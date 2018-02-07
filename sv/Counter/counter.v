@@ -4,7 +4,6 @@
 `define COUNTER_COUNTER_I
 
 `include "../Util/Math.v"
-`include "../Arith/AddSub.v"
 `include "../Util/Control.v"
 
 // wow verilog, much industry standard
@@ -22,18 +21,11 @@ module Counter_counter #
 
 `Util_Math_log2_expr
 
-wire [WIDTH-1:0] n;
 reg  [WIDTH-1:0] q$;
-add_subtract #
-	( .WIDTH (WIDTH)
-	) add
-	( .data1  (q$)
-	, .data2  (WIDTH'(1))
-	, .result (n)
-	, .addsub (AddSub_Add)
-	);
+wire [WIDTH-1:0] n;
+assign n = q$ + 1;
 
-always @(posedge Util_Control_clock(ctrl))
+always @(posedge `Util_Control_clock(ctrl))
 	if(`Util_Control_reset(ctrl))
 		q$ <= 0;
 	else if(load)
@@ -46,7 +38,7 @@ always @(posedge Util_Control_clock(ctrl))
 		else
 			q$ <= n;
 
-delay_1d #
+Delay_arr #
 	( .WIDTH (WIDTH)
 	, .DELAY (DELAY)
 	) dl

@@ -36,7 +36,6 @@
 * BECAUSE VERILOG DOESNT HAVE EM
 */
 `include "../Alu/Func.v"
-`include "../Alu/Status.v"
 `include "../Util/Control.v"
 /* SYSTEMVERILOG
 * GUD FOR TESTBENCH
@@ -80,7 +79,7 @@ logic [1:0] shamt;
 * BUT ITS OKAY
 * BECAZ MIGHTY MACROS!
 */
-`Alu_Status_T(logic) status;
+logic zero;
 /* WHATS THAT KOMRADE?
 * YOU WANT TO USE ENUMS?
 * DONT BE SILLY KOMRADE
@@ -91,7 +90,7 @@ logic [1:0] shamt;
 
 Alu_hilo #
 	( .DATA_W (4)
-	, .DELAY (0)
+	, .DELAY  (2)
 	) DUT
 	( .ctrl   (ctrl)
 	, .data1  (data1)
@@ -99,7 +98,7 @@ Alu_hilo #
 	, .func   (func)
 	, .shamt  (shamt)
 	, .result (result)
-	, .status (status)
+	, .zero   (zero)
 	);
 
 /* SYSTEMVERILOG
@@ -299,7 +298,14 @@ initial begin
 */
 	func = `Alu_Func_Mfhi;
 
-	#10;
+	#4;
+	`Util_Control_reset(ctrl) = 1;
+
+	#2;
+	`Util_Control_reset(ctrl) = 0;
+
+	#4;
+
 	$finish;
 end
 
