@@ -1,0 +1,17 @@
+__pycache__
+asm
+db
+doc
+incremental_db
+*_resources
+output_files
+simulation
+work
+*.cr.mti
+*.mpf
+*.qpf
+*.qsf
+transcript
+vish_stacktrace.vstf
+vsim.wlf
+*.bak

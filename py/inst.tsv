@@ -1,0 +1,56 @@
+add	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100000
+addi	i	rt,rs,imm	001000	rs.5	rt.5	imm.16
+addiu	i	rt,rs,imm	001001	rs.5	rt.5	imm.16
+addu	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100001
+and	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100100
+andi	i	rt,rs,imm	001100	rs.5	rt.5	imm.16
+lui	i	rt,imm	001111	-----	rt.5	imm.16
+nor	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100111
+or	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100101
+ori	i	rt,rs,imm	001101	rs.5	rt.5	imm.16
+slt	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	101010
+slti	i	rt,rs,imm	001010	rs.5	rt.5	imm.16
+sltiu	i	rt,rs,imm	001011	rs.5	rt.5	imm.16
+sltu	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	101011
+sub	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100010
+subu	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100011
+xor	r	rd,rs,rt	000000	rs.5	rt.5	rd.5	00000	100110
+xori	i	rt,rs,imm	001110	rs.5	rt.5	imm.16
+sll	r	rd,rt,sa	000000	-----	rt.5	rd.5	sa.5	000000
+sllv	r	rd,rt,rs	000000	rs.5	rt.5	rd.5	00000	000100
+sra	r	rd,rt,sa	000000	-----	rt.5	rd.5	sa.5	000011
+srav	r	rd,rt,rs	000000	rs.5	rt.5	rd.5	00000	000111
+srl	r	rd,rt,sa	000000	-----	rt.5	rd.5	sa.5	000010
+srlv	r	rd,rt,rs	000000	rs.5	rt.5	rd.5	00000	000110
+div	r	rs,rt	000000	rs.5	rt.5	0000000000	011010
+divu	r	rs,rt	000000	rs.5	rt.5	0000000000	011011
+mfhi	r	rd	000000	0000000000	rd.5	00000	010000
+mflo	r	rd	000000	0000000000	rd.5	00000	010010
+mthi	r	rs	000000	rs.5	000000000000000	010001
+mtlo	r	rs	000000	rs.5	000000000000000	010011
+mult	r	rs,rt	000000	rs.5	rt.5	0000000000	011000
+multu	r	rs,rt	000000	rs.5	rt.5	0000000000	011001
+beq	i	rs,rt,offset	000100	rs.5	rt.5	offset.16
+bgez	i	rs,offset	000001	rs.5	00001	offset.16
+bgezal	i	rs,offset	000001	rs.5	10001	offset.16
+bgtz	i	rs,offset	000111	rs.5	00000	offset.16
+blez	i	rs,offset	000110	rs.5	00000	offset.16
+bltz	i	rs,offset	000001	rs.5	00000	offset.16
+bltzal	i	rs,offset	000001	rs.5	10000	offset.16
+bne	i	rs,rt,offset	000101	rs.5	rt.5	offset.16
+break	r	code	000000	code.20	001101
+syscall	r		000000	00000000000000000000	001100
+j	j	target	000010	target.26
+jal	j	target	000011	target.26
+jalr	r	rs	000000	rs.5	00000	rd.5	00000	001001
+jr	r	rs	000000	rs.5	000000000000000	001000
+mfc0	i	rt,rd	010000	00000	rt.5	rd.5	00000000000
+mtc0	i	rt,rd	010000	00100	rt.5	rd.5	00000000000
+lb	i	rt,offset(rs)	100000	rs.5	rt.5	offset.16
+lbu	i	rt,offset(rs)	100100	rs.5	rt.5	offset.16
+lh	i	rt,offset(rs)	100001	rs.5	rt.5	offset.16
+lhu	i	rt,offset(rs)	100101	rs.5	rt.5	offset.16
+lw	i	rt,offset(rs)	100011	rs.5	rt.5	offset.16
+sb	i	rt,offset(rs)	101000	rs.5	rt.5	offset.16
+sh	i	rt,offset(rs)	101001	rs.5	rt.5	offset.16
+sw	i	rt,offset(rs)	101011	rs.5	rt.5	offset.16

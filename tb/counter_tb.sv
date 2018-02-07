@@ -1,0 +1,57 @@
+`include "../sv/Util/Control.v"
+
+module counter_tb;
+
+logic [3:0] d, q;
+`Util_Control_T(logic) ctrl;
+logic load, enable;
+
+Counter_counter #
+	( .MAX (12)
+	) DUT
+	( .d (d)
+	, .q (q)
+	, .ctrl (ctrl)
+	, .load (load)
+	, .enable (enable)
+	);
+
+initial `Util_Control_clock(ctrl) = 0;
+always #1 `Util_Control_clock(ctrl) = !`Util_Control_clock(ctrl);
+initial d = 4'b0;
+always #2 d = d - 1;
+
+initial begin
+	#0;
+	load = 0;
+	enable = 0;
+	`Util_Control_reset(ctrl) = 1;
+
+	#4;
+	`Util_Control_reset(ctrl) = 0;
+
+	#4;
+	enable = 1;
+
+	#32;
+	enable = 0;
+
+	#4;
+	load = 1;
+
+	#8;
+	enable = 1;
+
+	#4;
+	`Util_Control_reset(ctrl) = 1;
+
+	#4;
+	`Util_Control_reset(ctrl) = 0;
+	load = 0;
+	enable = 0;
+
+	$finish;
+end
+
+endmodule
+
