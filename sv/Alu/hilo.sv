@@ -62,7 +62,7 @@
  ████▀   ▀▀█████▄▄▄▄█████████▄
   ▀▀         ▀▀██████▀▀   ▀▀██
 */
-module alu_hilo_tb;
+module Alu_hilo_tb;
 
 logic [3:0] data1, data2, result;
 logic [1:0] shamt;

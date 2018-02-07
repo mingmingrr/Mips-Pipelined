@@ -1,6 +1,6 @@
 `include "../Util/Control.v"
 
-module counter_tb;
+module Counter_counter_tb;
 
 logic [3:0] d, q;
 `Util_Control_T(logic) ctrl;

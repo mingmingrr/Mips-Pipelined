@@ -1,7 +1,7 @@
 // vim: set ft=verilog:
 
-`ifndef ALU_FUNC
-`define ALU_FUNC
+`ifndef ALU_FUNC_M
+`define ALU_FUNC_M
 
 `define Alu_Func_T(T) T [4:0]
 `define Alu_Func_L 20

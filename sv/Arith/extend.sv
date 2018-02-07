@@ -2,7 +2,7 @@
 `include "../Arith/SignedUnsigned.v"
 `include "../Util/Control.v"
 
-module extend_tb;
+module Arith_extend_tb;
 
 logic [3:0] in  [1:0];
 logic [7:0] out [1:0];

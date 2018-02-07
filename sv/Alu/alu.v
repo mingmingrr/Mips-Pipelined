@@ -1,7 +1,7 @@
 // vim: set ft=verilog:
 
-`ifndef ALU
-`define ALU
+`ifndef ALU_ALU_I
+`define ALU_ALU_I
 
 `include "../Util/Math.v"
 `include "./Func.v"
