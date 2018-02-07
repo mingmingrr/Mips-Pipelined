@@ -35,16 +35,16 @@
 * CANT EVEN USE PACKAGES
 * BECAUSE VERILOG DOESNT HAVE EM
 */
-`include "../sv/Alu/Func.v"
-`include "../sv/Alu/Status.v"
-`include "../sv/Util/Control.v"
+`include "../Alu/Func.v"
+`include "../Alu/Status.v"
+`include "../Util/Control.v"
 /* SYSTEMVERILOG
 * GUD FOR TESTBENCH
 * DA KOMRADE
 * CANT EVEN TEST A MODULE
 * WITHOUT NEEDING AN INCLUDE
 */
-`include "../sv/Alu/hilo.v"
+`include "../Alu/hilo.v"
 
 /*
           ▀▀▀██████▄▄▄
@@ -91,7 +91,7 @@ logic [1:0] shamt;
 
 Alu_hilo #
 	( .DATA_W (4)
-	, .DELAY (2)
+	, .DELAY (0)
 	) DUT
 	( .ctrl   (ctrl)
 	, .data1  (data1)

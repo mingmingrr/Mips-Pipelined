@@ -1,4 +1,4 @@
-`include "../sv/Util/Control.v"
+`include "../Util/Control.v"
 
 module counter_tb;
 
