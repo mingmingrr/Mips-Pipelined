@@ -6,9 +6,9 @@
 `include "../Util/Control.v"
 `include "../Util/Array.v"
 
-module gen #
+module Delay_gen #
 	( parameter DELAY = 0
-	, parameter RESET = 0
+	, parameter RESET = 1'b0
 	)
 	( `Util_Control_T(input) ctrl
 	, input  in
@@ -23,11 +23,12 @@ generate
 		integer i;
 		always @(posedge `Util_Control_clock(ctrl))
 			if(!`Util_Control_reset(ctrl)) begin
-				q[0] = in;
+				q[0] <= in;
 				for(i = 1; i < DELAY; i = i + 1)
-					q[i] = q[i-1];
+					q[i] <= q[i-1];
 			end else
-				`Util_Array_setAll(q, DELAY, i, RESET)
+				for(i = 0; i < DELAY; i = i + 1)
+					q[i] <= RESET;
 		assign out = q[DELAY-1];
 	end
 endgenerate
