@@ -66,7 +66,7 @@ always @(posedge `Util_Control_clock(ctrl))
 		reg_lo <= res_lo;
 
 Delay_arr #
-	( .DELAY (DELAY + 1)
+	( .DELAY (DELAY)
 	, .WIDTH (DATA_W)
 	) dres
 	( .in   (res_lo)

@@ -11,6 +11,7 @@ work
 *.mpf
 *.qpf
 *.qsf
+*.qws
 transcript
 vish_stacktrace.vstf
 vsim.wlf

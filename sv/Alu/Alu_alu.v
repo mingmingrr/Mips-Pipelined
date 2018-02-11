@@ -53,7 +53,7 @@ always @(*)
 		`Alu_Func_Mthi : res_lo$ = data1;
 		`Alu_Func_Mflo : res_lo$ = reg_lo;
 		`Alu_Func_Mfhi : res_lo$ = reg_hi;
-		`Alu_Func_None : res_lo$ = data1;
+		default        : res_lo$ = data1;
 	endcase
 assign res_lo = res_lo$;
 

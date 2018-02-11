@@ -19,7 +19,7 @@ module Delay_arr #
 
 genvar i;
 generate
-	for(i = 0; i < WIDTH; i = i + 1)
+	for(i = 0; i < WIDTH; i = i + 1) begin : dgen
 		Delay_gen #
 			( .DELAY(DELAY)
 			, .RESET(RESET[i])
@@ -28,6 +28,7 @@ generate
 			, .in   (in[i])
 			, .out  (out[i])
 			);
+	end
 endgenerate
 
 endmodule
