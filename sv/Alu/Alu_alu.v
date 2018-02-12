@@ -36,9 +36,9 @@ always @(*)
 	case(func)
 		`Alu_Func_Add  : res_lo$ = data1 + data2;
 		`Alu_Func_Sub  : res_lo$ = data1 - data2;
-		`Alu_Func_Sll  : res_lo$ = data1 >> shamt;
-		`Alu_Func_Sra  : res_lo$ = data1$ << shamt;
-		`Alu_Func_Srl  : res_lo$ = data1 << shamt;
+		`Alu_Func_Sll  : res_lo$ = data1 << shamt;
+		`Alu_Func_Sra  : res_lo$ = data1$ >>> shamt;
+		`Alu_Func_Srl  : res_lo$ = data1 >> shamt;
 		`Alu_Func_And  : res_lo$ = data1 & data2;
 		`Alu_Func_Or   : res_lo$ = data1 | data2;
 		`Alu_Func_Nor  : res_lo$ = ~(data1 | data2);
