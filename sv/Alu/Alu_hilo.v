@@ -6,6 +6,7 @@
 `include "../Util/Util_Math.v"
 `include "../Alu/Alu_Func.v"
 `include "../Util/Util_Control.v"
+`include "../Delay/Delay_arr.v"
 
 module Alu_hilo #
 	( parameter DATA_W  = 32
@@ -44,13 +45,13 @@ Alu_alu #
 reg store_hi, store_lo;
 always @(*)
 	case(func)
-		`Alu_Func_Mulu : {store_hi, store_lo} <= 2'b11;
-		`Alu_Func_Muls : {store_hi, store_lo} <= 2'b11;
-		`Alu_Func_Divu : {store_hi, store_lo} <= 2'b11;
-		`Alu_Func_Divs : {store_hi, store_lo} <= 2'b11;
-		`Alu_Func_Mthi : {store_hi, store_lo} <= 2'b10;
-		`Alu_Func_Mtlo : {store_hi, store_lo} <= 2'b01;
-		default        : {store_hi, store_lo} <= 2'b00;
+		`Alu_Func_Mulu : {store_hi, store_lo} = 2'b11;
+		`Alu_Func_Muls : {store_hi, store_lo} = 2'b11;
+		`Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
+		`Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
+		`Alu_Func_Mthi : {store_hi, store_lo} = 2'b10;
+		`Alu_Func_Mtlo : {store_hi, store_lo} = 2'b01;
+		default        : {store_hi, store_lo} = 2'b00;
 	endcase
 
 always @(posedge `Util_Control_clock(ctrl))
