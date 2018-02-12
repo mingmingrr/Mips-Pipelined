@@ -107,8 +107,8 @@ Alu_hilo #
 * NO STRUCTS? NO PROBLEM
 * JUST USE MORE MACROS
 */
-initial `Util_Control_clock(ctrl) = 0;
-always #1 `Util_Control_clock(ctrl) = !`Util_Control_clock(ctrl);
+initial `Util_Control_Clock(ctrl) = 0;
+always #1 `Util_Control_Clock(ctrl) = !`Util_Control_Clock(ctrl);
 
 initial begin
 	#0;
@@ -121,7 +121,7 @@ initial begin
  * $$ | \_/ $$ |$$ |  $$ |\$$$$$$  |$$ |  $$ | $$$$$$  |\$$$$$$  |$$\ 
  * \__|     \__|\__|  \__| \______/ \__|  \__| \______/  \______/ \__|
 */
-	`Util_Control_reset(ctrl) = 1;
+	`Util_Control_Reset(ctrl) = 1;
 	data1 = 4'h0;
 	data2 = 4'h0;
 	shamt = 2'h1;
@@ -148,7 +148,7 @@ initial begin
  * | $$  \$ | $$| $$  | $$ \$$    $$| $$  | $$ \$$    $$ \$$    $$|  \
  *  \$$      \$$ \$$   \$$  \$$$$$$  \$$   \$$  \$$$$$$   \$$$$$$  \$$
 */
-	`Util_Control_reset(ctrl) = 0;
+	`Util_Control_Reset(ctrl) = 0;
 
 	#2;
 	data1 = 4'h7;
@@ -299,10 +299,10 @@ initial begin
 	func = `Alu_Func_Mfhi;
 
 	#4;
-	`Util_Control_reset(ctrl) = 1;
+	`Util_Control_Reset(ctrl) = 1;
 
 	#2;
-	`Util_Control_reset(ctrl) = 0;
+	`Util_Control_Reset(ctrl) = 0;
 
 	#4;
 

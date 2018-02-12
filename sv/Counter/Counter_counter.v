@@ -25,8 +25,8 @@ reg  [WIDTH-1:0] q$;
 wire [WIDTH-1:0] n;
 assign n = q$ + 1;
 
-always @(posedge `Util_Control_clock(ctrl))
-	if(`Util_Control_reset(ctrl))
+always @(posedge `Util_Control_Clock(ctrl))
+	if(`Util_Control_Reset(ctrl))
 		q$ <= 0;
 	else if(load)
 		q$ <= d;

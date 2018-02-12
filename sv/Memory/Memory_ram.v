@@ -30,7 +30,7 @@ module Memory_ram #
 // synopsys translate_off
 `endif
 // tri1 [BYTES_W-1:0] bytes;
-// tri1 `Util_Control_clock(ctrl);
+// tri1 `Util_Control_Clock(ctrl);
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
@@ -42,7 +42,7 @@ assign out = sub_wire0;
 altsyncram altsyncram_component
 	( .address_a      (addr)
 	, .byteena_a      (bytes)
-	, .clock0         (`Util_Control_clock(ctrl))
+	, .clock0         (`Util_Control_Clock(ctrl))
 	, .data_a         (data)
 	, .wren_a         (wren)
 	, .q_a            (sub_wire0)

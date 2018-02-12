@@ -15,17 +15,17 @@ Delay_arr #
 	, .out  (out)
 	);
 
-initial `Util_Control_clock(ctrl) = 0;
-always #1 `Util_Control_clock(ctrl) = !`Util_Control_clock(ctrl);
+initial `Util_Control_Clock(ctrl) = 0;
+always #1 `Util_Control_Clock(ctrl) = !`Util_Control_Clock(ctrl);
 
 initial in = 4'b0;
 always #2 in = in + 1;
 
 initial begin
 	#0;
-	`Util_Control_reset(ctrl) = 1;
+	`Util_Control_Reset(ctrl) = 1;
 	#4;
-	`Util_Control_reset(ctrl) = 0;
+	`Util_Control_Reset(ctrl) = 0;
 end
 
 endmodule

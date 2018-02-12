@@ -22,17 +22,17 @@ Arith_extend #
 
 assign sign = `Arith_SignedUnsigned_Signed;
 
-initial `Util_Control_clock(ctrl) = 0;
-always #1 `Util_Control_clock(ctrl) = !`Util_Control_clock(ctrl);
+initial `Util_Control_Clock(ctrl) = 0;
+always #1 `Util_Control_Clock(ctrl) = !`Util_Control_Clock(ctrl);
 
 initial begin
 	#0;
-	`Util_Control_reset(ctrl) = 1;
+	`Util_Control_Reset(ctrl) = 1;
 	in[0] = 4'h0;
 	in[1] = 4'h0;
 
 	#2;
-	`Util_Control_reset(ctrl) = 0;
+	`Util_Control_Reset(ctrl) = 0;
 
 	#2;
 	in[0] = 4'ha;

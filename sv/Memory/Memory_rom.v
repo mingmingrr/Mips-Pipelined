@@ -25,7 +25,7 @@ module Memory_rom #
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
-// tri1 `Util_Control_clock(ctrl);
+// tri1 `Util_Control_Clock(ctrl);
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
@@ -36,7 +36,7 @@ assign out = sub_wire0;
 
 altsyncram altsyncram_component
 	( .address_a      (addr)
-	, .clock0         (`Util_Control_clock(ctrl))
+	, .clock0         (`Util_Control_Clock(ctrl))
 	, .q_a            (sub_wire0)
 	, .aclr0          (1'b0)
 	, .aclr1          (1'b0)

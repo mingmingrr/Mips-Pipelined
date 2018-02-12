@@ -22,7 +22,7 @@ module Arith_extend #
 `Array_Pack_packDecl(reg, DEPTH, IN_W, out$, out, i2, pdl1)
 
 integer i;
-always @(posedge `Util_Control_clock(ctrl))
+always @(posedge `Util_Control_Clock(ctrl))
 	for(i = 0; i < DEPTH; i = i + 1)
 		out$[i] <= OUT_W'(in$[i]);
 endmodule

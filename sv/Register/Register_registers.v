@@ -36,8 +36,8 @@ assign rd2_data
 	: regs[rd2_addr]
 	;
 
-always @(posedge `Util_Control_clock(ctrl))
-	if(`Util_Control_reset(ctrl)) begin : wtf
+always @(posedge `Util_Control_Clock(ctrl))
+	if(`Util_Control_Reset(ctrl)) begin : wtf
 		integer i;
 		for(i = 0; i < ADDR_L; i = i + 1)
 			begin regs[i] <= RESET; end

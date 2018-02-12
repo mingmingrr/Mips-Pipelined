@@ -54,14 +54,14 @@ always @(*)
 		default        : {store_hi, store_lo} = 2'b00;
 	endcase
 
-always @(posedge `Util_Control_clock(ctrl))
-	if(`Util_Control_reset(ctrl))
+always @(posedge `Util_Control_Clock(ctrl))
+	if(`Util_Control_Reset(ctrl))
 		reg_hi <= DATA_W'(0);
 	else if(store_hi)
 		reg_hi <= res_hi;
 
-always @(posedge `Util_Control_clock(ctrl))
-	if(`Util_Control_reset(ctrl))
+always @(posedge `Util_Control_Clock(ctrl))
+	if(`Util_Control_Reset(ctrl))
 		reg_lo <= DATA_W'(0);
 	else if(store_lo)
 		reg_lo <= res_lo;

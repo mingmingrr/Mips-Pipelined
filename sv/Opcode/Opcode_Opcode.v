@@ -9,6 +9,11 @@
 `define Opcode_Opcode_W 7
 `define Opcode_Opcode_L 57
 
+`define Opcode_Opcode_Source(x) x[6]
+`define Opcode_Opcode_Source_T(T) T
+`define Opcode_Opcode_Opcode(x) x[5:0]
+`define Opcode_Opcode_Opcode_T(T) T [5:0]
+
 `define Opcode_Opcode_Add     {`Opcode_Source_Func , 6'b100000}
 `define Opcode_Opcode_Addi    {`Opcode_Source_Op   , 6'b001000}
 `define Opcode_Opcode_Addiu   {`Opcode_Source_Op   , 6'b001001}

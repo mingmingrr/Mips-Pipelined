@@ -28,8 +28,8 @@ assign addr = pc;
 wire signed [OFFSET_W-1:0] offset$;
 assign offset$ = offset;
 
-always @(posedge `Util_Control_clock(ctrl))
-	if(`Util_Control_reset(ctrl))
+always @(posedge `Util_Control_Clock(ctrl))
+	if(`Util_Control_Reset(ctrl))
 		pc <= RESET;
 	else
 		case(act)

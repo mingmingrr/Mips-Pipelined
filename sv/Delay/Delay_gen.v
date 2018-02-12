@@ -20,8 +20,8 @@ generate
 	else begin
 		reg q[DELAY-1:0];
 		integer i;
-		always @(posedge `Util_Control_clock(ctrl))
-			if(!`Util_Control_reset(ctrl)) begin
+		always @(posedge `Util_Control_Clock(ctrl))
+			if(!`Util_Control_Reset(ctrl)) begin
 				q[0] <= in;
 				for(i = 1; i < DELAY; i = i + 1)
 					q[i] <= q[i-1];

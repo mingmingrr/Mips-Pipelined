@@ -4,7 +4,10 @@
 `define UTIL_CONTROL_M
 
 `define Util_Control_T(T) T [1:0]
-`define Util_Control_clock(x) x[0]
-`define Util_Control_reset(x) x[1]
+
+`define Util_Control_Clock(x) x[0]
+`define Util_Control_Clock_T(x) T
+`define Util_Control_Reset(x) x[1]
+`define Util_Control_Reset_T(T) T
 
 `endif
