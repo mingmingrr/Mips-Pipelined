@@ -4,6 +4,7 @@
 `define ALU_FUNC_M
 
 `define Alu_Func_T(T) T [4:0]
+`define Alu_Func_W 5
 `define Alu_Func_L 20
 
 `define Alu_Func_Add  5'd0
