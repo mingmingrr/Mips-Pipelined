@@ -3,29 +3,29 @@
 `ifndef ALU_FUNC_M
 `define ALU_FUNC_M
 
-`define Alu_Func_T(T) T [4:0]
+`define Alu_Func_T(T) T [`Alu_Func_W-1:0]
 `define Alu_Func_W 5
 `define Alu_Func_L 20
 
-`define Alu_Func_Add  5'd0
-`define Alu_Func_Sub  5'd1
-`define Alu_Func_Sll  5'd2
-`define Alu_Func_Srl  5'd3
-`define Alu_Func_Sra  5'd4
-`define Alu_Func_And  5'd5
-`define Alu_Func_Or   5'd6
-`define Alu_Func_Nor  5'd7
-`define Alu_Func_Xor  5'd8
-`define Alu_Func_Slts 5'd9
-`define Alu_Func_Sltu 5'd10
-`define Alu_Func_Muls 5'd11
-`define Alu_Func_Mulu 5'd12
-`define Alu_Func_Divs 5'd13
-`define Alu_Func_Divu 5'd14
-`define Alu_Func_Mfhi 5'd15
-`define Alu_Func_Mthi 5'd16
-`define Alu_Func_Mflo 5'd17
-`define Alu_Func_Mtlo 5'd18
-`define Alu_Func_None 5'd19
+`define Alu_Func_Add  `Alu_Func_W'(0)
+`define Alu_Func_Sub  `Alu_Func_W'(1)
+`define Alu_Func_Sll  `Alu_Func_W'(2)
+`define Alu_Func_Srl  `Alu_Func_W'(3)
+`define Alu_Func_Sra  `Alu_Func_W'(4)
+`define Alu_Func_And  `Alu_Func_W'(5)
+`define Alu_Func_Or   `Alu_Func_W'(6)
+`define Alu_Func_Nor  `Alu_Func_W'(7)
+`define Alu_Func_Xor  `Alu_Func_W'(8)
+`define Alu_Func_Slts `Alu_Func_W'(9)
+`define Alu_Func_Sltu `Alu_Func_W'(10)
+`define Alu_Func_Muls `Alu_Func_W'(11)
+`define Alu_Func_Mulu `Alu_Func_W'(12)
+`define Alu_Func_Divs `Alu_Func_W'(13)
+`define Alu_Func_Divu `Alu_Func_W'(14)
+`define Alu_Func_Mfhi `Alu_Func_W'(15)
+`define Alu_Func_Mthi `Alu_Func_W'(16)
+`define Alu_Func_Mflo `Alu_Func_W'(17)
+`define Alu_Func_Mtlo `Alu_Func_W'(18)
+`define Alu_Func_None `Alu_Func_W'(19)
 
 `endif
