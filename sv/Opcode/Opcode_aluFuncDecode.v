@@ -1,7 +1,7 @@
 // vim: set ft=verilog:
 
-`ifndef OPCODE_ALUFUNC_I
-`define OPCODE_ALUFUNC_I
+`ifndef OPCODE_ALUFUNCDECODE_I
+`define OPCODE_ALUFUNCDECODE_I
 
 `include "../Alu/Alu_Func.v"
 `include "../Opcode/Opcode_Opcode.v"
