@@ -1,6 +1,6 @@
-`include "../Arith/extend.v"
-`include "../Arith/SignedUnsigned.v"
-`include "../Util/Control.v"
+`include "../Arith/Arith_extend.v"
+`include "../Arith/Arith_SignedUnsigned.v"
+`include "../Util/Util_Control.v"
 
 module Arith_extend_tb;
 

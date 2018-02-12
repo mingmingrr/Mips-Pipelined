@@ -3,8 +3,8 @@
 `ifndef COUNTER_COUNTER_I
 `define COUNTER_COUNTER_I
 
-`include "../Util/Math.v"
-`include "../Util/Control.v"
+`include "../Util/Util_Math.v"
+`include "../Util/Util_Control.v"
 
 // wow verilog, much industry standard
 module Counter_counter #

@@ -3,8 +3,7 @@
 `ifndef DELAY_GEN_I
 `define DELAY_GEN_I
 
-`include "../Util/Control.v"
-`include "../Util/Array.v"
+`include "../Util/Util_Control.v"
 
 module Delay_gen #
 	( parameter DELAY = 0

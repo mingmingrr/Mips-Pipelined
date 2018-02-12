@@ -1,5 +1,5 @@
-`include "./arr.v"
-`include "../Util/Control.v"
+`include "../Delay/Delay_arr.v"
+`include "../Util/Util_Control.v"
 
 module Delay_arr_tb;
 

@@ -3,8 +3,8 @@
 `ifndef ALU_ALU_I
 `define ALU_ALU_I
 
-`include "../Util/Math.v"
-`include "./Func.v"
+`include "../Util/Util_Math.v"
+`include "../Alu/Alu_Func.v"
 
 module Alu_alu #
 	( parameter DATA_W  = 32

@@ -3,9 +3,8 @@
 `ifndef DELAY_ARR_I
 `define DELAY_ARR_I
 
-`include "../Util/Control.v"
-`include "../Util/Array.v"
-`include "./gen.v"
+`include "../Util/Util_Control.v"
+`include "../Delay/Delay_gen.v"
 
 module Delay_arr #
 	( parameter WIDTH = 32

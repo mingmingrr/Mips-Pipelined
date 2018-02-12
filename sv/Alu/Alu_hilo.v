@@ -3,9 +3,9 @@
 `ifndef ALU_HILO_I
 `define ALU_HILO_I
 
-`include "../Util/Math.v"
-`include "./Func.v"
-`include "../Util/Control.v"
+`include "../Util/Util_Math.v"
+`include "../Alu/Alu_Func.v"
+`include "../Util/Util_Control.v"
 
 module Alu_hilo #
 	( parameter DATA_W  = 32

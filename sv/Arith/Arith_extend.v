@@ -3,9 +3,9 @@
 `ifndef ARITH_EXTEND_I
 `define ARITH_EXTEND_I
 
-`include "./SignedUnsigned.v"
-`include "../Util/Control.v"
-`include "../Util/Pack.v"
+`include "../Arith/Arith_SignedUnsigned.v"
+`include "../Util/Util_Control.v"
+`include "../Array/Array_Pack.v"
 
 module Arith_extend #
 	( parameter IN_W  = 16
