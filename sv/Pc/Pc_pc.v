@@ -8,7 +8,7 @@
 module Pc_pc #
 	( parameter ADDR_W = 32
 	, parameter OFFSET_W = 16
-	, parameter JUMP_W = 22
+	, parameter JUMP_W = 26
 	, parameter STEP = 4
 	, parameter SKIP = Util_Math_log2(STEP)
 	, parameter RESET = ADDR_W'(0)
