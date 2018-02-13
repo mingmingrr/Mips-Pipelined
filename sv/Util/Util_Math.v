@@ -5,7 +5,7 @@
 
 `define Util_Math_log2_expr \
 	function integer Util_Math_log2; \
-		input x; \
+		input x; integer x; \
 		begin \
 			Util_Math_log2 = 0; \
 			x = x - 1; \

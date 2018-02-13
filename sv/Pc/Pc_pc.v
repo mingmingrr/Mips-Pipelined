@@ -35,7 +35,7 @@ always @(posedge `Util_Control_Clock(ctrl))
 		case(act)
 			`Pc_Action_None   : pc <= pc;
 			`Pc_Action_Inc    : pc <= pc + STEP;
-			`Pc_Action_Offset : pc <= pc + (ADDR_W'(offset$) << SKIP);
+			`Pc_Action_Branch : pc <= pc + (ADDR_W'(offset$) << SKIP);
 			`Pc_Action_Jump   : pc <= {pc[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
 			default : pc <= pc;
 		endcase
