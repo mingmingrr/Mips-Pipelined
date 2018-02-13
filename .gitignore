@@ -17,3 +17,4 @@ vish_stacktrace.vstf
 vsim.wlf
 *.bak
 *_stacktrace.txt
+*.b.v
