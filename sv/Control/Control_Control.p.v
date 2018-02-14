@@ -3,16 +3,24 @@
 
 `include "../Pc/Pc_Action.v"
 `include "../Opcode/Opcode_OpFunc.v"
+`include "../Control/Control_AluData2Source.v"
+`include "../Control/Control_Register1AddrSource.v"
+`include "../Control/Control_Register2AddrSource.v"
+`include "../Control/Control_RegisterWriteAddrSource.v"
+`include "../Control/Control_RegisterWriteDataSource.v"
+`include "../Control/Control_ShamtSource.v"
 
-$(__import__("imp").load_source("MS", "../../py/vstruct.py").makeStruct(
+$(makeStruct(
 "Control_Control", [
 ("OpFunc"                  , "`Opcode_OpFunc_W"),
-("RegisterWriteDataSource" , "1"),
-("RegisterWriteAddrSource" , "1"),
-("MemoryReadEnable"        , "1"),
+("RegisterWriteDataSource" , "`Control_RegisterWriteDataSource_W"),
+("RegisterWriteAddrSource" , "`Control_RegisterWriteAddrSource_W"),
 ("MemoryWriteEnable"       , "1"),
 ("PcAction"                , "`Pc_Action_W"),
-("AluData2Source"          , "1"),
+("AluData2Source"          , "`Control_AluData2Source_W"),
+("ShamtSource"             , "`Control_ShamtSource_W"),
+("Register1AddrSource"     , "`Control_Register1AddrSource_W"),
+("Register2AddrSource"     , "`Control_Register2AddrSource_W"),
 ]))
 
 `endif
