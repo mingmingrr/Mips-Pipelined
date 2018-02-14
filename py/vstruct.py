@@ -4,8 +4,7 @@ import sys
 from collections import namedtuple
 
 def makeStruct(struct, fields):
-	output = []
-	fields, last = list(fields), None
+	output, fields, last = [], list(fields), None
 	for name, width in fields:
 		output.append(f'`define {struct}_{name}_W {width}')
 		if last is None:
@@ -30,6 +29,8 @@ def makeStruct(struct, fields):
 		+ ', \\\n\t'.join(f'`{struct}_{i[0]}_W\'({i[0]})' for i in fields)
 		+ ' \\')
 	output.append('\t}')
+	output.append(f'`define {struct}_Init_Defaults \\\n\t`{struct}_Init('
+		+ ', '.join(i[0][0].lower() + i[0][1:] for i in fields) + ')')
 	return '\n'.join(output)
 
 if __name__ == '__main__':

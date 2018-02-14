@@ -7,7 +7,7 @@
 `include "../Opcode/Opcode_OpFunc.v"
 
 module Opcode_aluFuncDecode
-	( `Opcode_OpFunc_T(input) opfunc
+	( `Opcode_OpFunc_T(input) opFunc
 	, `Alu_Func_T(output) func
 	);
 
@@ -15,7 +15,7 @@ module Opcode_aluFuncDecode
 assign func = func$;
 
 always @ (*)
-	case(opfunc)
+	case(opFunc)
 		`Opcode_OpFunc_Add     : func$ = `Alu_Func_Add;
 		`Opcode_OpFunc_Addi    : func$ = `Alu_Func_Add;
 		`Opcode_OpFunc_Addiu   : func$ = `Alu_Func_Add;
