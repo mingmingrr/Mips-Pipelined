@@ -11,6 +11,5 @@
 `define Control_ShamtSource_T(T) \
 	T [`Control_ShamtSource_W-1:0]
 
-
 `endif
 

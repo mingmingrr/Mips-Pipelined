@@ -44,10 +44,18 @@
 	+ `Control_Control_RegisterWriteAddrSource_W - 1 \
 	:`Control_Control_RegisterWriteAddrSource_I ]
 
-`define Control_Control_MemoryWriteEnable_W 1
-`define Control_Control_MemoryWriteEnable_I \
+`define Control_Control_RegisterWriteEnable_W 1
+`define Control_Control_RegisterWriteEnable_I \
 	`Control_Control_RegisterWriteAddrSource_W + \
 	`Control_Control_RegisterWriteAddrSource_I
+`define Control_Control_RegisterWriteEnable_T(T) T
+`define Control_Control_RegisterWriteEnable(x) \
+	x [ `Control_Control_RegisterWriteEnable_I ]
+
+`define Control_Control_MemoryWriteEnable_W 1
+`define Control_Control_MemoryWriteEnable_I \
+	`Control_Control_RegisterWriteEnable_W + \
+	`Control_Control_RegisterWriteEnable_I
 `define Control_Control_MemoryWriteEnable_T(T) T
 `define Control_Control_MemoryWriteEnable(x) \
 	x [ `Control_Control_MemoryWriteEnable_I ]
@@ -117,16 +125,18 @@
 	`Control_RegisterWriteDataSource_W + \
 	`Control_RegisterWriteAddrSource_W + \
 	1 + \
+	1 + \
 	`Pc_Action_W + \
 	`Control_AluData2Source_W + \
 	`Control_ShamtSource_W + \
 	`Control_Register1AddrSource_W + \
 	`Control_Register2AddrSource_W
 `define Control_Control_T(T) T [`Control_Control_W-1:0]
-`define Control_Control_Init(OpFunc, RegisterWriteDataSource, RegisterWriteAddrSource, MemoryWriteEnable, PcAction, AluData2Source, ShamtSource, Register1AddrSource, Register2AddrSource) { \
+`define Control_Control_Init(OpFunc, RegisterWriteDataSource, RegisterWriteAddrSource, RegisterWriteEnable, MemoryWriteEnable, PcAction, AluData2Source, ShamtSource, Register1AddrSource, Register2AddrSource) { \
 	`Control_Control_OpFunc_W'(OpFunc), \
 	`Control_Control_RegisterWriteDataSource_W'(RegisterWriteDataSource), \
 	`Control_Control_RegisterWriteAddrSource_W'(RegisterWriteAddrSource), \
+	`Control_Control_RegisterWriteEnable_W'(RegisterWriteEnable), \
 	`Control_Control_MemoryWriteEnable_W'(MemoryWriteEnable), \
 	`Control_Control_PcAction_W'(PcAction), \
 	`Control_Control_AluData2Source_W'(AluData2Source), \
@@ -135,7 +145,7 @@
 	`Control_Control_Register2AddrSource_W'(Register2AddrSource) \
 	}
 `define Control_Control_Init_Defaults \
-	`Control_Control_Init(opFunc, registerWriteDataSource, registerWriteAddrSource, memoryWriteEnable, pcAction, aluData2Source, shamtSource, register1AddrSource, register2AddrSource)
+	`Control_Control_Init(opFunc, registerWriteDataSource, registerWriteAddrSource, registerWriteEnable, memoryWriteEnable, pcAction, aluData2Source, shamtSource, register1AddrSource, register2AddrSource)
 
 `endif
 

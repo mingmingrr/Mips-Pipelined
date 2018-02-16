@@ -22,23 +22,26 @@ module Pc_pc #
 
 `Util_Math_log2_expr
 
-reg [ADDR_W-1:0] pc;
-assign addr = pc;
+reg [ADDR_W-1:0] addr_next, addr_reg;
+assign addr = addr_next;
 
 wire signed [OFFSET_W-1:0] offset$;
 assign offset$ = offset;
 
+always @(*)
+	case(act)
+		`Pc_Action_None   : addr_next =  addr_reg + STEP;
+		`Pc_Action_Inc    : addr_next =  addr_reg + STEP;
+		`Pc_Action_Branch : addr_next =  addr_reg + (ADDR_W'(offset$) << SKIP);
+		`Pc_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
+		default           : addr_next =  addr_reg + STEP;
+	endcase
+
 always @(posedge `Util_Control_Clock(ctrl))
 	if(`Util_Control_Reset(ctrl))
-		pc <= RESET;
+		addr_reg <= RESET - STEP;
 	else
-		case(act)
-			`Pc_Action_None   : pc <= pc;
-			`Pc_Action_Inc    : pc <= pc + STEP;
-			`Pc_Action_Branch : pc <= pc + (ADDR_W'(offset$) << SKIP);
-			`Pc_Action_Jump   : pc <= {pc[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
-			default : pc <= pc;
-		endcase
+		addr_reg <= addr_next;
 
 endmodule
 

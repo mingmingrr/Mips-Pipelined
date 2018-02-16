@@ -15,6 +15,7 @@ $(makeStruct(
 ("OpFunc"                  , "`Opcode_OpFunc_W"),
 ("RegisterWriteDataSource" , "`Control_RegisterWriteDataSource_W"),
 ("RegisterWriteAddrSource" , "`Control_RegisterWriteAddrSource_W"),
+("RegisterWriteEnable"     , "1"),
 ("MemoryWriteEnable"       , "1"),
 ("PcAction"                , "`Pc_Action_W"),
 ("AluData2Source"          , "`Control_AluData2Source_W"),

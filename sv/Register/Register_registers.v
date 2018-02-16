@@ -22,7 +22,7 @@ module Register_registers #
 
 `Util_Math_log2_expr
 
-reg [DATA_W-1:0] regs [ADDR_L-1:0];
+reg [DATA_W-1:0] regs [0:ADDR_L-1];
 
 assign rd1_data
 	= rd1_addr == wr_addr
@@ -41,7 +41,7 @@ always @(posedge `Util_Control_Clock(ctrl))
 		integer i;
 		for(i = 0; i < ADDR_L; i = i + 1)
 			begin regs[i] <= RESET; end
-	end else if(!(|wr_addr) && wr_en)
+	end else if((|wr_addr) && wr_en)
 		regs[wr_addr] <= wr_data;
 
 endmodule

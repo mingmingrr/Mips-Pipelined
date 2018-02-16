@@ -6,7 +6,6 @@
 `include "../Util/Util_Control.v"
 `include "../Alu/Alu_hilo.v"
 `include "../Opcode/Opcode_OpFunc.v"
-`include "../Instruction/Instruction_Category.v"
 `include "../Instruction/Instruction_Parts.v"
 `include "../Control/Control_Control.v"
 
@@ -17,13 +16,12 @@ module Mips_mips #
 	( `Util_Control_T(input) ctrl
 	);
 
-`Opcode_OpFunc_T(wire) opfunc;
-`Instruction_Category_T(wire) category;
+`Opcode_OpFunc_T(wire) opFunc;
 `Alu_Func_T(wire) alu_func;
 `Control_Control_T(wire) control;
 wire [31:0] instruction;
 
-wire [31:0] ram_addr;
+wire [5:0] ram_addr;
 wire [31:0] ram_data;
 wire ram_wren;
 wire [31:0] ram_out;
@@ -33,14 +31,14 @@ Memory_ram #
 	, .DATA_W  (32)
 	) GRAM
 	( .addr  (ram_addr)
-	, .bytes (4'hf)
+	, .bytes (4'b1100)
 	, .data  (ram_data)
 	, .wren  (ram_wren)
 	, .ctrl  (ctrl)
 	, .out   (ram_out)
 	);
 
-wire [31:0] rom_addr;
+wire [5:0] rom_addr;
 wire [31:0] rom_out;
 Memory_rom #
 	( .FILE    (FILE)
@@ -52,21 +50,20 @@ Memory_rom #
 	, .out   (rom_out)
 	);
 
-wire [31:0] reg_rd1_addr ;
-reg [31:0] reg_rd1_addr$;
+wire [4:0] reg_rd1_addr ;
+reg [4:0] reg_rd1_addr$;
 assign reg_rd1_addr = reg_rd1_addr$;
 wire [31:0] reg_rd1_data ;
-wire [31:0] reg_rd2_addr ;
-reg [31:0] reg_rd2_addr$;
+wire [4:0] reg_rd2_addr ;
+reg [4:0] reg_rd2_addr$;
 assign reg_rd2_addr = reg_rd2_addr$;
 wire [31:0] reg_rd2_data ;
-wire [31:0] reg_wr_addr  ;
-reg [31:0] reg_wr_addr$ ;
+wire [4:0] reg_wr_addr  ;
+reg [4:0] reg_wr_addr$ ;
 assign reg_wr_addr = reg_wr_addr$;
 wire [31:0] reg_wr_data  ;
 reg [31:0] reg_wr_data$ ;
 assign reg_wr_data = reg_wr_data$;
-wire        reg_wr_en    ;
 Register_registers #
 	( .DATA_W (32)
 	, .ADDR_L (32)
@@ -78,7 +75,7 @@ Register_registers #
 	, .rd2_data (reg_rd2_data)
 	, .wr_addr  (reg_wr_addr )
 	, .wr_data  (reg_wr_data )
-	, .wr_en    (1'b1)
+	, .wr_en    (`Control_Control_RegisterWriteEnable(control))
 	);
 
 wire [31:0] alu_data1;
@@ -102,11 +99,6 @@ Alu_hilo #
 	, .zero   (alu_zero)
 	);
 
-Instruction_categorize GCAT
-	( .opFunc   (opFunc  )
-	, .category (category)
-	);
-
 Opcode_aluFuncDecode GALUDEC
 	( .opFunc (opFunc)
 	, .func   (alu_func)
@@ -114,14 +106,13 @@ Opcode_aluFuncDecode GALUDEC
 
 Control_generate GCTRLGEN
 	( .opFunc   (opFunc)
-	, .category (category)
 	, .control  (control)
 	);
 
 Opcode_instToOpFunc GITOOF
 	( .op     (`Instruction_Parts_Op(instruction))
 	, .func   (`Instruction_Parts_Func(instruction))
-	, .opfunc (opfunc)
+	, .opfunc (opFunc)
 	);
 
 `Pc_Action_T(wire) pc_action;
@@ -139,12 +130,19 @@ Pc_pc #
 	( .ctrl (ctrl)
 	, .act  (pc_action)
 	, .offset (`Instruction_Parts_Imm(instruction))
-	, .jump   (`Instruction_Parts_Imm(instruction))
+	, .jump   (`Instruction_Parts_Target(instruction))
 	, .addr (pc_addr)
 	);
 
-assign rom_addr = pc_addr;
+assign rom_addr = pc_addr[7:2];
+assign ram_addr = alu_result[7:2];
 assign instruction = rom_out;
+assign alu_data1 = reg_rd1_data;
+
+wire [4:0] rs, rt, rd;
+assign rs = `Instruction_Parts_Rs(instruction);
+assign rt = `Instruction_Parts_Rt(instruction);
+assign rs = `Instruction_Parts_Rd(instruction);
 
 wire [15:0] immediate;
 assign immediate = `Instruction_Parts_Imm(instruction);
