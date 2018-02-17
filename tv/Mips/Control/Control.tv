@@ -1,0 +1,28 @@
+`ifndef CONTROL_CONTROL_M
+`define CONTROL_CONTROL_M
+
+`include "../../Mips/Pc/Action.v"
+`include "../../Mips/Instruction/Opcode/OpFunc.v"
+`include "../../Mips/Control/Signal/AluData2Source.v"
+`include "../../Mips/Control/Signal/Register1AddrSource.v"
+`include "../../Mips/Control/Signal/Register2AddrSource.v"
+`include "../../Mips/Control/Signal/RegisterWriteAddrSource.v"
+`include "../../Mips/Control/Signal/RegisterWriteDataSource.v"
+`include "../../Mips/Control/Signal/ShamtSource.v"
+
+$(tv.makeStruct(
+"Control_Control", [
+("OpFunc"                  , "`Opcode_OpFunc_W"),
+("RegisterWriteDataSource" , "`Control_RegisterWriteDataSource_W"),
+("RegisterWriteAddrSource" , "`Control_RegisterWriteAddrSource_W"),
+("RegisterWriteEnable"     , "1"),
+("MemoryWriteEnable"       , "1"),
+("PcAction"                , "`Pc_Action_W"),
+("AluData2Source"          , "`Control_AluData2Source_W"),
+("ShamtSource"             , "`Control_ShamtSource_W"),
+("Register1AddrSource"     , "`Control_Register1AddrSource_W"),
+("Register2AddrSource"     , "`Control_Register2AddrSource_W"),
+]))
+
+`endif
+

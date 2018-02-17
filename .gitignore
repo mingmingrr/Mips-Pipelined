@@ -18,3 +18,4 @@ vsim.wlf
 *.bak
 *_stacktrace.txt
 *.b.v
+sv
