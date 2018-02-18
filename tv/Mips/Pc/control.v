@@ -1,73 +1,75 @@
 `ifndef PC_CONTROL_I
 `define PC_CONTROL_I
 
-`include "../../Mips/Alu/Status.v"
 `include "../../Mips/Pc/Action.v"
+`include "../../Mips/Alu/Status.v"
 `include "../../Mips/Control/Control.v"
+`include "../../Mips/Instruction/OpFunc/Source.v"
 `include "../../Mips/Instruction/OpFunc/OpFunc.v"
+`include "../../Mips/Instruction/OpFunc/OpFuncs.v"
 
-module Pc_control
-	( `Control_Control_T(input) control
+module Mips_Pc_control
+	( `Mips_Control_Control_T(input) control
 	, input zeroflag
 	, input zeroreg
-	, `Pc_Action_T(output) action
+	, `Mips_Pc_Action_T(output) action
 	);
 
-`Pc_Action_T(reg) action$;
+`Mips_Pc_Action_T(reg) action$;
 assign action = action$;
 
 always @(*)
-	case(`Control_Control_PcAction(control))
-		`Pc_Action_None   : action$ = `Pc_Action_None;
-		`Pc_Action_Inc    : action$ = `Pc_Action_Inc;
-		`Pc_Action_Jump   : action$ = `Pc_Action_Jump;
-		`Pc_Action_Branch :
-			case(`Control_Control_OpFunc(control))
-				`Opcode_OpFunc_Beq:
+	case(`Mips_Control_Control_PcAction(control))
+		`Mips_Pc_Action_None   : action$ = `Mips_Pc_Action_None;
+		`Mips_Pc_Action_Inc    : action$ = `Mips_Pc_Action_Inc;
+		`Mips_Pc_Action_Jump   : action$ = `Mips_Pc_Action_Jump;
+		`Mips_Pc_Action_Branch :
+			case(`Mips_Control_Control_OpFunc(control))
+				`Mips_Instruction_OpFunc_OpFuncs_Beq:
 					if(zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bne:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bne:
 					if(!zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bgez:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bgez:
 					if(!zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bgezal:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bgezal:
 					if(!zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bltz:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bltz:
 					if(zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bltzal:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bltzal:
 					if(zeroflag)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Bgtz:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Bgtz:
 					if(!zeroflag && !zeroreg)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
-				`Opcode_OpFunc_Blez:
+						action$ = `Mips_Pc_Action_None;
+				`Mips_Instruction_OpFunc_OpFuncs_Blez:
 					if(zeroflag || zeroreg)
-						action$ = `Pc_Action_Branch;
+						action$ = `Mips_Pc_Action_Branch;
 					else
-						action$ = `Pc_Action_None;
+						action$ = `Mips_Pc_Action_None;
 				default:
-					action$ = `Pc_Action_None;
+					action$ = `Mips_Pc_Action_None;
 			endcase
 		default:
-			action$ = `Pc_Action_None;
+			action$ = `Mips_Pc_Action_None;
 	endcase
 
 endmodule

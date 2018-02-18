@@ -1,6 +1,0 @@
-`ifndef CONTROL_REGISTERWRITEADDRSOURCE_M
-`define CONTROL_REGISTERWRITEADDRSOURCE_M
-
-$(tv.makeEnum("Control_RegisterWriteAddrSource", "None Rt Rd".split(' ')))
-
-`endif

@@ -1,0 +1,6 @@
+`ifndef MIPS_CONTROL_SIGNAL_REGISTER1ADDRSOURCE_M
+`define MIPS_CONTROL_SIGNAL_REGISTER1ADDRSOURCE_M
+
+$(tv.makeEnum("Mips_Control_Signal_Register1AddrSource", "None Rs Rt".split(' ')))
+
+`endif

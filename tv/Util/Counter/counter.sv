@@ -1,9 +1,9 @@
-`include "../Util/Util_Control.v"
+`include "../../Data/Control.v"
 
-module Counter_counter_tb;
+module Util_Counter_counter_tb;
 
 logic [3:0] d, q;
-`Util_Control_T(logic) ctrl;
+`Data_Control_T(logic) ctrl;
 logic load, enable;
 
 Counter_counter #
@@ -16,8 +16,8 @@ Counter_counter #
 	, .enable (enable)
 	);
 
-initial `Util_Control_Clock(ctrl) = 0;
-always #1 `Util_Control_Clock(ctrl) = !`Util_Control_Clock(ctrl);
+initial `Data_Control_Clock(ctrl) = 0;
+always #1 `Data_Control_Clock(ctrl) = !`Data_Control_Clock(ctrl);
 initial d = 4'b0;
 always #2 d = d - 1;
 
@@ -25,10 +25,10 @@ initial begin
 	#0;
 	load = 0;
 	enable = 0;
-	`Util_Control_Reset(ctrl) = 1;
+	`Data_Control_Reset(ctrl) = 1;
 
 	#4;
-	`Util_Control_Reset(ctrl) = 0;
+	`Data_Control_Reset(ctrl) = 0;
 
 	#4;
 	enable = 1;
@@ -43,10 +43,10 @@ initial begin
 	enable = 1;
 
 	#4;
-	`Util_Control_Reset(ctrl) = 1;
+	`Data_Control_Reset(ctrl) = 1;
 
 	#4;
-	`Util_Control_Reset(ctrl) = 0;
+	`Data_Control_Reset(ctrl) = 0;
 	load = 0;
 	enable = 0;
 

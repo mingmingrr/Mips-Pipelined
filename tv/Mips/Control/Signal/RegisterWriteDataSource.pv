@@ -1,0 +1,7 @@
+`ifndef MIPS_CONTROL_SIGNAL_REGISTERWRITEDATSOURCE_M
+`define MIPS_CONTROL_SIGNAL_REGISTERWRITEDATSOURCE_M
+
+$(tv.makeEnum("Mips_Control_Signal_RegisterWriteDataSource", "Alu Memory".split(' ')))
+
+`endif
+

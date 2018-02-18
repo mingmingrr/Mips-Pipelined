@@ -5,18 +5,19 @@
 
 `include "../../Util/Math.v"
 `include "../../Mips/Alu/Func.v"
+`include "../../Mips/Alu/alu.v"
 `include "../../Data/Control.v"
 `include "../../Util/Delay/arr.v"
 
-module Alu_hilo #
+module Mips_Alu_hilo #
 	( parameter DATA_W  = 32
 	, parameter SHAMT_W = Util_Math_log2(DATA_W)
 	, parameter DELAY   = 0
 	)
-	( `Util_Control_T(input) ctrl
+	( `Data_Control_T(input) ctrl
 	, input  [DATA_W-1:0]    data1
 	, input  [DATA_W-1:0]    data2
-	, `Alu_Func_T(input)     func
+	, `Mips_Alu_Func_T(input)     func
 	, input  [SHAMT_W-1:0]   shamt
 	, output [DATA_W-1:0]    result
 	, output                 zero
@@ -27,7 +28,7 @@ module Alu_hilo #
 reg [DATA_W-1:0] reg_hi, reg_lo;
 wire [DATA_W-1:0] res_hi, res_lo;
 wire zero$;
-Alu_alu #
+Mips_Alu_alu #
 	( .DATA_W  (DATA_W)
 	, .SHAMT_W (SHAMT_W)
 	) a
@@ -45,23 +46,23 @@ Alu_alu #
 reg store_hi, store_lo;
 always @(*)
 	case(func)
-		`Alu_Func_Mulu : {store_hi, store_lo} = 2'b11;
-		`Alu_Func_Muls : {store_hi, store_lo} = 2'b11;
-		`Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
-		`Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
-		`Alu_Func_Mthi : {store_hi, store_lo} = 2'b10;
-		`Alu_Func_Mtlo : {store_hi, store_lo} = 2'b01;
+		`Mips_Alu_Func_Mulu : {store_hi, store_lo} = 2'b11;
+		`Mips_Alu_Func_Muls : {store_hi, store_lo} = 2'b11;
+		`Mips_Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
+		`Mips_Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
+		`Mips_Alu_Func_Mthi : {store_hi, store_lo} = 2'b10;
+		`Mips_Alu_Func_Mtlo : {store_hi, store_lo} = 2'b01;
 		default        : {store_hi, store_lo} = 2'b00;
 	endcase
 
-always @(posedge `Util_Control_Clock(ctrl))
-	if(`Util_Control_Reset(ctrl))
+always @(posedge `Data_Control_Clock(ctrl))
+	if(`Data_Control_Reset(ctrl))
 		reg_hi <= DATA_W'(0);
 	else if(store_hi)
 		reg_hi <= res_hi;
 
-always @(posedge `Util_Control_Clock(ctrl))
-	if(`Util_Control_Reset(ctrl))
+always @(posedge `Data_Control_Clock(ctrl))
+	if(`Data_Control_Reset(ctrl))
 		reg_lo <= DATA_W'(0);
 	else if(store_lo)
 		reg_lo <= res_lo;

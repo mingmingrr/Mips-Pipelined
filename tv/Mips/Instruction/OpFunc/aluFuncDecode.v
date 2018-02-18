@@ -1,79 +1,78 @@
-// vim: set ft=verilog:
-
-`ifndef OPCODE_ALUFUNCDECODE_I
-`define OPCODE_ALUFUNCDECODE_I
+`ifndef MIPS_INSTRUCTION_OPFUNC_ALUFUNCDECODE_I
+`define MIPS_INSTRUCTION_OPFUNC_ALUFUNCDECODE_I
 
 `include "../../../Mips/Alu/Func.v"
 `include "../../../Mips/Instruction/OpFunc/OpFunc.v"
+`include "../../../Mips/Instruction/OpFunc/OpFuncs.v"
 
-module Opcode_aluFuncDecode
-	( `Opcode_OpFunc_T(input) opFunc
-	, `Alu_Func_T(output) func
+module Mips_Instruction_OpFunc_aluFuncDecode
+	( `Mips_Instruction_OpFunc_OpFunc_T(input) opFunc
+	, `Mips_Alu_Func_T(output) func
 	);
 
-`Alu_Func_T(reg) func$;
+`Mips_Alu_Func_T(reg) func$;
 assign func = func$;
 
 always @ (*)
 	case(opFunc)
-		`Opcode_OpFunc_Add     : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Addi    : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Addiu   : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Addu    : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_And     : func$ = `Alu_Func_And;
-		`Opcode_OpFunc_Andi    : func$ = `Alu_Func_And;
-		`Opcode_OpFunc_Lui     : func$ = `Alu_Func_Sll;
-		`Opcode_OpFunc_Nor     : func$ = `Alu_Func_Nor;
-		`Opcode_OpFunc_Or      : func$ = `Alu_Func_Or;
-		`Opcode_OpFunc_Ori     : func$ = `Alu_Func_Or;
-		`Opcode_OpFunc_Slt     : func$ = `Alu_Func_Slts;
-		`Opcode_OpFunc_Slti    : func$ = `Alu_Func_Slts;
-		`Opcode_OpFunc_Sltiu   : func$ = `Alu_Func_Sltu;
-		`Opcode_OpFunc_Sltu    : func$ = `Alu_Func_Sltu;
-		`Opcode_OpFunc_Sub     : func$ = `Alu_Func_Sub;
-		`Opcode_OpFunc_Subu    : func$ = `Alu_Func_Sub;
-		`Opcode_OpFunc_Xor     : func$ = `Alu_Func_Xor;
-		`Opcode_OpFunc_Xori    : func$ = `Alu_Func_Xor;
-		`Opcode_OpFunc_Sll     : func$ = `Alu_Func_Sll;
-		`Opcode_OpFunc_Sllv    : func$ = `Alu_Func_Sll;
-		`Opcode_OpFunc_Sra     : func$ = `Alu_Func_Sra;
-		`Opcode_OpFunc_Srav    : func$ = `Alu_Func_Sra;
-		`Opcode_OpFunc_Srl     : func$ = `Alu_Func_Srl;
-		`Opcode_OpFunc_Srlv    : func$ = `Alu_Func_Srl;
-		`Opcode_OpFunc_Div     : func$ = `Alu_Func_Divs;
-		`Opcode_OpFunc_Divu    : func$ = `Alu_Func_Divu;
-		`Opcode_OpFunc_Mfhi    : func$ = `Alu_Func_Mfhi;
-		`Opcode_OpFunc_Mflo    : func$ = `Alu_Func_Mflo;
-		`Opcode_OpFunc_Mthi    : func$ = `Alu_Func_Mthi;
-		`Opcode_OpFunc_Mtlo    : func$ = `Alu_Func_Mtlo;
-		`Opcode_OpFunc_Mult    : func$ = `Alu_Func_Muls;
-		`Opcode_OpFunc_Multu   : func$ = `Alu_Func_Mulu;
-		`Opcode_OpFunc_Beq     : func$ = `Alu_Func_Sub;
-		`Opcode_OpFunc_Bgez    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Bgezal  : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Bgtz    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Blez    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Bltz    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Bltzal  : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Bne     : func$ = `Alu_Func_Sub;
-		`Opcode_OpFunc_Break   : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Syscall : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_J       : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Jal     : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Jalr    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Jr      : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Mfc0    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Mtc0    : func$ = `Alu_Func_None;
-		`Opcode_OpFunc_Lb      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Lbu     : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Lh      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Lhu     : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Lw      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Sb      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Sh      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Sw      : func$ = `Alu_Func_Add;
-		`Opcode_OpFunc_Nop     : func$ = `Alu_Func_None;
-		default                : func$ = `Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Add     : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Addi    : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Addiu   : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Addu    : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_And     : func$ = `Mips_Alu_Func_And;
+		`Mips_Instruction_OpFunc_OpFuncs_Andi    : func$ = `Mips_Alu_Func_And;
+		`Mips_Instruction_OpFunc_OpFuncs_Lui     : func$ = `Mips_Alu_Func_Sll;
+		`Mips_Instruction_OpFunc_OpFuncs_Nor     : func$ = `Mips_Alu_Func_Nor;
+		`Mips_Instruction_OpFunc_OpFuncs_Or      : func$ = `Mips_Alu_Func_Or;
+		`Mips_Instruction_OpFunc_OpFuncs_Ori     : func$ = `Mips_Alu_Func_Or;
+		`Mips_Instruction_OpFunc_OpFuncs_Slt     : func$ = `Mips_Alu_Func_Slts;
+		`Mips_Instruction_OpFunc_OpFuncs_Slti    : func$ = `Mips_Alu_Func_Slts;
+		`Mips_Instruction_OpFunc_OpFuncs_Sltiu   : func$ = `Mips_Alu_Func_Sltu;
+		`Mips_Instruction_OpFunc_OpFuncs_Sltu    : func$ = `Mips_Alu_Func_Sltu;
+		`Mips_Instruction_OpFunc_OpFuncs_Sub     : func$ = `Mips_Alu_Func_Sub;
+		`Mips_Instruction_OpFunc_OpFuncs_Subu    : func$ = `Mips_Alu_Func_Sub;
+		`Mips_Instruction_OpFunc_OpFuncs_Xor     : func$ = `Mips_Alu_Func_Xor;
+		`Mips_Instruction_OpFunc_OpFuncs_Xori    : func$ = `Mips_Alu_Func_Xor;
+		`Mips_Instruction_OpFunc_OpFuncs_Sll     : func$ = `Mips_Alu_Func_Sll;
+		`Mips_Instruction_OpFunc_OpFuncs_Sllv    : func$ = `Mips_Alu_Func_Sll;
+		`Mips_Instruction_OpFunc_OpFuncs_Sra     : func$ = `Mips_Alu_Func_Sra;
+		`Mips_Instruction_OpFunc_OpFuncs_Srav    : func$ = `Mips_Alu_Func_Sra;
+		`Mips_Instruction_OpFunc_OpFuncs_Srl     : func$ = `Mips_Alu_Func_Srl;
+		`Mips_Instruction_OpFunc_OpFuncs_Srlv    : func$ = `Mips_Alu_Func_Srl;
+		`Mips_Instruction_OpFunc_OpFuncs_Div     : func$ = `Mips_Alu_Func_Divs;
+		`Mips_Instruction_OpFunc_OpFuncs_Divu    : func$ = `Mips_Alu_Func_Divu;
+		`Mips_Instruction_OpFunc_OpFuncs_Mfhi    : func$ = `Mips_Alu_Func_Mfhi;
+		`Mips_Instruction_OpFunc_OpFuncs_Mflo    : func$ = `Mips_Alu_Func_Mflo;
+		`Mips_Instruction_OpFunc_OpFuncs_Mthi    : func$ = `Mips_Alu_Func_Mthi;
+		`Mips_Instruction_OpFunc_OpFuncs_Mtlo    : func$ = `Mips_Alu_Func_Mtlo;
+		`Mips_Instruction_OpFunc_OpFuncs_Mult    : func$ = `Mips_Alu_Func_Muls;
+		`Mips_Instruction_OpFunc_OpFuncs_Multu   : func$ = `Mips_Alu_Func_Mulu;
+		`Mips_Instruction_OpFunc_OpFuncs_Beq     : func$ = `Mips_Alu_Func_Sub;
+		`Mips_Instruction_OpFunc_OpFuncs_Bgez    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Bgezal  : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Bgtz    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Blez    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Bltz    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Bltzal  : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Bne     : func$ = `Mips_Alu_Func_Sub;
+		`Mips_Instruction_OpFunc_OpFuncs_Break   : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Syscall : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_J       : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Jal     : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Jalr    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Jr      : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Mfc0    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Mtc0    : func$ = `Mips_Alu_Func_None;
+		`Mips_Instruction_OpFunc_OpFuncs_Lb      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Lbu     : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Lh      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Lhu     : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Lw      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Sb      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Sh      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Sw      : func$ = `Mips_Alu_Func_Add;
+		`Mips_Instruction_OpFunc_OpFuncs_Nop     : func$ = `Mips_Alu_Func_None;
+		default                                 : func$ = `Mips_Alu_Func_None;
 	endcase
 
 endmodule

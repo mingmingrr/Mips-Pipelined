@@ -1,9 +1,9 @@
 // vim: set ft=verilog:
 
-`ifndef SEVENSEG_SEVENSEG_M
-`define SEVENSEG_SEVENSEG_M
+`ifndef UTIL_SEVENSEG_SEVENSEG_M
+`define UTIL_SEVENSEG_SEVENSEG_M
 
-module SevenSeg_SevenSeg;
+module Util_SevenSeg_SevenSeg;
 
 function [6:0] decodeHighTrue([3:0] in);
 	case(in)

@@ -2,14 +2,14 @@
 `include "../../Data/Arith/SignedUnsigned.v"
 `include "../../Data/Control.v"
 
-module Arith_extend_tb;
+module Data_Arith_extend_tb;
 
 logic [3:0] in  [1:0];
 logic [7:0] out [1:0];
-`Arith_SignedUnsigned_T(logic) sign;
-`Util_Control_T(logic) ctrl;
+`Data_Arith_SignedUnsigned_T(logic) sign;
+`Data_Control_T(logic) ctrl;
 
-Arith_extend #
+Data_Arith_extend #
 	( .IN_W  (4)
 	, .OUT_W (8)
 	, .DEPTH (2)
@@ -20,19 +20,19 @@ Arith_extend #
 	, .ctrl (ctrl)
 	);
 
-assign sign = `Arith_SignedUnsigned_Signed;
+assign sign = `Data_Arith_SignedUnsigned_Signed;
 
-initial `Util_Control_Clock(ctrl) = 0;
-always #1 `Util_Control_Clock(ctrl) = !`Util_Control_Clock(ctrl);
+initial `Data_Control_Clock(ctrl) = 0;
+always #1 `Data_Control_Clock(ctrl) = !`Data_Control_Clock(ctrl);
 
 initial begin
 	#0;
-	`Util_Control_Reset(ctrl) = 1;
+	`Data_Control_Reset(ctrl) = 1;
 	in[0] = 4'h0;
 	in[1] = 4'h0;
 
 	#2;
-	`Util_Control_Reset(ctrl) = 0;
+	`Data_Control_Reset(ctrl) = 0;
 
 	#2;
 	in[0] = 4'ha;

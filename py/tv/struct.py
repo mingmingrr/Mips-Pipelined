@@ -3,15 +3,12 @@
 import sys
 
 def makeStruct(struct, fields):
-	output, fields, last = [], list(fields), None
-	for name, width in fields:
+	output, fields, index = [], list(fields), 0
+	for field in fields:
+		name, width, index = (field + (index,))[:3]
 		output.append(f'`define {struct}_{name}_W {width}')
-		if last is None:
-			output.append(f'`define {struct}_{name}_I 0')
-		else:
-			output.append(f'`define {struct}_{name}_I \\\n\t' 
-				+ f'`{struct}_{last}_W + \\\n\t`{struct}_{last}_I')
-		last = name
+		output.append(f'`define {struct}_{name}_I \\\n\t{index}')
+		index = f'`{struct}_{name}_W + \\\n\t`{struct}_{name}_I'
 		if width in {'1', 1}:
 			output.append(f'`define {struct}_{name}_T(T) T')
 			output.append(f'`define {struct}_{name}(x) \\\n\tx [ `{struct}_{name}_I ]')

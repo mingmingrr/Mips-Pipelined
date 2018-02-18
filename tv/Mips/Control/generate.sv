@@ -1,16 +1,16 @@
-`include "../Control/Control_generate.v"
+`include "../Mips/Control/generate.v"
 
-module Control_generate_tb;
+module Mips_Control_generate_tb;
 
-`Opcode_OpFunc_T        ( reg  ) opFunc;
-`Control_Control_T      ( wire ) control;
+`Mips_Instruction_OpFunc_OpFunc_T ( reg  ) opFunc;
+`Mips_Control_Control_T           ( wire ) control;
 
-Control_generate DUT
+Mips_Control_generate DUT
 	( .opFunc   (opFunc)
 	, .control  (control)
 	);
 
-initial opFunc = `Opcode_OpFunc_W'(0);
+initial opFunc = `Mips_Instruction_OpFunc_OpFunc_W'(0);
 always #1 opFunc = opFunc + 1;
 
 endmodule

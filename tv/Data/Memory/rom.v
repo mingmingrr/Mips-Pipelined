@@ -1,5 +1,5 @@
-`ifndef MEMORY_RAM_I
-`define MEMORY_RAM_I
+`ifndef DATA_MEMORY_ROM_I
+`define DATA_MEMORY_ROM_I
 
 `include "../../Altera/Mf.v"
 `include "../../Util/Math.v"
@@ -9,14 +9,14 @@
 `timescale 1 ps / 1 ps
 // synopsys translate_on
 
-module Memory_rom #
+module Data_Memory_rom #
 	( parameter FILE = "../../asm/test0.mif"
 	, parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	, parameter DATA_W = 32
 	)
 	( input [ADDR_W-1:0]  addr
-	, `Util_Control_T(input) ctrl
+	, `Data_Control_T(input) ctrl
 	, output [DATA_W-1:0] out
 	);
 
@@ -36,7 +36,7 @@ assign out = sub_wire0;
 
 altsyncram altsyncram_component
 	( .address_a      (addr)
-	, .clock0         (`Util_Control_Clock(ctrl))
+	, .clock0         (`Data_Control_Clock(ctrl))
 	, .q_a            (sub_wire0)
 	, .aclr0          (1'b0)
 	, .aclr1          (1'b0)

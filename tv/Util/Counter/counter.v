@@ -1,10 +1,10 @@
 // vim: set ft=verilog:
 
-`ifndef COUNTER_COUNTER_I
-`define COUNTER_COUNTER_I
+`ifndef UTIL_COUNTER_COUNTER_I
+`define UTIL_COUNTER_COUNTER_I
 
-`include "../Util/Util_Math.v"
-`include "../Util/Util_Control.v"
+`include "../../Util/Util_Math.v"
+`include "../../Data/Util_Control.v"
 
 // wow verilog, much industry standard
 module Counter_counter #
@@ -14,7 +14,7 @@ module Counter_counter #
 	)
 	( input  [WIDTH-1:0] d
 	, output [WIDTH-1:0] q
-	, `Util_Control_T(input) ctrl
+	, `Data_Control_T(input) ctrl
 	, input load
 	, input enable
 	);
@@ -25,8 +25,8 @@ reg  [WIDTH-1:0] q$;
 wire [WIDTH-1:0] n;
 assign n = q$ + 1;
 
-always @(posedge `Util_Control_Clock(ctrl))
-	if(`Util_Control_Reset(ctrl))
+always @(posedge `Data_Control_Clock(ctrl))
+	if(`Data_Control_Reset(ctrl))
 		q$ <= 0;
 	else if(load)
 		q$ <= d;

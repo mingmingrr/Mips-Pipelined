@@ -6,27 +6,36 @@
 `include "../Data/Memory/rom.v"
 `include "../Mips/Alu/hilo.v"
 `include "../Mips/Alu/Func.v"
-`include "../Mips/Instruction/Parts.v"
+`include "../Mips/Alu/hilo.v"
+`include "../Mips/Pc/pc.v"
+`include "../Mips/Pc/control.v"
+`include "../Mips/Instruction/Format/IFormat.v"
+`include "../Mips/Instruction/Format/JFormat.v"
+`include "../Mips/Instruction/Format/RFormat.v"
 `include "../Mips/Instruction/OpFunc/OpFunc.v"
+`include "../Mips/Instruction/OpFunc/aluFuncDecode.v"
+`include "../Mips/Instruction/OpFunc/instToOpFunc.v"
 `include "../Mips/Control/Control.v"
+`include "../Mips/Control/generate.v"
+`include "../Mips/Register/registers.v"
 
 module Mips_mips #
 	( parameter FILE = "../../asm/test0.mif"
 	, parameter ADDR_L = 64
 	)
-	( `Util_Control_T(input) ctrl
+	( `Data_Control_T(input) ctrl
 	);
 
-`Opcode_OpFunc_T(wire) opFunc;
-`Alu_Func_T(wire) alu_func;
-`Control_Control_T(wire) control;
+`Mips_Instruction_OpFunc_OpFunc_T(wire) opFunc;
+`Mips_Alu_Func_T(wire) alu_func;
+`Mips_Control_Control_T(wire) control;
 wire [31:0] instruction;
 
 wire [5:0] ram_addr;
 wire [31:0] ram_data;
 wire ram_wren;
 wire [31:0] ram_out;
-Memory_ram #
+Data_Memory_ram #
 	( .FILE    (FILE)
 	, .ADDR_L  (ADDR_L)
 	, .DATA_W  (32)
@@ -41,7 +50,7 @@ Memory_ram #
 
 wire [5:0] rom_addr;
 wire [31:0] rom_out;
-Memory_rom #
+Data_Memory_rom #
 	( .FILE    (FILE)
 	, .ADDR_L  (ADDR_L)
 	, .DATA_W  (32)
@@ -65,18 +74,18 @@ assign reg_wr_addr = reg_wr_addr$;
 wire [31:0] reg_wr_data  ;
 reg [31:0] reg_wr_data$ ;
 assign reg_wr_data = reg_wr_data$;
-Register_registers #
+Mips_Register_registers #
 	( .DATA_W (32)
 	, .ADDR_L (32)
 	) GREG
-	( .ctrl     (ctrl)
-	, .rd1_addr (reg_rd1_addr)
-	, .rd1_data (reg_rd1_data)
-	, .rd2_addr (reg_rd2_addr)
-	, .rd2_data (reg_rd2_data)
-	, .wr_addr  (reg_wr_addr )
-	, .wr_data  (reg_wr_data )
-	, .wr_en    (`Control_Control_RegisterWriteEnable(control))
+	( .ctrl    (ctrl)
+	, .rd1Addr (reg_rd1_addr)
+	, .rd1Data (reg_rd1_data)
+	, .rd2Addr (reg_rd2_addr)
+	, .rd2Data (reg_rd2_data)
+	,  .wrAddr (reg_wr_addr )
+	,  .wrData (reg_wr_data )
+	,  .wrEnable (`Mips_Control_Control_RegisterWriteEnable(control))
 	);
 
 wire [31:0] alu_data1;
@@ -88,7 +97,7 @@ reg [4:0]  alu_shamt$;
 assign alu_shamt = alu_shamt$;
 wire [31:0] alu_result;
 wire        alu_zero;
-Alu_hilo #
+Mips_Alu_hilo #
 	( .DATA_W (32)
 	) GALU
 	( .ctrl (ctrl)
@@ -100,24 +109,24 @@ Alu_hilo #
 	, .zero   (alu_zero)
 	);
 
-Opcode_aluFuncDecode GALUDEC
+Mips_Instruction_OpFunc_aluFuncDecode GALUDEC
 	( .opFunc (opFunc)
 	, .func   (alu_func)
 	);
 
-Control_generate GCTRLGEN
+Mips_Control_generate GCTRLGEN
 	( .opFunc   (opFunc)
 	, .control  (control)
 	);
 
-Opcode_instToOpFunc GITOOF
-	( .op     (`Instruction_Parts_Op(instruction))
-	, .func   (`Instruction_Parts_Func(instruction))
-	, .opfunc (opFunc)
+Mips_Instruction_OpFunc_instToOpFunc GITOOF
+	( .op     (`Mips_Instruction_Format_RFormat_Op(instruction))
+	, .func   (`Mips_Instruction_Format_RFormat_Func(instruction))
+	, .opFunc (opFunc)
 	);
 
-`Pc_Action_T(wire) pc_action;
-Pc_control GPCCTRL
+`Mips_Pc_Action_T(wire) pc_action;
+Mips_Pc_control GPCCTRL
 	( .control  (control)
 	, .zeroflag (alu_zero)
 	, .zeroreg  (~(|reg_rd2_data))
@@ -125,13 +134,13 @@ Pc_control GPCCTRL
 	);
 
 wire [31:0] pc_addr;
-Pc_pc #
+Mips_Pc_pc #
 	( .ADDR_W (32)
 	) GPC
 	( .ctrl (ctrl)
 	, .act  (pc_action)
-	, .offset (`Instruction_Parts_Imm(instruction))
-	, .jump   (`Instruction_Parts_Target(instruction))
+	, .offset (`Mips_Instruction_Format_IFormat_Imm(instruction))
+	, .jump   (`Mips_Instruction_Format_JFormat_Target(instruction))
 	, .addr (pc_addr)
 	);
 
@@ -141,73 +150,73 @@ assign instruction = rom_out;
 assign alu_data1 = reg_rd1_data;
 
 wire [4:0] rs, rt, rd;
-assign rs = `Instruction_Parts_Rs(instruction);
-assign rt = `Instruction_Parts_Rt(instruction);
-assign rs = `Instruction_Parts_Rd(instruction);
+assign rs = `Mips_Instruction_Format_RFormat_Rs(instruction);
+assign rt = `Mips_Instruction_Format_RFormat_Rt(instruction);
+assign rs = `Mips_Instruction_Format_RFormat_Rd(instruction);
 
 wire [15:0] immediate;
-assign immediate = `Instruction_Parts_Imm(instruction);
+assign immediate = `Mips_Instruction_Format_IFormat_Imm(instruction);
 
 always @(*)
-	case(`Control_Control_RegisterWriteAddrSource(control))
-		`Control_RegisterWriteAddrSource_Rt:
-			reg_wr_addr$ = `Instruction_Parts_Rt(instruction);
-		`Control_RegisterWriteAddrSource_Rd:
-			reg_wr_addr$ = `Instruction_Parts_Rd(instruction);
-		`Control_RegisterWriteAddrSource_None:
+	case(`Mips_Control_Control_RegisterWriteAddrSource(control))
+		`Mips_Control_Signal_RegisterWriteAddrSource_Rt:
+			reg_wr_addr$ = `Mips_Instruction_Format_RFormat_Rt(instruction);
+		`Mips_Control_Signal_RegisterWriteAddrSource_Rd:
+			reg_wr_addr$ = `Mips_Instruction_Format_RFormat_Rd(instruction);
+		`Mips_Control_Signal_RegisterWriteAddrSource_None:
 			reg_wr_addr$ = 5'b0;
 		default:
 			reg_wr_addr$ = 5'b0;
 	endcase
 always @(*)
-	case(`Control_Control_RegisterWriteDataSource(control))
-		`Control_RegisterWriteDataSource_Memory:
+	case(`Mips_Control_Control_RegisterWriteDataSource(control))
+		`Mips_Control_Signal_RegisterWriteDataSource_Memory:
 			reg_wr_data$ = ram_out;
-		`Control_RegisterWriteDataSource_Alu:
+		`Mips_Control_Signal_RegisterWriteDataSource_Alu:
 			reg_wr_data$ = alu_result;
 		default:
 			reg_wr_data$ = alu_result;
 	endcase
 always @(*)
-	case(`Control_Control_Register1AddrSource(control))
-		`Control_Register1AddrSource_Rs:
-			reg_rd1_addr$ = `Instruction_Parts_Rs(instruction);
-		`Control_Register1AddrSource_Rt:
-			reg_rd1_addr$ = `Instruction_Parts_Rt(instruction);
-		`Control_Register1AddrSource_None:
+	case(`Mips_Control_Control_Register1AddrSource(control))
+		`Mips_Control_Signal_Register1AddrSource_Rs:
+			reg_rd1_addr$ = `Mips_Instruction_Format_RFormat_Rs(instruction);
+		`Mips_Control_Signal_Register1AddrSource_Rt:
+			reg_rd1_addr$ = `Mips_Instruction_Format_RFormat_Rt(instruction);
+		`Mips_Control_Signal_Register1AddrSource_None:
 			reg_rd1_addr$ = 5'b0;
 		default:
 			reg_rd1_addr$ = 5'b0;
 	endcase
 always @(*)
-	case(`Control_Control_Register2AddrSource(control))
-		`Control_Register2AddrSource_Rt:
-			reg_rd2_addr$ = `Instruction_Parts_Rt(instruction);
-		`Control_Register2AddrSource_None:
+	case(`Mips_Control_Control_Register2AddrSource(control))
+		`Mips_Control_Signal_Register2AddrSource_Rt:
+			reg_rd2_addr$ = `Mips_Instruction_Format_RFormat_Rt(instruction);
+		`Mips_Control_Signal_Register2AddrSource_None:
 			reg_rd2_addr$ = 5'b0;
 		default:
 			reg_rd2_addr$ = 5'b0;
 	endcase
 always @(*)
-	case(`Control_Control_ShamtSource(control))
-		`Control_ShamtSource_Shamt:
-			alu_shamt$ = `Instruction_Parts_Shamt(instruction);
-		`Control_ShamtSource_Const2:
+	case(`Mips_Control_Control_ShamtSource(control))
+		`Mips_Control_Signal_ShamtSource_Shamt:
+			alu_shamt$ = `Mips_Instruction_Format_RFormat_Shamt(instruction);
+		`Mips_Control_Signal_ShamtSource_Const2:
 			alu_shamt$ = 5'h2;
-		`Control_ShamtSource_Const16:
+		`Mips_Control_Signal_ShamtSource_Const16:
 			alu_shamt$ = 5'h10;
-		`Control_ShamtSource_None:
+		`Mips_Control_Signal_ShamtSource_None:
 			alu_shamt$ = 5'h0;
 		default:
 			alu_shamt$ = 5'h0;
 	endcase
 always @(*)
-	case(`Control_Control_AluData2Source(control))
-		`Control_AluData2Source_Register:
+	case(`Mips_Control_Control_AluData2Source(control))
+		`Mips_Control_Signal_AluData2Source_Register:
 			alu_data2$ = reg_rd2_data;
-		`Control_AluData2Source_ImmediateSigned:
+		`Mips_Control_Signal_AluData2Source_ImmediateSigned:
 			alu_data2$ = { {16{immediate[15]}}, immediate };
-		`Control_AluData2Source_ImmediateUnsigned:
+		`Mips_Control_Signal_AluData2Source_ImmediateUnsigned:
 			alu_data2$ = { 16'h0, immediate };
 		default:
 			alu_data2$ = reg_rd2_data;
