@@ -1,9 +1,9 @@
 `ifndef MIPS_INSTRUCTION_CATEGORIZE_M
 `define MIPS_INSTRUCTION_CATEGORIZE_M
 
-`include "../../Mips/Instruction/Category.v"
-`include "../../Mips/Instruction/OpFunc/OpFunc.v"
-`include "../../Mips/Instruction/OpFunc/Source.v"
+`include "Mips/Instruction/Category.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/Source.v"
 
 module Mips_Instruction_categorize
 	( `Mips_Instruction_OpFunc_OpFunc_T(input) opFunc

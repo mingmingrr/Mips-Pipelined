@@ -1,0 +1,10 @@
+`ifndef MIPS_CONTROL_SIGNAL_MEMORY_CONTROL_M
+`define MIPS_CONTROL_SIGNAL_MEMORY_CONTROL_M
+
+`include "Mips/Control/Signal/Memory/Signal/WriteEnable.v"
+
+$(tv.makeStruct("Mips_Control_Signal_Memory_Control", [
+("WriteEnable", "`Mips_Control_Signal_Memory_Signal_WriteEnable_W"),
+]))
+
+`endif

@@ -1,5 +1,3 @@
-// vim: set ft=verilog:
-
 `ifndef UTIL_MATH_M
 `define UTIL_MATH_M
 

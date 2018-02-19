@@ -1,5 +1,5 @@
-`include "../Mips/mips.v"
-`include "../Data/Control.v"
+`include "Mips/mips.v"
+`include "Data/Control.v"
 
 module Mips_mips_tb;
 

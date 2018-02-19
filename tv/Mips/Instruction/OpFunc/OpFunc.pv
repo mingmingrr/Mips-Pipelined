@@ -1,9 +1,7 @@
-// vim: set ft=verilog:
-
 `ifndef MIPS_INSTRUCTION_OPFUNC_OPFUNC_M
 `define MIPS_INSTRUCTION_OPFUNC_OPFUNC_M
 
-`include "../../../Mips/Instruction/OpFunc/Source.v"
+`include "Mips/Instruction/OpFunc/Source.v"
 
 $(tv.makeStruct("Mips_Instruction_OpFunc_OpFunc", [
 ("Source", 1),

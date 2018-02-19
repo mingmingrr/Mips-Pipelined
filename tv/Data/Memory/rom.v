@@ -1,16 +1,16 @@
 `ifndef DATA_MEMORY_ROM_I
 `define DATA_MEMORY_ROM_I
 
-`include "../../Altera/Mf.v"
-`include "../../Util/Math.v"
-`include "../../Data/Control.v"
+`include "Altera/Mf.v"
+`include "Util/Math.v"
+`include "Data/Control.v"
 
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
 
 module Data_Memory_rom #
-	( parameter FILE = "../../asm/test0.mif"
+	( parameter FILE = "asm/test0.mif"
 	, parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	, parameter DATA_W = 32

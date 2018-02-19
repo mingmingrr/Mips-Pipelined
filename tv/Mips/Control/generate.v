@@ -1,11 +1,11 @@
 `ifndef MIPS_CONTROL_GENERATE_I
 `define MIPS_CONTROL_GENERATE_I
 
-`include "../../Mips/Instruction/OpFunc/Source.v"
-`include "../../Mips/Instruction/OpFunc/OpFunc.v"
-`include "../../Mips/Instruction/Category.v"
-`include "../../Mips/Instruction/categorize.v"
-`include "../../Mips/Control/Control.v"
+`include "Mips/Control/Control.v"
+`include "Mips/Instruction/OpFunc/Source.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/Category.v"
+`include "Mips/Instruction/categorize.v"
 
 module Mips_Control_generate
 	( `Mips_Instruction_OpFunc_OpFunc_T(input) opFunc
@@ -32,8 +32,7 @@ Instruction_categorize GCAT
 assign memoryWriteEnable = `Mips_Instruction_Category_Store(category);
 
 always @(*)
-	if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc)
-			== `Mips_Instruction_OpFunc_Source_Func)
+	if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc) == `Mips_Instruction_OpFunc_Source_Func)
 		registerWriteAddrSource = `Mips_Control_Signal_RegisterWriteAddrSource_Rd;
 	else
 		registerWriteAddrSource = `Mips_Control_Signal_RegisterWriteAddrSource_Rt;

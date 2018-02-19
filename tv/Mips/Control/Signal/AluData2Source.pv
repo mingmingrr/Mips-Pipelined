@@ -1,8 +1,0 @@
-`ifndef MIPS_CONTROL_SIGNAL_ALUDATA2SOURCE_M
-`define MIPS_CONTROL_SIGNAL_ALUDATA2SOURCE_M
-
-$(tv.makeEnum("Mips_Control_Signal_AluData2Source",
-	"Register ImmediateSigned ImmediateUnsigned".split(' ')))
-
-`endif
-

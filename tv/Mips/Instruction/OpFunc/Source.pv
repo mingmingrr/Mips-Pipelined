@@ -1,7 +1,8 @@
 `ifndef MIPS_INSTRUCTION_OPFUNC_SOURCE_M
 `define MIPS_INSTRUCTION_OPFUNC_SOURCE_M
 
-$(tv.makeEnum("Mips_Instruction_OpFunc_Source", "Op Func".split(' ')))
+$(tv.makeEnum("Mips_Instruction_OpFunc_Source",
+	"Op Func".split(' ')))
 
 `endif
 

@@ -1,4 +1,4 @@
-`include "../../Data/Control.v"
+`include "Data/Control.v"
 
 module Util_Counter_counter_tb;
 

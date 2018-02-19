@@ -13,4 +13,7 @@ while True:
 	if 'MODIFY' not in line: continue
 	time.sleep(0.5)
 	sys.stdin.flush()
-	subprocess.run(['make', '--silent'])
+	try:
+		subprocess.run(['make', '--silent'], check=True)
+	except subprocess.CalledProcessError:
+		subprocess.run(['notify-send', '-a', 'make', '"make failed"'])

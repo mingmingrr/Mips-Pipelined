@@ -1,4 +1,5 @@
-`include "../Mips/Control/generate.v"
+`include "Mips/Control/generate.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
 
 module Mips_Control_generate_tb;
 

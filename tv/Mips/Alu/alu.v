@@ -3,8 +3,8 @@
 `ifndef MIPS_ALU_ALU_I
 `define MIPS_ALU_ALU_I
 
-`include "../../Util/Math.v"
-`include "../../Mips/Alu/Func.v"
+`include "Util/Math.v"
+`include "Mips/Alu/Func.v"
 
 module Mips_Alu_alu #
 	( parameter DATA_W  = 32

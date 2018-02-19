@@ -1,0 +1,8 @@
+`ifndef MIPS_CONTROL_SIGNAL_ALU_SIGNAL_DATA2SOURCE_M
+`define MIPS_CONTROL_SIGNAL_ALU_SIGNAL_DATA2SOURCE_M
+
+$(tv.makeEnum("Mips_Control_Signal_Alu_Signal_Data2Source",
+	"Register Immediate".split(' ')))
+
+`endif
+

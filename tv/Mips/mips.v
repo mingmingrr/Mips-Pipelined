@@ -1,26 +1,26 @@
 `ifndef MIPS_MIPS_I
 `define MIPS_MIPS_I
 
-`include "../Data/Control.v"
-`include "../Data/Memory/ram.v"
-`include "../Data/Memory/rom.v"
-`include "../Mips/Alu/hilo.v"
-`include "../Mips/Alu/Func.v"
-`include "../Mips/Alu/hilo.v"
-`include "../Mips/Pc/pc.v"
-`include "../Mips/Pc/control.v"
-`include "../Mips/Instruction/Format/IFormat.v"
-`include "../Mips/Instruction/Format/JFormat.v"
-`include "../Mips/Instruction/Format/RFormat.v"
-`include "../Mips/Instruction/OpFunc/OpFunc.v"
-`include "../Mips/Instruction/OpFunc/aluFuncDecode.v"
-`include "../Mips/Instruction/OpFunc/instToOpFunc.v"
-`include "../Mips/Control/Control.v"
-`include "../Mips/Control/generate.v"
-`include "../Mips/Register/registers.v"
+`include "Data/Control.v"
+`include "Data/Memory/ram.v"
+`include "Data/Memory/rom.v"
+`include "Mips/Alu/hilo.v"
+`include "Mips/Alu/Func.v"
+`include "Mips/Alu/hilo.v"
+`include "Mips/Pc/pc.v"
+`include "Mips/Pc/control.v"
+`include "Mips/Instruction/Format/IFormat.v"
+`include "Mips/Instruction/Format/JFormat.v"
+`include "Mips/Instruction/Format/RFormat.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/aluFuncDecode.v"
+`include "Mips/Instruction/OpFunc/instToOpFunc.v"
+`include "Mips/Control/Control.v"
+`include "Mips/Control/generate.v"
+`include "Mips/Register/registers.v"
 
 module Mips_mips #
-	( parameter FILE = "../../asm/test0.mif"
+	( parameter FILE = "asm/test0.mif"
 	, parameter ADDR_L = 64
 	)
 	( `Data_Control_T(input) ctrl
@@ -146,13 +146,14 @@ Mips_Pc_pc #
 
 assign rom_addr = pc_addr[7:2];
 assign ram_addr = alu_result[7:2];
+assign ram_data = reg_rd2_data;
 assign instruction = rom_out;
 assign alu_data1 = reg_rd1_data;
 
 wire [4:0] rs, rt, rd;
 assign rs = `Mips_Instruction_Format_RFormat_Rs(instruction);
 assign rt = `Mips_Instruction_Format_RFormat_Rt(instruction);
-assign rs = `Mips_Instruction_Format_RFormat_Rd(instruction);
+assign rd = `Mips_Instruction_Format_RFormat_Rd(instruction);
 
 wire [15:0] immediate;
 assign immediate = `Mips_Instruction_Format_IFormat_Imm(instruction);

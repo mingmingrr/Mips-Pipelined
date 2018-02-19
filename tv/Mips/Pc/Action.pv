@@ -1,7 +1,0 @@
-`ifndef MIPS_PC_ACTION_M
-`define MIPS_PC_ACTION_M
-
-$(tv.makeEnum("Mips_Pc_Action", "None Inc Branch Jump".split(' ')))
-
-`endif
-

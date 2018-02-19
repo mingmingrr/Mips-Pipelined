@@ -1,8 +1,8 @@
 `ifndef REGISTER_REGISTERS_I
 `define REGISTER_REGISTERS_I
 
-`include "../../Util/Math.v"
-`include "../../Data/Control.v"
+`include "Util/Math.v"
+`include "Data/Control.v"
 
 module Mips_Register_registers #
 	( parameter DATA_W = 32
@@ -25,16 +25,18 @@ module Mips_Register_registers #
 reg [DATA_W-1:0] regs [0:ADDR_L-1];
 
 assign rd1Data
-	= rd1Addr == wrAddr
-	? wrData
-	: regs[rd1Addr]
-	;
+	= regs[rd1Addr];
+	// = rd1Addr == wrAddr
+	// ? wrData
+	// : regs[rd1Addr]
+	// ;
 
 assign rd2Data
-	= rd2Addr == wrAddr
-	? wrData
-	: regs[rd2Addr]
-	;
+	= regs[rd2Addr];
+	// = rd2Addr == wrAddr
+	// ? wrData
+	// : regs[rd2Addr]
+	// ;
 
 always @(posedge `Data_Control_Clock(ctrl))
 	if(`Data_Control_Reset(ctrl)) begin : wtf

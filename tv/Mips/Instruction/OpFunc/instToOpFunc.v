@@ -1,9 +1,9 @@
-`ifndef OPCODE_INSTTOOPFUNC_I
-`define OPCODE_INSTTOOPFUNC_I
+`ifndef MIPS_INSTRUCTION_OPFUNC_INSTTOOPFUNC_I
+`define MIPS_INSTRUCTION_OPFUNC_INSTTOOPFUNC_I
 
-`include "../../../Mips/Instruction/Format/RFormat.v"
-`include "../../../Mips/Instruction/OpFunc/OpFunc.v"
-`include "../../../Mips/Instruction/OpFunc/Source.v"
+`include "Mips/Instruction/Format/RFormat.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/Source.v"
 
 module Mips_Instruction_OpFunc_instToOpFunc
 	( `Mips_Instruction_Format_RFormat_Op_T(input)   op
@@ -13,8 +13,10 @@ module Mips_Instruction_OpFunc_instToOpFunc
 
 assign opFunc
 	= (|op)
-	? {`Mips_Instruction_OpFunc_Source_Op, op}
-	: {`Mips_Instruction_OpFunc_Source_Func, func}
+	? `Mips_Instruction_OpFunc_OpFunc_Init
+		( `Mips_Instruction_OpFunc_Source_Op   , op   )
+	: `Mips_Instruction_OpFunc_OpFunc_Init
+		( `Mips_Instruction_OpFunc_Source_Func , func )
 	;
 
 endmodule

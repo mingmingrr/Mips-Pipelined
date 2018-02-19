@@ -1,0 +1,9 @@
+`ifndef MIPS_CONTROL_SIGNAL_IMMEDIATE_SIGNAL_SHIFT_M
+`define MIPS_CONTROL_SIGNAL_IMMEDIATE_SIGNAL_SHIFT_M
+
+$(tv.makeEnum("Mips_Control_Signal_Immediate_Signal_Shift",
+	"None Left2 Left16".split(' ')))
+
+`endif
+
+

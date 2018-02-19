@@ -3,9 +3,9 @@
 `ifndef DATA_ARITH_EXTEND_I
 `define DATA_ARITH_EXTEND_I
 
-`include "../../Data/Arith/SignedUnsigned.v"
-`include "../../Data/Array/Pack.v"
-`include "../../Data/Control.v"
+`include "Data/Arith/SignedUnsigned.v"
+`include "Data/Array/Pack.v"
+`include "Data/Control.v"
 
 module Data_Arith_extend #
 	( parameter IN_W  = 16

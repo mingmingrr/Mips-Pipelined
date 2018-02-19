@@ -3,11 +3,11 @@
 `ifndef ALU_HILO_I
 `define ALU_HILO_I
 
-`include "../../Util/Math.v"
-`include "../../Mips/Alu/Func.v"
-`include "../../Mips/Alu/alu.v"
-`include "../../Data/Control.v"
-`include "../../Util/Delay/arr.v"
+`include "Util/Math.v"
+`include "Mips/Alu/Func.v"
+`include "Mips/Alu/alu.v"
+`include "Data/Control.v"
+`include "Util/Delay/arr.v"
 
 module Mips_Alu_hilo #
 	( parameter DATA_W  = 32

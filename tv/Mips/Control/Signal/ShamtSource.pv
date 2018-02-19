@@ -1,8 +1,0 @@
-`ifndef MIPS_CONTROL_SIGNAL_SHAMTSOURCE_M
-`define MIPS_CONTROL_SIGNAL_SHAMTSOURCE_M
-
-$(tv.makeEnum("Mips_Control_Signal_ShamtSource",
-	"None Shamt Const2 Const16".split(' ')))
-
-`endif
-

@@ -1,0 +1,9 @@
+`ifndef MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_WRITEENABLE_M
+`define MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_WRITEENABLE_M
+
+$(tv.makeEnum("Mips_Control_Signal_Memory_Signal_WriteEnable",
+	map(reversed, enumerate("Disable Enable".split(' ')))))
+
+`endif
+
+

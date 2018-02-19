@@ -1,11 +1,7 @@
-#! /usr/bin/env python3
-
-import sys
-
 def makeStruct(struct, fields):
 	output, fields, index = [], list(fields), 0
 	for field in fields:
-		name, width, index = (field + (index,))[:3]
+		name, width, index = (tuple(field) + (index,))[:3]
 		output.append(f'`define {struct}_{name}_W {width}')
 		output.append(f'`define {struct}_{name}_I \\\n\t{index}')
 		index = f'`{struct}_{name}_W + \\\n\t`{struct}_{name}_I'
@@ -23,15 +19,8 @@ def makeStruct(struct, fields):
 	output.append(f'`define {struct}_T(T) T [`{struct}_W-1:0]')
 	output.append(f'`define {struct}_Init(' + ', '.join(i[0] for i in fields) + ') { \\\n\t'
 		+ ', \\\n\t'.join(f'`{struct}_{i[0]}_W\'({i[0]})' for i in fields)
-		+ ' \\')
-	output.append('\t}')
+		+ ' \\\n\t}')
 	output.append(f'`define {struct}_Init_Defaults \\\n\t`{struct}_Init('
 		+ ', '.join(i[0][0].lower() + i[0][1:] for i in fields) + ')')
 	return '\n'.join(output)
 
-if __name__ == '__main__':
-	struct, *fields = sys.stdin.readlines()
-	print(makeStruct(
-		struct.strip(),
-		(i.strip().split(' ') for i in fields)
-	))

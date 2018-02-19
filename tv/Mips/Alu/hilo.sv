@@ -35,15 +35,15 @@
 * CANT EVEN USE PACKAGES
 * BECAUSE VERILOG DOESNT HAVE EM
 */
-`include "../../Mips/Alu/Func.v"
-`include "../../Data/Control.v"
+`include "Mips/Alu/Func.v"
+`include "Data/Control.v"
 /* SYSTEMVERILOG
 * GUD FOR TESTBENCH
 * DA KOMRADE
 * CANT EVEN TEST A MODULE
 * WITHOUT NEEDING AN INCLUDE
 */
-`include "../../Mips/Alu/Alu_hilo.v"
+`include "Mips/Alu/Alu_hilo.v"
 
 /*
           ▀▀▀██████▄▄▄
