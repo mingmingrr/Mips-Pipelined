@@ -5,5 +5,8 @@
 	for(i = 0; i < l; i = i + 1) \
 		a[i] = x;
 
+`define Data_Array_Array_subRange(a, i, w) \
+	a[i+w-1:i]
+
 `endif
 

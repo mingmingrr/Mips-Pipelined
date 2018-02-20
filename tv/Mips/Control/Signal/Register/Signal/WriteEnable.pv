@@ -1,8 +1,7 @@
 `ifndef MIPS_CONTROL_SIGNAL_REGISTER_SIGNAL_WRITEENABLE_M
 `define MIPS_CONTROL_SIGNAL_REGISTER_SIGNAL_WRITEENABLE_M
 
-$(tv.makeEnum("Mips_Control_Signal_Register_Signal_WriteEnable",
-	map(reversed, enumerate("Disable Enable".split(' ')))))
+$(tv.makeBool("Mips_Control_Signal_Register_Signal_WriteEnable"))
 
 `endif
 

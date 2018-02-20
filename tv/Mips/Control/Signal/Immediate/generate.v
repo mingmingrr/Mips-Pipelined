@@ -1,14 +1,15 @@
 `ifndef MIPS_CONTROL_SIGNAL_IMMEDIATE_GENERATE_I
 `define MIPS_CONTROL_SIGNAL_IMMEDIATE_GENERATE_I
 
-`include "Mips/Instruction/Category.v"
+`include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/OpFuncs.v"
 `include "Mips/Control/Signal/Immediate/Control.v"
 
-module Mips_Control_Signal_Alu_generate
-	( `Mips_Instruction_OpFunc_OpFunc_T  (input)  opFunc
-	, `Mips_Instruction_Category_T       (input)  category
-	, `Mips_Control_Signal_Alu_Control_T (output) control
+module Mips_Control_Signal_Immediate_generate
+	( `Mips_Instruction_OpFunc_OpFunc_T        (input)  opFunc
+	, `Mips_Instruction_Category_Category_T    (input)  category
+	, `Mips_Control_Signal_Immediate_Control_T (output) control
 	);
 
 `Mips_Control_Signal_Immediate_Control_Extend_T (reg) extend ;
@@ -16,19 +17,21 @@ module Mips_Control_Signal_Alu_generate
 
 always @(*)
 	if(opFunc == `Mips_Instruction_OpFunc_OpFuncs_Lui)
-		shift = `Mips_Control_Signal_Immediate_Signal_Shift_Const16 ;
+		shift = `Mips_Control_Signal_Immediate_Signal_Shift_Left16 ;
 	else
-		shift = `Mips_Control_Signal_Immediate_Signal_Shift_None    ;
+		shift = `Mips_Control_Signal_Immediate_Signal_Shift_None   ;
 
 always @(*)
 	casez(category)
-		`Mips_Instruction_Category_Logic_V:
-			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Unsigend ;
+		`Mips_Instruction_Category_Category_Logic:
+			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Unsigned ;
 		default:
-			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Sigend   ;
+			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Signed   ;
 	endcase
 
-assign control = `Mips_Control_Signal_Alu_Control_Init_Defaults;
+assign control = `Mips_Control_Signal_Immediate_Control_Init_Defaults;
+
+endmodule
 
 `endif
 

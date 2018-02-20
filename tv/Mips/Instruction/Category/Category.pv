@@ -1,0 +1,7 @@
+`ifndef MIPS_INSTRUCTION_CATEGORY_CATEGORY_M
+`define MIPS_INSTRUCTION_CATEGORY_CATEGORY_M
+
+$(tv.makeEnum("Mips_Instruction_Category_Category",
+	"RShift RShiftV RJump RHilo RLong RComp RLogic RArith Comp Logic Arith Shift Jump Branch Load Store Other".split(' ')))
+
+`endif

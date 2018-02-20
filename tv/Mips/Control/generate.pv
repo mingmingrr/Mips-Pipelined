@@ -1,0 +1,32 @@
+`ifndef MIPS_CONTROL_GENERATE_I
+`define MIPS_CONTROL_GENERATE_I
+
+`include "Mips/Instruction/Category/Category.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Control/Control.v"
+
+$for(i in "Pc Alu Memory Register Immediate".split(' '))
+`include "Mips/Control/Signal/$(i)/generate.v"
+$endfor
+
+module Mips_Control_generate
+	( `Mips_Instruction_OpFunc_OpFunc_T     (input)  opFunc
+	, `Mips_Instruction_Category_Category_T (input)  category
+	, `Mips_Control_Control_T               (output) control
+	);
+
+$for(i in "Pc Alu Memory Register Immediate".split(' '))
+`Mips_Control_Control_$(i)_T (wire) $(i[0].lower() + i[1:]);
+Mips_Control_Signal_$(i)_generate GEN$(i.upper())
+	( .opFunc   (opFunc)
+	, .category (category)
+	, .control  ($(i[0].lower() + i[1:]))
+	);
+$endfor
+
+assign control = `Mips_Control_Control_Init_Defaults;
+
+endmodule
+
+`endif
+
