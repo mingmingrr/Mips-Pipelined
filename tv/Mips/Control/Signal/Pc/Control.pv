@@ -2,9 +2,11 @@
 `define MIPS_CONTROL_SIGNAL_PC_CONTROL_M
 
 `include "Mips/Control/Signal/Pc/Signal/Action.v"
+`include "Mips/Control/Signal/Pc/Signal/Condition.v"
 
 $(tv.makeStruct("Mips_Control_Signal_Pc_Control", [
-("Action", "`Mips_Control_Signal_Pc_Signal_Action_W"),
+( "Action"    , "`Mips_Control_Signal_Pc_Signal_Action_W"    ),
+( "Condition" , "`Mips_Control_Signal_Pc_Signal_Condition_W" ),
 ]))
 
 `endif

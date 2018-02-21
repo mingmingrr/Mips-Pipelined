@@ -1,0 +1,8 @@
+`ifndef MIPS_CONTROL_SIGNAL_PC_SIGNAL_CONDITION_M
+`define MIPS_CONTROL_SIGNAL_PC_SIGNAL_CONDITION_M
+
+$(tv.makeEnum("Mips_Control_Signal_Pc_Signal_Condition",
+	"None Equality Compare".split(' ')))
+
+`endif
+

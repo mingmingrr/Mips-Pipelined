@@ -3,6 +3,8 @@
 
 $(tv.makeStruct("Mips_Alu_Status", [
 ("Zero", 1),
+("Less", 1),
+("Equal", 1),
 ]))
 
 `endif

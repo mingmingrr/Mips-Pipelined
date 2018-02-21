@@ -2,7 +2,7 @@
 `define REGISTER_REGISTERS_I
 
 `include "Util/Math.v"
-`include "Data/Control.v"
+`include "Data/Control/Control.v"
 
 module Mips_Register_registers #
 	( parameter DATA_W = 32
@@ -10,7 +10,7 @@ module Mips_Register_registers #
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	, parameter RESET = ADDR_L'(0)
 	)
-	( `Data_Control_T(input) ctrl
+	( `Data_Control_Control_T(input) ctrl
 	, input  [ADDR_W-1:0] rd1Addr
 	, output [DATA_W-1:0] rd1Data
 	, input  [ADDR_W-1:0] rd2Addr
@@ -38,8 +38,8 @@ assign rd2Data
 	// : regs[rd2Addr]
 	// ;
 
-always @(posedge `Data_Control_Clock(ctrl))
-	if(`Data_Control_Reset(ctrl)) begin : wtf
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	if(`Data_Control_Control_Reset(ctrl)) begin : wtf
 		integer i;
 		for(i = 0; i < ADDR_L; i = i + 1)
 			begin regs[i] <= RESET; end

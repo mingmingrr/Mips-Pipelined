@@ -3,7 +3,7 @@
 
 `include "Altera/Mf.v"
 `include "Util/Math.v"
-`include "Data/Control.v"
+`include "Data/Control/Control.v"
 
 // synopsys translate_off
 `timescale 1 ps / 1 ps
@@ -16,7 +16,7 @@ module Data_Memory_rom #
 	, parameter DATA_W = 32
 	)
 	( input [ADDR_W-1:0]  addr
-	, `Data_Control_T(input) ctrl
+	, `Data_Control_Control_T(input) ctrl
 	, output [DATA_W-1:0] out
 	);
 
@@ -25,7 +25,7 @@ module Data_Memory_rom #
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
-// tri1 `Util_Control_Clock(ctrl);
+// tri1 `Util_Control_Control_Clock(ctrl);
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
@@ -36,7 +36,7 @@ assign out = sub_wire0;
 
 altsyncram altsyncram_component
 	( .address_a      (addr)
-	, .clock0         (`Data_Control_Clock(ctrl))
+	, .clock0         (`Data_Control_Control_Clock(ctrl))
 	, .q_a            (sub_wire0)
 	, .aclr0          (1'b0)
 	, .aclr1          (1'b0)

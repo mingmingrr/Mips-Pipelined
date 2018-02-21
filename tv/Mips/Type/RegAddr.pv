@@ -1,0 +1,11 @@
+`ifndef MIPS_TYPE_REGADDR_M
+`define MIPS_TYPE_REGADDR_M
+
+$(tv.makeStruct(
+"Mips_Type_RegAddr", [
+("RegAddr", 5),
+]))
+
+`endif
+
+

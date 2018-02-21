@@ -1,8 +1,8 @@
-`ifndef PC_PC_I
-`define PC_PC_I
+`ifndef MIPS_PC_PC_I
+`define MIPS_PC_PC_I
 
 `include "Util/Math.v"
-`include "Data/Control.v"
+`include "Data/Control/Control.v"
 `include "Mips/Control/Signal/Pc/Signal/Action.v"
 
 module Mips_Pc_pc #
@@ -13,7 +13,7 @@ module Mips_Pc_pc #
 	, parameter SKIP = Util_Math_log2(STEP)
 	, parameter RESET = ADDR_W'(0)
 	)
-	( `Data_Control_T(input) ctrl
+	( `Data_Control_Control_T(input) ctrl
 	, `Mips_Control_Signal_Pc_Signal_Action_T(input) act
 	, input [OFFSET_W-1:0] offset
 	, input [JUMP_W-1:0] jump
@@ -34,11 +34,11 @@ always @(*)
 		`Mips_Control_Signal_Pc_Signal_Action_Inc    : addr_next =  addr_reg + STEP;
 		`Mips_Control_Signal_Pc_Signal_Action_Branch : addr_next =  addr_reg + (ADDR_W'(offset$) << SKIP);
 		`Mips_Control_Signal_Pc_Signal_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
-		default                                      : addr_next =  addr_reg + STEP;
+		default                                      : addr_next =  addr_reg ;
 	endcase
 
-always @(posedge `Data_Control_Clock(ctrl))
-	if(`Data_Control_Reset(ctrl))
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	if(`Data_Control_Control_Reset(ctrl))
 		addr_reg <= RESET - STEP;
 	else
 		addr_reg <= addr_next;

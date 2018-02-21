@@ -3,6 +3,7 @@
 
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/OpFuncs.v"
 `include "Mips/Control/Signal/Pc/Control.v"
 
 module Mips_Control_Signal_Pc_generate
@@ -11,14 +12,28 @@ module Mips_Control_Signal_Pc_generate
 	, `Mips_Control_Signal_Pc_Control_T     (output) control
 	);
 
-`Mips_Control_Signal_Pc_Control_Action_T (reg) action ;
+`Mips_Control_Signal_Pc_Control_Action_T    (reg) action    ;
+`Mips_Control_Signal_Pc_Control_Condition_T (reg) condition ;
 
 always @(*)
-	case(category)
-		`Mips_Instruction_Category_Category_Jump   : action = `Mips_Control_Signal_Pc_Signal_Action_Jump   ;
-		`Mips_Instruction_Category_Category_RJump  : action = `Mips_Control_Signal_Pc_Signal_Action_Jump   ;
-		`Mips_Instruction_Category_Category_Branch : action = `Mips_Control_Signal_Pc_Signal_Action_Branch ;
-		default                                    : action = `Mips_Control_Signal_Pc_Signal_Action_Inc    ;
+	if(`Mips_Instruction_Category_Category_Jump(category))
+		action = `Mips_Control_Signal_Pc_Signal_Action_Jump;
+	else if(`Mips_Instruction_Category_Category_Branch(category))
+		action = `Mips_Control_Signal_Pc_Signal_Action_Branch;
+	else
+		action = `Mips_Control_Signal_Pc_Signal_Action_Inc;
+
+always @(*)
+	case(opFunc)
+		// `Mips_Instruction_OpFunc_OpFuncs_Bgez   : condition = `Mips_Control_Signal_Pc_Signal_Condition_GE   ;
+		// `Mips_Instruction_OpFunc_OpFuncs_Bgezal : condition = `Mips_Control_Signal_Pc_Signal_Condition_GE   ;
+		// `Mips_Instruction_OpFunc_OpFuncs_Bgtz   : condition = `Mips_Control_Signal_Pc_Signal_Condition_GT   ;
+		// `Mips_Instruction_OpFunc_OpFuncs_Blez   : condition = `Mips_Control_Signal_Pc_Signal_Condition_LE   ;
+		// `Mips_Instruction_OpFunc_OpFuncs_Bltz   : condition = `Mips_Control_Signal_Pc_Signal_Condition_LT   ;
+		// `Mips_Instruction_OpFunc_OpFuncs_Bltzal : condition = `Mips_Control_Signal_Pc_Signal_Condition_LE   ;
+		`Mips_Instruction_OpFunc_OpFuncs_Beq    : condition = `Mips_Control_Signal_Pc_Signal_Condition_Equality ;
+		`Mips_Instruction_OpFunc_OpFuncs_Bne    : condition = `Mips_Control_Signal_Pc_Signal_Condition_Equality ;
+		default                                 : condition = `Mips_Control_Signal_Pc_Signal_Condition_None     ;
 	endcase
 
 assign control = `Mips_Control_Signal_Pc_Control_Init_Defaults;

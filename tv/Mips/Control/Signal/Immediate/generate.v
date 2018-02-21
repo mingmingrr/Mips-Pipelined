@@ -22,12 +22,10 @@ always @(*)
 		shift = `Mips_Control_Signal_Immediate_Signal_Shift_None   ;
 
 always @(*)
-	casez(category)
-		`Mips_Instruction_Category_Category_Logic:
-			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Unsigned ;
-		default:
-			extend = `Mips_Control_Signal_Immediate_Signal_Extend_Signed   ;
-	endcase
+	if(`Mips_Instruction_Category_Category_Logic(category))
+		extend = `Mips_Control_Signal_Immediate_Signal_Extend_Unsigned ;
+	else
+		extend = `Mips_Control_Signal_Immediate_Signal_Extend_Signed   ;
 
 assign control = `Mips_Control_Signal_Immediate_Control_Init_Defaults;
 

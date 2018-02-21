@@ -18,10 +18,13 @@ module Mips_Control_Signal_Register_generate
 `Mips_Control_Signal_Register_Control_WriteEnable_T     (reg)  writeEnable     ;
 
 always @(*)
-	casez(category)
-		`Mips_Instruction_Category_Category_RShift : port1AddrSource = `Mips_Control_Signal_Register_Signal_Port1AddrSource_Rt ;
-		default                                    : port1AddrSource = `Mips_Control_Signal_Register_Signal_Port1AddrSource_Rs ;
-	endcase
+	if(
+		`Mips_Instruction_Category_Category_Shift(category) &&
+		`Mips_Instruction_Category_Category_Register(category)
+	)
+		port1AddrSource = `Mips_Control_Signal_Register_Signal_Port1AddrSource_Rt ;
+	else
+		port1AddrSource = `Mips_Control_Signal_Register_Signal_Port1AddrSource_Rs ;
 
 assign
 	port2AddrSource = `Mips_Control_Signal_Register_Signal_Port2AddrSource_Rt;
@@ -33,18 +36,20 @@ always @(*)
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rt;
 
 always @(*)
-	casez(category)
-		`Mips_Instruction_Category_Category_Load : writeDataSource = `Mips_Control_Signal_Register_Signal_WriteDataSource_Memory ;
-		default                                  : writeDataSource = `Mips_Control_Signal_Register_Signal_WriteDataSource_Alu    ;
-	endcase
+	if(`Mips_Instruction_Category_Category_Load(category))
+		writeDataSource = `Mips_Control_Signal_Register_Signal_WriteDataSource_Memory ;
+	else
+		writeDataSource = `Mips_Control_Signal_Register_Signal_WriteDataSource_Alu    ;
 
 always @(*)
-	casez(category)
-		`Mips_Instruction_Category_Category_RJump  : writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_False ;
-		`Mips_Instruction_Category_Category_Jump   : writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_False ;
-		`Mips_Instruction_Category_Category_Branch : writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_False ;
-		default                                    : writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_True  ;
-	endcase
+	if(
+		`Mips_Instruction_Category_Category_Jump(category) ||
+		`Mips_Instruction_Category_Category_Branch(category) ||
+		`Mips_Instruction_Category_Category_Store(category)
+	)
+		writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_False ;
+	else
+		writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_True  ;
 
 assign control = `Mips_Control_Signal_Register_Control_Init_Defaults;
 

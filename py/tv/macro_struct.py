@@ -18,7 +18,7 @@ def makeStruct(struct, fields):
 		+ ' + \\\n\t'.join(map(str, (i[1] for i in fields))))
 	output.append(f'`define {struct}_T(T) T [`{struct}_W-1:0]')
 	output.append(f'`define {struct}_Init(' + ', '.join(i[0] for i in fields) + ') { \\\n\t'
-		+ ', \\\n\t'.join(f'`{struct}_{i[0]}_W\'({i[0]})' for i in fields)
+		+ ', \\\n\t'.join(f'{i[0]}' for i in fields) # `{struct}_{i[0]}_W\'
 		+ ' \\\n\t}')
 	output.append(f'`define {struct}_Init_Defaults \\\n\t`{struct}_Init('
 		+ ', '.join(i[0][0].lower() + i[0][1:] for i in fields) + ')')
