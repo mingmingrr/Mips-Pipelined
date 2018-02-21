@@ -4,8 +4,8 @@
 `include "Mips/Instruction/OpFunc/Source.v"
 
 $(tv.makeStruct("Mips_Instruction_OpFunc_OpFunc", [
-("Source", 1),
-("OpFunc", 6),
+("Source", 1, 6),
+("OpFunc", 6, 0),
 ]))
 
 `endif

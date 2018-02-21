@@ -3,6 +3,7 @@
 
 `include "Data/Array/Array.v"
 `include "Data/Control/Control.v"
+`include "Data/Control/invert.v"
 `include "Data/Memory/ram.v"
 `include "Data/Memory/rom.v"
 `include "Mips/Alu/hilo.v"
@@ -39,24 +40,30 @@ module Mips_mips #
 `Mips_Type_Word_T (wire) instruction;
 
 `Mips_Instruction_OpFunc_OpFunc_T (wire) opFunc;
-Mips_Instruction_OpFunc_instToOpFunc GITOOF
+Mips_Instruction_OpFunc_instToOpFunc ITOOF_G
 	( .op     (`Mips_Instruction_Format_RFormat_Op(instruction))
 	, .func   (`Mips_Instruction_Format_RFormat_Func(instruction))
 	, .opFunc (opFunc)
 	);
 
 `Mips_Instruction_Category_Category_T(wire) category;
-Mips_Instruction_Category_categorize GCATAGORY
+Mips_Instruction_Category_categorize CATAGORY_G
 	( .opFunc   (opFunc)
 	, .branchOp (`Mips_Instruction_Format_RFormat_Rt(instruction))
 	, .category (category)
 	);
 
 `Mips_Control_Control_T (wire) control;
-Mips_Control_generate GCTRLGEN
+Mips_Control_generate CTRLGEN_G
 	( .opFunc   (opFunc)
 	, .category (category)
 	, .control  (control)
+	);
+
+`Data_Control_Control_T (wire) ctrl_i;
+Data_Control_invert CTRLINV_G
+	( .in  (ctrl)
+	, .out (ctrl_i)
 	);
 
 `Mips_mips_Addr_T (wire) ram_addr  ;
@@ -68,7 +75,7 @@ Data_Memory_ram #
 	, .ADDR_L  (ADDR_L)
 	, .ADDR_W  (ADDR_W)
 	, .DATA_W  (`Mips_Type_Word_W)
-	) GRAM
+	) RAM_G
 	( .addr  (ram_addr)
 	, .bytes (ram_bytes)
 	, .data  (ram_data)
@@ -77,7 +84,7 @@ Data_Memory_ram #
 			`Mips_Control_Control_Memory_I +
 			`Mips_Control_Signal_Memory_Control_WriteEnable_I
 		))
-	, .ctrl  (ctrl)
+	, .ctrl  (ctrl_i)
 	, .out   (ram_out)
 	);
 
@@ -88,7 +95,7 @@ Data_Memory_rom #
 	, .ADDR_L  (ADDR_L)
 	, .ADDR_W  (ADDR_W)
 	, .DATA_W  (`Mips_Type_Word_W)
-	) GROM
+	) ROM_G
 	( .addr  (rom_addr)
 	, .ctrl  (ctrl)
 	, .out   (rom_out)
@@ -103,7 +110,7 @@ Data_Memory_rom #
 Mips_Register_registers #
 	( .DATA_W (32)
 	, .ADDR_L (32)
-	) GREG
+	) REG_G
 	( .ctrl    (ctrl)
 	, .rd1Addr (reg_rd1_addr)
 	, .rd1Data (reg_rd1_data)
@@ -120,7 +127,7 @@ Mips_Register_registers #
 
 
 `Mips_Alu_Func_T (wire) alu_func ;
-Mips_Instruction_OpFunc_aluFuncDecode GALUDEC
+Mips_Instruction_OpFunc_aluFuncDecode ALUDEC_G
 	( .opFunc (opFunc)
 	, .func   (alu_func)
 	);
@@ -131,7 +138,7 @@ Mips_Instruction_OpFunc_aluFuncDecode GALUDEC
 `Mips_Alu_Status_T   (wire) alu_status ;
 Mips_Alu_hilo #
 	( .DATA_W (32)
-	) GALU
+	) ALU_G
 	( .ctrl (ctrl)
 	, .func   (alu_func)
 	, .data1  (alu_data1)
@@ -141,7 +148,7 @@ Mips_Alu_hilo #
 	);
 
 `Mips_Control_Signal_Pc_Control_Action_T(reg) pc_action;
-Mips_Datapath_Signal_Pc_action GPCA
+Mips_Datapath_Signal_Pc_action PCA_G
 	( .status (alu_status)
 	, .condition (`Data_Array_Array_subRange(
 			control,
@@ -158,13 +165,12 @@ Mips_Datapath_Signal_Pc_action GPCA
 	, .actionOut (pc_action)
 	);
 
-
 `Mips_Type_Word_T(wire) pc_addr;
 Mips_Pc_pc #
 	( .ADDR_W (32)
-	) GPC
-	( .ctrl (ctrl)
-	, .act  (pc_action)
+	) PC_G
+	( .ctrl   (ctrl)
+	, .action (pc_action)
 	, .offset (`Mips_Instruction_Format_IFormat_Imm(instruction))
 	, .jump   (`Mips_Instruction_Format_JFormat_Target(instruction))
 	, .addr (pc_addr)

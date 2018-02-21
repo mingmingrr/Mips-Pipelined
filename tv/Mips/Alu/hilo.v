@@ -16,10 +16,10 @@ module Mips_Alu_hilo #
 	, parameter SHAMT_W = Util_Math_log2(DATA_W)
 	, parameter DELAY   = 0
 	)
-	( `Data_Control_Control_T             (input) ctrl
-	, `Mips_Alu_hilo_Type_Data_T  (input) data1
-	, `Mips_Alu_hilo_Type_Data_T  (input) data2
-	, `Mips_Alu_Func_T            (input) func
+	( `Data_Control_Control_T     (input)  ctrl
+	, `Mips_Alu_hilo_Type_Data_T  (input)  data1
+	, `Mips_Alu_hilo_Type_Data_T  (input)  data2
+	, `Mips_Alu_Func_T            (input)  func
 	, `Mips_Alu_hilo_Type_Data_T  (output) result
 	, `Mips_Alu_Status_T          (output) status
 	);

@@ -6,7 +6,7 @@ module Mips_mips_tb;
 `Data_Control_Control_T(reg) ctrl;
 
 Mips_mips #
-	( .FILE ("asm/test1.mif")
+	( .FILE ("asm/test0.mif")
 	) DUT
 	( .ctrl (ctrl)
 	);

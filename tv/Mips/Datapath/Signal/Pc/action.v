@@ -34,6 +34,7 @@ always @(*)
 			else
 				actionOut$ = actionIn;
 	endcase
+assign actionOut = actionOut$;
 
 endmodule
 

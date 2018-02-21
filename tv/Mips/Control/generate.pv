@@ -17,7 +17,7 @@ module Mips_Control_generate
 
 $for(i in "Pc Alu Memory Register Immediate".split(' '))
 `Mips_Control_Control_$(i)_T (wire) $(i[0].lower() + i[1:]);
-Mips_Control_Signal_$(i)_generate GEN$(i.upper())
+Mips_Control_Signal_$(i)_generate $(i.upper())_G
 	( .opFunc   (opFunc)
 	, .category (category)
 	, .control  ($(i[0].lower() + i[1:]))

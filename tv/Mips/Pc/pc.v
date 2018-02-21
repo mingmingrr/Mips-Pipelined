@@ -14,7 +14,7 @@ module Mips_Pc_pc #
 	, parameter RESET = ADDR_W'(0)
 	)
 	( `Data_Control_Control_T(input) ctrl
-	, `Mips_Control_Signal_Pc_Signal_Action_T(input) act
+	, `Mips_Control_Signal_Pc_Signal_Action_T(input) action
 	, input [OFFSET_W-1:0] offset
 	, input [JUMP_W-1:0] jump
 	, output [ADDR_W-1:0] addr
@@ -29,12 +29,12 @@ wire signed [OFFSET_W-1:0] offset$;
 assign offset$ = offset;
 
 always @(*)
-	case(act)
+	case(action)
 		`Mips_Control_Signal_Pc_Signal_Action_None   : addr_next =  addr_reg + STEP;
 		`Mips_Control_Signal_Pc_Signal_Action_Inc    : addr_next =  addr_reg + STEP;
 		`Mips_Control_Signal_Pc_Signal_Action_Branch : addr_next =  addr_reg + (ADDR_W'(offset$) << SKIP);
 		`Mips_Control_Signal_Pc_Signal_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
-		default                                      : addr_next =  addr_reg ;
+		default                                      : addr_next =  addr_reg + STEP;
 	endcase
 
 always @(posedge `Data_Control_Control_Clock(ctrl))

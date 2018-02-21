@@ -25,9 +25,9 @@ always @(*)
 reg immediate;
 always @(*)
 	casez(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc))
-		`Mips_Instruction_OpFunc_Source_Op   : register = 1'b1;
-		`Mips_Instruction_OpFunc_Source_Func : register = 1'b0;
-		default                               : register = 1'b0;
+		`Mips_Instruction_OpFunc_Source_Op   : immediate = 1'b1;
+		`Mips_Instruction_OpFunc_Source_Func : immediate = 1'b0;
+		default                              : immediate = 1'b0;
 	endcase
 
 reg jump;
