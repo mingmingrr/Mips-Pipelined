@@ -2,7 +2,7 @@
 `define MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_BYTEENABLE_M
 
 $(tv.makeEnum("Mips_Control_Signal_Memory_Signal_ByteEnable",
-	"None Byte Half Int".split(" ")))
+	"None Byte Half Word".split(" ")))
 
 `endif
 

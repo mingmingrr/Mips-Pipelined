@@ -3,6 +3,7 @@
 
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/OpFuncs.v"
 `include "Mips/Control/Signal/Memory/Control.v"
 
 module Mips_Control_Signal_Memory_generate
@@ -24,12 +25,12 @@ always @(*)
 	case(opFunc)
 		`Mips_Instruction_OpFunc_OpFuncs_Lb  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Byte ;
 		`Mips_Instruction_OpFunc_OpFuncs_Lh  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Half ;
-		`Mips_Instruction_OpFunc_OpFuncs_Lw  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Int  ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lw  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Word ;
 		`Mips_Instruction_OpFunc_OpFuncs_Lbu : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Byte ;
 		`Mips_Instruction_OpFunc_OpFuncs_Lhu : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Half ;
 		`Mips_Instruction_OpFunc_OpFuncs_Sb  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Byte ;
 		`Mips_Instruction_OpFunc_OpFuncs_Sh  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Half ;
-		`Mips_Instruction_OpFunc_OpFuncs_Sw  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Int  ;
+		`Mips_Instruction_OpFunc_OpFuncs_Sw  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Word ;
 		default                              : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_None ;
 	endcase
 

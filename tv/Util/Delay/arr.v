@@ -4,7 +4,7 @@
 `include "Data/Control/Control.v"
 `include "Util/Delay/gen.v"
 
-module Delay_Delay_arr #
+module Util_Delay_arr #
 	( parameter WIDTH = 32
 	, parameter DELAY = 0
 	, parameter RESET = WIDTH'(0)
@@ -17,7 +17,7 @@ module Delay_Delay_arr #
 genvar i;
 generate
 	for(i = 0; i < WIDTH; i = i + 1) begin : dgen
-		Delay_Delay_gen #
+		Util_Delay_gen #
 			( .DELAY(DELAY)
 			, .RESET(RESET[i])
 			) dg

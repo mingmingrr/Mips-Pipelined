@@ -20,7 +20,6 @@ module Mips_Alu_hilo #
 	, `Mips_Alu_hilo_Type_Data_T  (input) data1
 	, `Mips_Alu_hilo_Type_Data_T  (input) data2
 	, `Mips_Alu_Func_T            (input) func
-	, `Mips_Alu_hilo_Type_Shamt_T (input) shamt
 	, `Mips_Alu_hilo_Type_Data_T  (output) result
 	, `Mips_Alu_Status_T          (output) status
 	);
@@ -33,12 +32,10 @@ module Mips_Alu_hilo #
 
 Mips_Alu_alu #
 	( .DATA_W  (DATA_W)
-	, .SHAMT_W (SHAMT_W)
-	) a
+	) GALU
 	( .data1  (data1)
 	, .data2  (data2)
 	, .func   (func)
-	, .shamt  (shamt)
 	, .reg_lo (reg_lo)
 	, .reg_hi (reg_hi)
 	, .res_lo (res_lo)

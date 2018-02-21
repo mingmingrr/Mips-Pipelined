@@ -2,13 +2,14 @@
 `define MIPS_INSTRUCTION_CATEGORY_CATEGORIZE_I
 
 `include "Mips/Instruction/Category/Category.v"
+`include "Mips/Instruction/Format/RFormat.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/OpFuncs.v"
 `include "Mips/Instruction/OpFunc/Source.v"
 
 module Mips_Instruction_Category_categorize
 	( `Mips_Instruction_OpFunc_OpFunc_T(input)      opFunc
-	, `Mips_Instruction_Format_IFormat_Rt_T(input)  branchOp
+	, `Mips_Instruction_Format_RFormat_Rt_T(input)  branchOp
 	, `Mips_Instruction_Category_Category_T(output) category
 	);
 
@@ -16,16 +17,16 @@ module Mips_Instruction_Category_categorize
 reg register;
 always @(*)
 	casez(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc))
-		`Mips_Instruction_OpFuncc_Source_Func : register = 1'b1;
-		`Mips_Instruction_OpFuncc_Source_Op   : register = 1'b0;
+		`Mips_Instruction_OpFunc_Source_Func : register = 1'b1;
+		`Mips_Instruction_OpFunc_Source_Op   : register = 1'b0;
 		default                               : register = 1'b0;
 	endcase
 
 reg immediate;
 always @(*)
 	casez(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc))
-		`Mips_Instruction_OpFuncc_Source_Op   : register = 1'b1;
-		`Mips_Instruction_OpFuncc_Source_Func : register = 1'b0;
+		`Mips_Instruction_OpFunc_Source_Op   : register = 1'b1;
+		`Mips_Instruction_OpFunc_Source_Func : register = 1'b0;
 		default                               : register = 1'b0;
 	endcase
 
@@ -101,9 +102,9 @@ always @(*)
 reg arithmetic;
 always @(*)
 	casez(opFunc)
-		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Func , 6'b1000??) : arith = 1'b1;
-		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Op   , 6'b00100?) : arith = 1'b1;
-		default                                                                                : arith = 1'b0;
+		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Func , 6'b1000??) : arithmetic = 1'b1;
+		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Op   , 6'b00100?) : arithmetic = 1'b1;
+		default                                                                                : arithmetic = 1'b0;
 	endcase
 
 reg load;
@@ -126,19 +127,3 @@ endmodule
 
 `endif
 
-Register
-Immediate
-Jump
-Branch
-Link
-Shift
-ShiftV
-Jump
-Hilo
-Long
-Compare
-Logic
-Arithmetic
-Load
-Store
-Other

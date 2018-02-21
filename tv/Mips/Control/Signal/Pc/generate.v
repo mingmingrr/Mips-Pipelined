@@ -31,9 +31,9 @@ always @(*)
 		// `Mips_Instruction_OpFunc_OpFuncs_Blez   : condition = `Mips_Control_Signal_Pc_Signal_Condition_LE   ;
 		// `Mips_Instruction_OpFunc_OpFuncs_Bltz   : condition = `Mips_Control_Signal_Pc_Signal_Condition_LT   ;
 		// `Mips_Instruction_OpFunc_OpFuncs_Bltzal : condition = `Mips_Control_Signal_Pc_Signal_Condition_LE   ;
-		`Mips_Instruction_OpFunc_OpFuncs_Beq    : condition = `Mips_Control_Signal_Pc_Signal_Condition_Equality ;
-		`Mips_Instruction_OpFunc_OpFuncs_Bne    : condition = `Mips_Control_Signal_Pc_Signal_Condition_Equality ;
-		default                                 : condition = `Mips_Control_Signal_Pc_Signal_Condition_None     ;
+		`Mips_Instruction_OpFunc_OpFuncs_Beq    : condition = `Mips_Control_Signal_Pc_Signal_Condition_EQ ;
+		`Mips_Instruction_OpFunc_OpFuncs_Bne    : condition = `Mips_Control_Signal_Pc_Signal_Condition_NE ;
+		default                                 : condition = `Mips_Control_Signal_Pc_Signal_Condition_None ;
 	endcase
 
 assign control = `Mips_Control_Signal_Pc_Control_Init_Defaults;

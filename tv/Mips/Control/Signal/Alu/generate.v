@@ -16,8 +16,8 @@ module Mips_Control_Signal_Alu_generate
 always @(*)
 	if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc) == `Mips_Instruction_OpFunc_Source_Func) begin
 		if(
-			`Mips_Instruction_Category_Category_Shift(category)
-			`Mips_Instruction_Category_Category_ShiftV(category)
+			`Mips_Instruction_Category_Category_Shift(category) &&
+			!`Mips_Instruction_Category_Category_ShiftV(category)
 		)
 			data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Shamt;
 		else

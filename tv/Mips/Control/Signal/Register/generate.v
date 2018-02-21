@@ -30,7 +30,9 @@ assign
 	port2AddrSource = `Mips_Control_Signal_Register_Signal_Port2AddrSource_Rt;
 
 always @(*)
-	if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc) == `Mips_Instruction_OpFunc_Source_Func)
+	if(`Mips_Instruction_Category_Category_Link(category))
+		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_R31;
+	else if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc) == `Mips_Instruction_OpFunc_Source_Func)
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rd;
 	else
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rt;

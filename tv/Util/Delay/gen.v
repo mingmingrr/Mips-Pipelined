@@ -3,7 +3,7 @@
 
 `include "Data/Control/Control.v"
 
-module Delay_gen #
+module Util_Delay_gen #
 	( parameter DELAY = 0
 	, parameter RESET = 1'b0
 	)
