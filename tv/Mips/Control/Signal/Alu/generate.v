@@ -14,20 +14,23 @@ module Mips_Control_Signal_Alu_generate
 `Mips_Control_Signal_Alu_Control_Data2Source_T (reg) data2Source;
 
 always @(*)
-	if(`Mips_Instruction_OpFunc_OpFunc_Source(opFunc) == `Mips_Instruction_OpFunc_Source_Func) begin
-		if(
-			`Mips_Instruction_Category_Category_Shift(category) &&
-			!`Mips_Instruction_Category_Category_ShiftV(category)
-		)
-			data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Shamt;
-		else
-			data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Register;
-	end else begin
-		if(`Mips_Instruction_Category_Category_Branch(category))
-			data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Register  ;
-		else
-			data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Immediate ;
-	end
+	if(
+		`Mips_Instruction_Category_Category_Shift(category) &&
+		(!`Mips_Instruction_Category_Category_ShiftV(category))
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Shamt;
+	else if(
+		`Mips_Instruction_Category_Category_Load(category) ||
+		`Mips_Instruction_Category_Category_Store(category)
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Immediate;
+	else if(
+		`Mips_Instruction_Category_Category_Register(category) ||
+		`Mips_Instruction_Category_Category_Branch(category)
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Register;
+	else
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Immediate;
 
 assign control = `Mips_Control_Signal_Alu_Control_Init_Defaults;
 

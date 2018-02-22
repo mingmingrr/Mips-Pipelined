@@ -14,6 +14,7 @@ module Mips_Control_Signal_Memory_generate
 
 `Mips_Control_Signal_Memory_Control_WriteEnable_T (reg) writeEnable ;
 `Mips_Control_Signal_Memory_Control_ByteEnable_T  (reg) byteEnable  ;
+`Mips_Control_Signal_Memory_Control_ByteExtend_T  (reg) byteExtend  ;
 
 always @(*)
 	if(`Mips_Instruction_Category_Category_Store(category))
@@ -32,6 +33,16 @@ always @(*)
 		`Mips_Instruction_OpFunc_OpFuncs_Sh  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Half ;
 		`Mips_Instruction_OpFunc_OpFuncs_Sw  : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_Word ;
 		default                              : byteEnable = `Mips_Control_Signal_Memory_Signal_ByteEnable_None ;
+	endcase
+
+always @(*)
+	case(opFunc)
+		`Mips_Instruction_OpFunc_OpFuncs_Lb  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lh  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lw  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lbu : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lhu : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned ;
+		default                              : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned ;
 	endcase
 
 assign control = `Mips_Control_Signal_Memory_Control_Init_Defaults;

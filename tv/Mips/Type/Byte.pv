@@ -1,0 +1,10 @@
+`ifndef MIPS_TYPE_BYTE_M
+`define MIPS_TYPE_BYTE_M
+
+$(tv.makeStruct(
+"Mips_Type_Byte", [
+("Byte", 8),
+]))
+
+`endif
+

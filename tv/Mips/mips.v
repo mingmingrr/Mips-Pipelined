@@ -16,12 +16,14 @@
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/aluFuncDecode.v"
 `include "Mips/Instruction/OpFunc/instToOpFunc.v"
-`include "Mips/Datapath/Signal/Pc/action.v"
+`include "Mips/Datapath/Pc/action.v"
+`include "Mips/Datapath/Memory/bam.v"
 `include "Mips/Control/Control.v"
 `include "Mips/Control/generate.v"
 `include "Mips/Register/registers.v"
 `include "Mips/Type/RegAddr.v"
 `include "Mips/Type/Word.v"
+`include "Mips/Type/Byte.v"
 `include "Mips/Type/Bit.v"
 `include "Util/Math.v"
 
@@ -60,32 +62,17 @@ Mips_Control_generate CTRLGEN_G
 	, .control  (control)
 	);
 
-`Data_Control_Control_T (wire) ctrl_i;
-Data_Control_invert CTRLINV_G
-	( .in  (ctrl)
-	, .out (ctrl_i)
-	);
-
-`Mips_mips_Addr_T (wire) ram_addr  ;
+wire [9:0] ram_addr  ;
 `Mips_Type_Word_T (wire) ram_data  ;
 `Mips_Type_Word_T (wire) ram_out   ;
-wire [3:0]               ram_bytes ;
-Data_Memory_ram #
-	( .FILE    (FILE)
-	, .ADDR_L  (ADDR_L)
-	, .ADDR_W  (ADDR_W)
-	, .DATA_W  (`Mips_Type_Word_W)
+Mips_Datapath_Memory_bam #
+	( .ADDR_L  (1 << 10)
 	) RAM_G
 	( .addr  (ram_addr)
-	, .bytes (ram_bytes)
 	, .data  (ram_data)
-	, .wren  (`Data_Array_Array_subIndex(
-			control,
-			`Mips_Control_Control_Memory_I +
-			`Mips_Control_Signal_Memory_Control_WriteEnable_I
-		))
-	, .ctrl  (ctrl_i)
 	, .out   (ram_out)
+	, .control (`Mips_Control_Control_Memory(control))
+	, .ctrl  (ctrl)
 	);
 
 `Mips_mips_Addr_T (wire) rom_addr ;
@@ -148,7 +135,7 @@ Mips_Alu_hilo #
 	);
 
 `Mips_Control_Signal_Pc_Control_Action_T(reg) pc_action;
-Mips_Datapath_Signal_Pc_action PCA_G
+Mips_Datapath_Pc_action PCACT_G
 	( .status (alu_status)
 	, .condition (`Data_Array_Array_subRange(
 			control,
@@ -165,7 +152,7 @@ Mips_Datapath_Signal_Pc_action PCA_G
 	, .actionOut (pc_action)
 	);
 
-`Mips_Type_Word_T(wire) pc_addr;
+`Mips_Type_Word_T(wire) pc_addr_curr, pc_addr_next;
 Mips_Pc_pc #
 	( .ADDR_W (32)
 	) PC_G
@@ -173,11 +160,12 @@ Mips_Pc_pc #
 	, .action (pc_action)
 	, .offset (`Mips_Instruction_Format_IFormat_Imm(instruction))
 	, .jump   (`Mips_Instruction_Format_JFormat_Target(instruction))
-	, .addr (pc_addr)
+	, .addrNext (pc_addr_next)
+	, .addrCurr (pc_addr_curr)
 	);
 
-assign rom_addr = pc_addr[7:2];
-assign ram_addr = alu_result[7:2];
+assign rom_addr = pc_addr_next[7:2];
+assign ram_addr = alu_result[9:0];
 assign ram_data = reg_rd2_data;
 assign instruction = rom_out;
 assign alu_data1 = reg_rd1_data;
@@ -242,33 +230,10 @@ always @(*)
 	))
 		`Mips_Control_Signal_Register_Signal_WriteDataSource_Memory : reg_wr_data$ = ram_out;
 		`Mips_Control_Signal_Register_Signal_WriteDataSource_Alu    : reg_wr_data$ = alu_result;
+		`Mips_Control_Signal_Register_Signal_WriteDataSource_Pc     : reg_wr_data$ = pc_addr_curr + 4;
 		default                                                     : reg_wr_data$ = alu_result;
 	endcase
 assign reg_wr_data = reg_wr_data$;
-
-/*
-Pc
-*/
-
-/*
-Memory
-*/
-
-reg [3:0] ram_bytes$;
-always @(*)
-	case(`Data_Array_Array_subRange(
-		control,
-		`Mips_Control_Control_Memory_I +
-		`Mips_Control_Signal_Memory_Control_ByteEnable_I,
-		`Mips_Control_Signal_Memory_Control_ByteEnable_W
-	))
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Word : ram_bytes$ = 4'b1111;
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Half : ram_bytes$ = 4'b0011;
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Byte : ram_bytes$ = 4'b0001;
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_None : ram_bytes$ = 4'b0000;
-		default                                            : ram_bytes$ = 4'b0000;
-	endcase
-assign ram_bytes = ram_bytes$;
 
 /*
 Immediate
@@ -313,10 +278,10 @@ always @(*)
 		`Mips_Control_Signal_Alu_Control_Data2Source_I,
 		`Mips_Control_Signal_Alu_Control_Data2Source_W
 	))
-		`Mips_Control_Signal_Alu_Signal_Data2Source_Register  : alu_data2$ = reg_rd1_data;
+		`Mips_Control_Signal_Alu_Signal_Data2Source_Register  : alu_data2$ = reg_rd2_data;
 		`Mips_Control_Signal_Alu_Signal_Data2Source_Immediate : alu_data2$ = immediate_extended_shifted;
-		`Mips_Control_Signal_Alu_Signal_Data2Source_Shamt     : alu_data2$ = `Mips_Instruction_Format_RFormat_Shamt(instruction);
-		default                                               : alu_data2$ = reg_rd1_data;
+		`Mips_Control_Signal_Alu_Signal_Data2Source_Shamt     : alu_data2$ = {27'b0, `Mips_Instruction_Format_RFormat_Shamt(instruction)};
+		default                                               : alu_data2$ = reg_rd2_data;
 	endcase
 assign alu_data2 = alu_data2$;
 

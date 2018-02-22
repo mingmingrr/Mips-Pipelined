@@ -1,9 +1,20 @@
 `ifndef MIPS_TYPE_WORD_M
 `define MIPS_TYPE_WORD_M
 
+$("\n".join(
+f"`define Mips_Type_Word_{name}(x) x[{width}-1:0]"
+for name, width in [
+("Byte", 8),
+("Half", 16),
+("Word", 32),
+]))
+
 $(tv.makeStruct(
 "Mips_Type_Word", [
-("Word", 32),
+("Byte0", 8, 0),
+("Byte1", 8, 8),
+("Byte2", 8, 16),
+("Byte3", 8, 24),
 ]))
 
 `endif

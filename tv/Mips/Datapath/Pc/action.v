@@ -1,4 +1,4 @@
-`ifndef MIPS_DATAPATH_SIGNAL_PC_ACTION_I
+`ifndef MIPS_DATAPATH_PC_ACTION_I
 `define MIPS_DATAPATH_SIGNAL_PC_ACTION_I
 
 `include "Mips/Alu/Status.v"
@@ -6,7 +6,7 @@
 `include "Mips/Control/Signal/Pc/Signal/Action.v"
 `include "Mips/Control/Signal/Pc/Signal/Condition.v"
 
-module Mips_Datapath_Signal_Pc_action
+module Mips_Datapath_Pc_action
 	( `Mips_Alu_Status_T                          (input)  status
 	, `Mips_Control_Signal_Pc_Control_Action_T    (input)  actionIn
 	, `Mips_Control_Signal_Pc_Control_Condition_T (input)  condition
