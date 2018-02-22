@@ -37,12 +37,9 @@ always @(*)
 
 always @(*)
 	case(opFunc)
-		`Mips_Instruction_OpFunc_OpFuncs_Lb  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
-		`Mips_Instruction_OpFunc_OpFuncs_Lh  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
-		`Mips_Instruction_OpFunc_OpFuncs_Lw  : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
-		`Mips_Instruction_OpFunc_OpFuncs_Lbu : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
+		`Mips_Instruction_OpFunc_OpFuncs_Lbu : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned ;
 		`Mips_Instruction_OpFunc_OpFuncs_Lhu : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned ;
-		default                              : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned ;
+		default                              : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
 	endcase
 
 assign control = `Mips_Control_Signal_Memory_Control_Init_Defaults;

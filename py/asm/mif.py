@@ -3,10 +3,15 @@
 import re
 
 def toBin(mif):
-	return (f'{int(i.strip(";").split(":")[1].strip().strip(";"), 16):0>32b}' for i in mif) # if re.match(r'^([0-9a-f]+):([0-9a-f]+);$', i.replace(' ',''))]
+	for i in mif:
+		# if re.match(r'^([0-9a-f]+):([0-9a-f]+);$', i.replace(' ',''))]
+		yield f'{int(i.strip(";").split(":")[1].strip().strip(";"), 16):0>32b}'
 
 def fromBin(bin):
-	return [f'{n:0>3x} : {int(i,2):0>8x};' for n, i in enumerate(bin)]
+	yield 'WIDTH=32; DEPTH=64; ADDRESS_RADIX=HEX; DATA_RADIX=HEX; CONTENT BEGIN'
+	for n, i in enumerate(bin):
+		yield f'{n:0>3x} : {int(i,2):0>8x};'
+	yield 'END;'
 
 import sys
 

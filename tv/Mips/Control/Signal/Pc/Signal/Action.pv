@@ -2,6 +2,6 @@
 `define MIPS_CONTROL_SIGNAL_PC_SIGNAL_ACTION_M
 
 $(tv.makeEnum("Mips_Control_Signal_Pc_Signal_Action",
-	"None Inc Branch Jump".split(' ')))
+	"None Inc Branch Jump JumpR".split(' ')))
 
 `endif

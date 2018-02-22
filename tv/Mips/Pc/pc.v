@@ -17,6 +17,7 @@ module Mips_Pc_pc #
 	, `Mips_Control_Signal_Pc_Signal_Action_T(input) action
 	, input [OFFSET_W-1:0] offset
 	, input [JUMP_W-1:0] jump
+	, input [ADDR_W-1:0] jumpr
 	, output [ADDR_W-1:0] addrNext
 	, output [ADDR_W-1:0] addrCurr
 	);
@@ -38,11 +39,12 @@ assign offset$ = {{(ADDR_W-OFFSET_W){offset[OFFSET_W-1]}}, offset};
 
 always @(*)
 	case(action)
-		`Mips_Control_Signal_Pc_Signal_Action_None   : addr_next =  addr_reg ;
-		`Mips_Control_Signal_Pc_Signal_Action_Inc    : addr_next =  addr_reg + STEP;
-		`Mips_Control_Signal_Pc_Signal_Action_Branch : addr_next =  addr_reg + (offset$ << SKIP) + STEP;
+		`Mips_Control_Signal_Pc_Signal_Action_None   : addr_next = addr_reg ;
+		`Mips_Control_Signal_Pc_Signal_Action_Inc    : addr_next = addr_reg + STEP;
+		`Mips_Control_Signal_Pc_Signal_Action_Branch : addr_next = addr_reg + (offset$ << SKIP) + STEP;
 		`Mips_Control_Signal_Pc_Signal_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
-		default                                      : addr_next =  addr_reg ;
+		`Mips_Control_Signal_Pc_Signal_Action_JumpR  : addr_next = jumpr;
+		default                                      : addr_next = addr_reg ;
 	endcase
 
 always @(posedge `Data_Control_Control_Clock(ctrl))

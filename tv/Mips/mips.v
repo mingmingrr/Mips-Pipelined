@@ -160,6 +160,7 @@ Mips_Pc_pc #
 	, .action (pc_action)
 	, .offset (`Mips_Instruction_Format_IFormat_Imm(instruction))
 	, .jump   (`Mips_Instruction_Format_JFormat_Target(instruction))
+	, .jumpr  (reg_rd1_data)
 	, .addrNext (pc_addr_next)
 	, .addrCurr (pc_addr_curr)
 	);
@@ -248,8 +249,8 @@ always @(*)
 		`Mips_Control_Signal_Immediate_Control_Extend_W
 	))
 		`Mips_Control_Signal_Immediate_Signal_Extend_Unsigned : immediate_extended = {16'h0, `Mips_Instruction_Format_IFormat_Imm(instruction)};
-		`Mips_Control_Signal_Immediate_Signal_Extend_Signed   : immediate_extended = {{16{instruction[16]}}, `Mips_Instruction_Format_IFormat_Imm(instruction)};
-		default                                               : immediate_extended = {{16{instruction[16]}}, `Mips_Instruction_Format_IFormat_Imm(instruction)};
+		`Mips_Control_Signal_Immediate_Signal_Extend_Signed   : immediate_extended = {{16{instruction[15]}}, `Mips_Instruction_Format_IFormat_Imm(instruction)};
+		default                                               : immediate_extended = {{16{instruction[15]}}, `Mips_Instruction_Format_IFormat_Imm(instruction)};
 	endcase
 
 `Mips_Type_Word_T (reg) immediate_extended_shifted ;

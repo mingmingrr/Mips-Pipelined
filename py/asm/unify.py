@@ -15,11 +15,11 @@ def iterable(x):
 # [a] -> [a] -> {a:a}
 def unify_structure(a, b):
 	if iterable(a) != iterable(b):
-		raise ValueError('mismatched iterables')
+		raise ValueError(f'mismatched iterables:\n{a} {b}')
 	if not iterable(a):
 		return {a : b}
 	if len(a) != len(b):
-		raise ValueError('mismatched iterable lengths')
+		raise ValueError(f'mismatched iterable lengths:\n{a} {b}')
 	return F.reduce(
 		lambda s,x: [s.update(x), s][1],
 		map(unify_structure, a, b), {}

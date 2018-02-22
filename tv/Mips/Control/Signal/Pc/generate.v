@@ -16,9 +16,15 @@ module Mips_Control_Signal_Pc_generate
 `Mips_Control_Signal_Pc_Control_Condition_T (reg) condition ;
 
 always @(*)
-	if(`Mips_Instruction_Category_Category_Jump(category))
-		action = `Mips_Control_Signal_Pc_Signal_Action_Jump;
-	else if(`Mips_Instruction_Category_Category_Branch(category))
+	if(`Mips_Instruction_Category_Category_Jump(category)) begin
+		if(
+			opFunc == `Mips_Instruction_OpFunc_OpFuncs_Jr ||
+			opFunc == `Mips_Instruction_OpFunc_OpFuncs_Jalr
+		)
+			action = `Mips_Control_Signal_Pc_Signal_Action_JumpR;
+		else
+			action = `Mips_Control_Signal_Pc_Signal_Action_Jump;
+	end else if(`Mips_Instruction_Category_Category_Branch(category))
 		action = `Mips_Control_Signal_Pc_Signal_Action_Branch;
 	else
 		action = `Mips_Control_Signal_Pc_Signal_Action_Inc;

@@ -52,34 +52,23 @@ always @(posedge `Data_Control_Control_Clock(ctrl))
 				begin end
 		endcase
 
-`Mips_Type_Byte_T(reg) extbyte;
-always @(*)
-	case(`Mips_Control_Signal_Memory_Control_ByteEnable(control))
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_None : extbyte = 8'b0;
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Byte : extbyte = `Mips_Type_Word_Byte0(data);
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Half : extbyte = `Mips_Type_Word_Byte1(data);
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Word : extbyte = `Mips_Type_Word_Byte3(data);
-		default : extbyte = 8'b0;
-	endcase
-
-`Mips_Type_Byte_T(reg) extend;
+reg extend;
 always @(*)
 	case(`Mips_Control_Signal_Memory_Control_ByteExtend(control))
-		`Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned : extend = 8'b0;
-		`Mips_Control_Signal_Memory_Signal_ByteExtend_Signed : extend = {8{extbyte[7]}};
+		`Mips_Control_Signal_Memory_Signal_ByteExtend_Unsigned : extend = 1'b0;
+		`Mips_Control_Signal_Memory_Signal_ByteExtend_Signed   : extend = 1'b1;
 	endcase
 
 `Mips_Type_Word_T (reg) out$;
 always @(*)
 	case(`Mips_Control_Signal_Memory_Control_ByteEnable(control))
 		`Mips_Control_Signal_Memory_Signal_ByteEnable_None : out$ = 32'b0;
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Byte : out$ = {{3{extend}}, memData[addr+0]};
-		`Mips_Control_Signal_Memory_Signal_ByteEnable_Half : out$ = {{2{extend}}, memData[addr+1], memData[addr+0]};
+		`Mips_Control_Signal_Memory_Signal_ByteEnable_Byte : out$ = {{24{extend & memData[addr+0][7]}}, memData[addr+0]};
+		`Mips_Control_Signal_Memory_Signal_ByteEnable_Half : out$ = {{16{extend & memData[addr+1][7]}}, memData[addr+1], memData[addr+0]};
 		`Mips_Control_Signal_Memory_Signal_ByteEnable_Word : out$ = {memData[addr+3], memData[addr+2], memData[addr+1], memData[addr+0]};
 		default                                            : out$ = 32'b0;
 	endcase
 assign out = out$;
-
 
 endmodule
 
