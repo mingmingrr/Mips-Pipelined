@@ -1,3 +1,0 @@
-$(tv.makeEnum("Mips_Control_IfId_Signal_Pc_Signal_Action",
-	"None Inc Branch Jump JumpR".split(' ')))
-

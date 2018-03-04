@@ -1,0 +1,5 @@
+$(tv.makeEnum("Mips_Control_Type_Signal_Immediate_Signal_Shift",
+	"None Left2 Left16".split(' ')))
+
+
+

@@ -3,26 +3,20 @@
 `include "Data/Control/invert.v"
 `include "Data/Memory/ram.v"
 `include "Data/Memory/rom.v"
-`include "Mips/Alu/hilo.v"
-`include "Mips/Alu/Func.v"
-`include "Mips/Alu/hilo.v"
-`include "Mips/Pc/pc.v"
 `include "Mips/Instruction/Format/IFormat.v"
 `include "Mips/Instruction/Format/JFormat.v"
 `include "Mips/Instruction/Format/RFormat.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
-`include "Mips/Instruction/OpFunc/aluFuncDecode.v"
-`include "Mips/Instruction/OpFunc/instToOpFunc.v"
+`include "Mips/Instruction/OpFunc/decode.v"
 `include "Mips/Instruction/Category/categorize.v"
 `include "Mips/Instruction/Category/Category.v"
-`include "Mips/Datapath/Pc/action.v"
+`include "Mips/Datapath/Alu/datapath.v"
+`include "Mips/Datapath/Pc/datapath.v"
 `include "Mips/Datapath/Memory/bam.v"
 `include "Mips/Datapath/Immediate/extendShift.v"
-`include "Mips/Datapath/Register/register.v"
-`include "Mips/Datapath/Alu/alu.v"
-`include "Mips/Control/IfId/Control.v"
-`include "Mips/Control/IfId/generate.v"
-`include "Mips/Register/register.v"
+`include "Mips/Datapath/Register/datapath.v"
+`include "Mips/Control/Type/Control.v"
+`include "Mips/Control/Type/generate.v"
 `include "Mips/Type/RegAddr.v"
 `include "Mips/Type/Word.v"
 `include "Mips/Type/Byte.v"
@@ -45,7 +39,7 @@ module Mips_mips #
 `Mips_Type_Word_T (wire) instruction;
 
 `Mips_Instruction_OpFunc_OpFunc_T (wire) opFunc;
-Mips_Instruction_OpFunc_instToOpFunc ITOOF_G
+Mips_Instruction_OpFunc_decode ITOOF_G
 	( .op     (`Mips_Instruction_Format_RFormat_Op(instruction))
 	, .func   (`Mips_Instruction_Format_RFormat_Func(instruction))
 	, .opFunc (opFunc)
@@ -58,8 +52,8 @@ Mips_Instruction_Category_categorize CATAGORY_G
 	, .category (category)
 	);
 
-`Mips_Control_IfId_Control_T (wire) control;
-Mips_Control_IfId_generate CTRLGEN_G
+`Mips_Control_Type_Control_T (wire) control;
+Mips_Control_Type_generate CTRLGEN_G
 	( .opFunc   (opFunc)
 	, .category (category)
 	, .control  (control)
@@ -80,7 +74,7 @@ Mips_Datapath_Memory_bam #
 	( .addr  (ram_addr)
 	, .data  (ram_data)
 	, .out   (ram_out)
-	, .control (`Mips_Control_IfId_Control_Memory(control))
+	, .control (`Mips_Control_Type_Control_Memory(control))
 	, .ctrl  (ctrl_inverted)
 	);
 
@@ -99,7 +93,7 @@ Data_Memory_rom #
 
 `Mips_Type_Word_T (wire) immediate;
 Mips_Datapath_Immediate_extendShift IMM_G
-	( .control (`Mips_Control_IfId_Control_Immediate(control))
+	( .control (`Mips_Control_Type_Control_Immediate(control))
 	, .immIn   (`Mips_Instruction_Format_IFormat_Imm(instruction))
 	, .immOut  (immediate)
 	);
@@ -109,10 +103,10 @@ Mips_Datapath_Immediate_extendShift IMM_G
 
 `Mips_Type_Word_T  (wire) alu_shamt  ;
 `Mips_Type_Word_T  (wire) alu_result ;
-`Mips_Alu_Status_T (wire) alu_status ;
-Mips_Datapath_Alu_alu ALU_G
+`Mips_Datapath_Alu_Status_T (wire) alu_status ;
+Mips_Datapath_Alu_datapath ALU
 	( .ctrl (ctrl)
-	, .control  (`Mips_Control_IfId_Control_Alu(control))
+	, .control  (`Mips_Control_Type_Control_Alu(control))
 	, .opFunc   (opFunc)
 	, .regPort1 (reg_port1)
 	, .regPort2 (reg_port2)
@@ -123,29 +117,20 @@ Mips_Datapath_Alu_alu ALU_G
 	);
 assign alu_shamt = 32'(`Mips_Instruction_Format_RFormat_Shamt(instruction));
 
-`Mips_Control_IfId_Signal_Pc_Control_Action_T(wire) pc_action;
-Mips_Datapath_Pc_action PCACT_G
-	( .status  (alu_status)
-	, .control (`Mips_Control_IfId_Control_Pc(control))
-	, .action  (pc_action)
-	);
-
 `Mips_Type_Word_T(wire) pc_addr_curr, pc_addr_next;
-Mips_Pc_pc #
-	( .ADDR_W (32)
-	) PC_G
-	( .ctrl   (ctrl)
-	, .action (pc_action)
-	, .offset (`Mips_Instruction_Format_IFormat_Imm(instruction))
-	, .jump   (`Mips_Instruction_Format_JFormat_Target(instruction))
-	, .jumpr  (reg_port1)
+Mips_Datapath_Pc_datapath PC
+	( .status  (alu_status)
+	, .control (`Mips_Control_Type_Control_Pc(control))
+	, .ctrl   (ctrl)
+	, .instruction (instruction)
+	, .regPort1    (reg_port1)
 	, .addrNext (pc_addr_next)
 	, .addrCurr (pc_addr_curr)
 	);
 
-Mips_Datapath_Register_register REG_G
+Mips_Datapath_Register_datapath REG
 	( .ctrl    (ctrl)
-	, .control (`Mips_Control_IfId_Control_Register(control))
+	, .control (`Mips_Control_Type_Control_Register(control))
 	, .pcAddr  (pc_addr_curr)
 	, .ramOut  (ram_out)
 	, .aluResult (alu_result)

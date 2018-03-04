@@ -1,0 +1,4 @@
+$(tv.makeEnum("Mips_Datapath_Alu_Func",
+"Add Sub Sll Srl Sra And Or Nor Xor Slts Sltu Muls Mulu Divs Divu Mfhi Mthi Mflo Mtlo None".split(' ')
+))
+

@@ -1,9 +1,0 @@
-`include "Mips/Control/IfId/Signal/Immediate/Signal/Extend.v"
-`include "Mips/Control/IfId/Signal/Immediate/Signal/Shift.v"
-
-$(tv.makeStruct("Mips_Control_IfId_Signal_Immediate_Control", [
-("Extend" , "`Mips_Control_IfId_Signal_Immediate_Signal_Extend_W" ),
-("Shift"  , "`Mips_Control_IfId_Signal_Immediate_Signal_Shift_W"  ),
-]))
-
-

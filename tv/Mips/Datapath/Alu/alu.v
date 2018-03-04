@@ -1,51 +1,82 @@
-`include "Data/Control/Control.v"
-`include "Mips/Type/Word.v"
-`include "Mips/Instruction/OpFunc/OpFunc.v"
-`include "Mips/Control/IfId/Signal/Alu/Control.v"
-`include "Mips/Control/IfId/Signal/Alu/Signal/Data2Source.v"
-`include "Mips/Alu/hilo.v"
+`include "Util/Math.v"
+`include "Mips/Datapath/Alu/Func.v"
+`include "Mips/Datapath/Alu/Status.v"
 
-module Mips_Datapath_Alu_alu
-	( `Data_Control_Control_T(input) ctrl
-	, `Mips_Control_IfId_Signal_Alu_Control_T(input) control
-	, `Mips_Instruction_OpFunc_OpFunc_T(input) opFunc
-	, `Mips_Type_Word_T(input) regPort1
-	, `Mips_Type_Word_T(input) regPort2
-	, `Mips_Type_Word_T(input) shamt
-	, `Mips_Type_Word_T(input) immediate
-	, `Mips_Type_Word_T  (output) result
-	, `Mips_Alu_Status_T (output) status
+`define Mips_Datapath_Alu_alu_Data_T(T) T [DATA_W-1:0]
+
+module Mips_Datapath_Alu_alu #
+	( parameter DATA_W  = 32
+	)
+	( `Mips_Datapath_Alu_alu_Data_T (input)  data1
+	, `Mips_Datapath_Alu_alu_Data_T (input)  data2
+	, `Mips_Datapath_Alu_Func_T     (input)  func
+	, `Mips_Datapath_Alu_alu_Data_T (input)  reg_lo
+	, `Mips_Datapath_Alu_alu_Data_T (input)  reg_hi
+	, `Mips_Datapath_Alu_alu_Data_T (output) res_lo
+	, `Mips_Datapath_Alu_alu_Data_T (output) res_hi
+	, `Mips_Datapath_Alu_Status_T   (output) status
 	);
 
-`Mips_Alu_Func_T (wire) func ;
-Mips_Instruction_OpFunc_aluFuncDecode ALUDEC_G
-	( .opFunc (opFunc)
-	, .func   (func)
-	);
+`Util_Math_log2_expr
 
-`Mips_Type_Word_T  (wire) data1  ;
-`Mips_Type_Word_T  (wire) data2  ;
-Mips_Alu_hilo #
-	( .DATA_W (32)
-	) ALU_G
-	( .ctrl   (ctrl)
-	, .func   (func)
-	, .data1  (data1)
-	, .data2  (data2)
-	, .result (result)
-	, .status (status)
-	);
+`Mips_Datapath_Alu_alu_Data_T (wire signed) data1$  , data2$  ;
+`Mips_Datapath_Alu_alu_Data_T (wire signed) mul_lo$ , mul_hi$ ;
+`Mips_Datapath_Alu_alu_Data_T (wire)        mul_lo  , mul_hi  ;
+wire [Util_Math_log2(DATA_W)-1:0] shamt;
 
-assign data1 = regPort1;
+assign data1$ = data1;
+assign data2$ = data2;
+assign {mul_hi, mul_lo} = data1 * data2;
+assign {mul_hi$, mul_lo$} = data1$ * data2$;
+assign shamt = data2[Util_Math_log2(DATA_W)-1:0];
 
-`Mips_Type_Word_T (reg) data2$ ;
+`Mips_Datapath_Alu_alu_Data_T(reg) res_lo$;
 always @(*)
-	case(`Mips_Control_IfId_Signal_Alu_Control_Data2Source(control))
-		`Mips_Control_IfId_Signal_Alu_Signal_Data2Source_Immediate : data2$ = immediate;
-		`Mips_Control_IfId_Signal_Alu_Signal_Data2Source_Shamt     : data2$ = shamt;
-		`Mips_Control_IfId_Signal_Alu_Signal_Data2Source_Register  : data2$ = regPort2;
-		default                                               : data2$ = regPort2;
+	case(func)
+		`Mips_Datapath_Alu_Func_Add  : res_lo$ =          data1   +   data2  ;
+		`Mips_Datapath_Alu_Func_Sub  : res_lo$ =          data1   -   data2  ;
+		`Mips_Datapath_Alu_Func_Sll  : res_lo$ =          data1   <<  shamt  ;
+		`Mips_Datapath_Alu_Func_Sra  : res_lo$ =          data1$  >>> shamt  ;
+		`Mips_Datapath_Alu_Func_Srl  : res_lo$ =          data1   >>  shamt  ;
+		`Mips_Datapath_Alu_Func_And  : res_lo$ =          data1   &   data2  ;
+		`Mips_Datapath_Alu_Func_Or   : res_lo$ =          data1   |   data2  ;
+		`Mips_Datapath_Alu_Func_Nor  : res_lo$ = ~(       data1   |   data2  );
+		`Mips_Datapath_Alu_Func_Xor  : res_lo$ =          data1   ^   data2  ;
+		`Mips_Datapath_Alu_Func_Slts : res_lo$ = DATA_W'( data1$  <   data2$ );
+		`Mips_Datapath_Alu_Func_Sltu : res_lo$ = DATA_W'( data1   <   data2  );
+		`Mips_Datapath_Alu_Func_Muls : res_lo$ =          mul_lo$ ;
+		`Mips_Datapath_Alu_Func_Mulu : res_lo$ =          mul_lo  ;
+		// `Mips_Datapath_Alu_Func_Divs : res_lo$ =          data1$  /  data2$  ;
+		// `Mips_Datapath_Alu_Func_Divu : res_lo$ =          data1   /  data2   ;
+		`Mips_Datapath_Alu_Func_Mtlo : res_lo$ =          data1   ;
+		`Mips_Datapath_Alu_Func_Mthi : res_lo$ =          data1   ;
+		`Mips_Datapath_Alu_Func_Mflo : res_lo$ =          reg_lo  ;
+		`Mips_Datapath_Alu_Func_Mfhi : res_lo$ =          reg_hi  ;
+		default                      : res_lo$ =          data1   ;
 	endcase
-assign data2 = data2$;
+assign res_lo = res_lo$;
+
+`Mips_Datapath_Alu_alu_Data_T(reg) res_hi$;
+always @(*)
+	case(func)
+		`Mips_Datapath_Alu_Func_Muls : res_hi$ = mul_hi$;
+		`Mips_Datapath_Alu_Func_Mulu : res_hi$ = mul_hi;
+		// `Mips_Datapath_Alu_Func_Divs : res_hi$ = data1$ % data2$;
+		// `Mips_Datapath_Alu_Func_Divu : res_hi$ = data1 % data2;
+		`Mips_Datapath_Alu_Func_Mthi : res_hi$ = data1;
+		default                      : res_hi$ = DATA_W'(0);
+	endcase
+assign res_hi = res_hi$;
+
+wire zero;
+assign zero = ~(|res_lo$);
+wire less;
+assign less = data1 < data2;
+wire equal;
+assign equal = data1 == data2;
+
+assign status = `Mips_Datapath_Alu_Status_Init_Defaults;
 
 endmodule
+
+`undef Mips_Datapath_Alu_alu_Data_T

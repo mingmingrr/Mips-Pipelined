@@ -1,3 +1,0 @@
-$(tv.makeEnum("Mips_Control_IfId_Signal_Register_Signal_WriteAddrSource",
-	"None Rt Rd R31".split(' ')))
-
