@@ -46,7 +46,7 @@ always @(posedge `Data_Control_Control_Clock(ctrl))
 	if(`Data_Control_Control_Reset(ctrl))
 		for(i = 0; i < ADDR_L; i = i + 1)
 			memData[i] = RESET;
-	else begin
+	else if(`Mips_Control_Signal_Memory_Control_WriteEnable(control)) begin
 		if(byteEnable[3]) memData[addr+3] = `Mips_Type_Word_Byte3(data);
 		if(byteEnable[2]) memData[addr+2] = `Mips_Type_Word_Byte2(data);
 		if(byteEnable[1]) memData[addr+1] = `Mips_Type_Word_Byte1(data);
