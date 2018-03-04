@@ -1,6 +1,3 @@
-`ifndef MIPS_INSTRUCTION_OPFUNC_OPFUNC_M
-`define MIPS_INSTRUCTION_OPFUNC_OPFUNC_M
-
 `include "Mips/Instruction/OpFunc/Source.v"
 
 $(tv.makeStruct("Mips_Instruction_OpFunc_OpFunc", [
@@ -8,4 +5,3 @@ $(tv.makeStruct("Mips_Instruction_OpFunc_OpFunc", [
 ("OpFunc", 6, 0),
 ]))
 
-`endif

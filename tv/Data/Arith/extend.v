@@ -1,8 +1,3 @@
-// vim: set ft=verilog:
-
-`ifndef DATA_ARITH_EXTEND_I
-`define DATA_ARITH_EXTEND_I
-
 `include "Data/Arith/SignedUnsigned.v"
 `include "Data/Array/Pack.v"
 `include "Data/Control/Control.v"
@@ -27,4 +22,3 @@ always @(posedge `Data_Control_Control_Clock(ctrl))
 		out$[i] <= OUT_W'(in$[i]);
 endmodule
 
-`endif

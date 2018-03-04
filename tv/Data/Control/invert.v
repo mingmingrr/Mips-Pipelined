@@ -1,6 +1,3 @@
-`ifndef DATA_CONTROL_INVERT_I
-`define DATA_CONTROL_INVERT_I
-
 `include "Data/Control/Control.v"
 
 module Data_Control_invert
@@ -18,5 +15,4 @@ assign out = `Data_Control_Control_Init_Defaults;
 
 endmodule
 
-`endif
 

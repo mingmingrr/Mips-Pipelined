@@ -1,6 +1,3 @@
-`ifndef MIPS_INSTRUCTION_FORMAT_IFORMAT_M
-`define MIPS_INSTRUCTION_FORMAT_IFORMAT_M
-
 $(tv.makeStruct("Mips_Instruction_Format_IFormat", [
 ("Op"   , 6  , 26) ,
 ("Rs"   , 5  , 21) ,
@@ -8,4 +5,3 @@ $(tv.makeStruct("Mips_Instruction_Format_IFormat", [
 ("Imm"  , 16 , 0)  ,
 ]))
 
-`endif

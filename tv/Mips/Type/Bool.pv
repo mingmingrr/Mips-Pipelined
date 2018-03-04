@@ -1,10 +1,6 @@
-`ifndef MIPS_TYPE_BOOL_M
-`define MIPS_TYPE_BOOL_M
-
 $(tv.makeStruct(
 "Mips_Type_Bool", [
 ("Bool", 1),
 ]))
 
-`endif
 

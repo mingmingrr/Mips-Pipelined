@@ -9,6 +9,7 @@ Mips_mips #
 	( .FILE ("asm/test2.mif")
 	) DUT
 	( .ctrl (ctrl)
+	, .pcAddr ()
 	);
 
 initial `Data_Control_Control_Clock(ctrl) = 1'b0;

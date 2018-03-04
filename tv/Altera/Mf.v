@@ -1,5 +1,3 @@
-`ifndef ALTERA_MF_M
-`define ALTERA_MF_M
 `ifndef NO_INC
 
 // Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
@@ -55772,5 +55770,4 @@ module    altsource_probe    (
 
 endmodule //altsource_probe
 
-`endif
 `endif

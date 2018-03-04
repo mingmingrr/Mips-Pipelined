@@ -1,8 +1,4 @@
-`ifndef MIPS_CONTROL_SIGNAL_IMMEDIATE_SIGNAL_EXTEND_M
-`define MIPS_CONTROL_SIGNAL_IMMEDIATE_SIGNAL_EXTEND_M
-
 $(tv.makeEnum("Mips_Control_Signal_Immediate_Signal_Extend",
 	"Signed Unsigned".split(' ')))
 
-`endif
 

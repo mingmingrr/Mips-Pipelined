@@ -1,6 +1,3 @@
-`ifndef MIPS_PC_PC_I
-`define MIPS_PC_PC_I
-
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
 `include "Mips/Control/Signal/Pc/Signal/Action.v"
@@ -55,5 +52,4 @@ always @(posedge `Data_Control_Control_Clock(ctrl))
 
 endmodule
 
-`endif
 

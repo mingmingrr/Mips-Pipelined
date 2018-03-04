@@ -1,6 +1,3 @@
-`ifndef MIPS_INSTRUCTION_CATEGORY_CATEGORIZE_I
-`define MIPS_INSTRUCTION_CATEGORY_CATEGORIZE_I
-
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/Format/RFormat.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
@@ -91,12 +88,12 @@ always @(*)
 		default                                                                                : compare = 1'b0;
 	endcase
 
-reg logic;
+reg logical;
 always @(*)
 	casez(opFunc)
-		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Func , 6'b1001??) : logic = 1'b1;
-		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Op   , 6'b0011??) : logic = 1'b1;
-		default                                                                                : logic = 1'b0;
+		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Func , 6'b1001??) : logical = 1'b1;
+		`Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_Op   , 6'b0011??) : logical = 1'b1;
+		default                                                                                : logical = 1'b0;
 	endcase
 
 reg arithmetic;
@@ -125,5 +122,4 @@ assign category = `Mips_Instruction_Category_Category_Init_Defaults;
 
 endmodule
 
-`endif
 

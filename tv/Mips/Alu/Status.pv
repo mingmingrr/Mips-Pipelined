@@ -1,10 +1,6 @@
-`ifndef MIPS_ALU_STATUS_M
-`define MIPS_ALU_STATUS_M
-
 $(tv.makeStruct("Mips_Alu_Status", [
 ("Zero", 1),
 ("Less", 1),
 ("Equal", 1),
 ]))
 
-`endif

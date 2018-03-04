@@ -1,6 +1,3 @@
-`ifndef UTIL_MATH_M
-`define UTIL_MATH_M
-
 `define Util_Math_log2_expr \
 	function integer Util_Math_log2; \
 		input x; integer x; \
@@ -14,4 +11,3 @@
 		end \
 	endfunction
 
-`endif

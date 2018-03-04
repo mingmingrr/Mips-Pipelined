@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_SIGNAL_IMMEDIATE_GENERATE_I
-`define MIPS_CONTROL_SIGNAL_IMMEDIATE_GENERATE_I
-
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/OpFuncs.v"
@@ -22,7 +19,7 @@ always @(*)
 		shift = `Mips_Control_Signal_Immediate_Signal_Shift_None   ;
 
 always @(*)
-	if(`Mips_Instruction_Category_Category_Logic(category))
+	if(`Mips_Instruction_Category_Category_Logical(category))
 		extend = `Mips_Control_Signal_Immediate_Signal_Extend_Unsigned;
 	else
 		case(opFunc)
@@ -35,5 +32,4 @@ assign control = `Mips_Control_Signal_Immediate_Control_Init_Defaults;
 
 endmodule
 
-`endif
 

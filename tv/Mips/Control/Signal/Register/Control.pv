@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_SIGNAL_REGISTER_CONTROL_M
-`define MIPS_CONTROL_SIGNAL_REGISTER_CONTROL_M
-
 `include "Mips/Control/Signal/Register/Signal/Port1AddrSource.v"
 `include "Mips/Control/Signal/Register/Signal/Port2AddrSource.v"
 `include "Mips/Control/Signal/Register/Signal/WriteAddrSource.v"
@@ -15,4 +12,3 @@ $(tv.makeStruct("Mips_Control_Signal_Register_Control", [
 ("WriteEnable"     , "`Mips_Control_Signal_Register_Signal_WriteEnable_W"     ),
 ]))
 
-`endif

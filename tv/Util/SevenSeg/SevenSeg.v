@@ -1,8 +1,3 @@
-// vim: set ft=verilog:
-
-`ifndef UTIL_SEVENSEG_SEVENSEG_M
-`define UTIL_SEVENSEG_SEVENSEG_M
-
 module Util_SevenSeg_SevenSeg;
 
 function [6:0] decodeHighTrue([3:0] in);
@@ -33,4 +28,3 @@ endfunction
 
 endmodule
 
-`endif

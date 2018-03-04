@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_CONTROL_M
-`define MIPS_CONTROL_CONTROL_M
-
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Control/Signal/Pc/Control.v"
 `include "Mips/Control/Signal/Alu/Control.v"
@@ -17,5 +14,4 @@ $(tv.makeStruct(
 ("Immediate" , "`Mips_Control_Signal_Immediate_Control_W" ),
 ]))
 
-`endif
 

@@ -1,6 +1,3 @@
-`ifndef UTIL_DELAY_GEN_I
-`define UTIL_DELAY_GEN_I
-
 `include "Data/Control/Control.v"
 
 module Util_Delay_gen #
@@ -32,4 +29,3 @@ endgenerate
 
 endmodule
 
-`endif

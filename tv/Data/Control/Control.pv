@@ -1,9 +1,5 @@
-`ifndef DATA_CONTROL_CONTROL_M
-`define DATA_CONTROL_CONTROL_M
-
 $(tv.makeStruct("Data_Control_Control", [
 ("Clock", 1),
 ("Reset", 1),
 ]))
 
-`endif

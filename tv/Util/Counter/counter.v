@@ -1,8 +1,3 @@
-// vim: set ft=verilog:
-
-`ifndef UTIL_COUNTER_COUNTER_I
-`define UTIL_COUNTER_COUNTER_I
-
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
 
@@ -49,4 +44,3 @@ Delay_arr #
 
 endmodule
 
-`endif

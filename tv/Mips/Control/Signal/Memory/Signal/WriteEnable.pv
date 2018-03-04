@@ -1,8 +1,4 @@
-`ifndef MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_WRITEENABLE_M
-`define MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_WRITEENABLE_M
-
 $(tv.makeBool("Mips_Control_Signal_Memory_Signal_WriteEnable"))
 
-`endif
 
 

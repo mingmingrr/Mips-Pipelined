@@ -1,41 +1,49 @@
 default: all
 
-header = "py/tv.py"
+define makePre
+	@echo "[Make] $2 --> $1"
+	mkdir -p $(shell dirname "$1")
+endef
+
+define makePost
+	python3 py/tv/include.py --base sv --file "$1" --out "$1"
+	python3 py/tv/guard.py --base sv --file "$1" --out "$1"
+endef
+
+define makePv
+	$(call makePre,$1,$2)
+	expander3 -a "py/tv/header.py" "$2" > "$1"
+	$(call makePost,$1,$2)
+endef
+
+define makeV
+	$(call makePre,$1,$2)
+	cp "$2" "$1"
+	$(call makePost,$1,$2)
+endef
 
 tvlog = $(shell find tv -name "*.tv")
 tvout = $(tvlog:tv/%.tv=sv/%.v)
 $(tvout): sv/%.v: tv/%.tv
-	@echo "[Expand] $< --> $@"
-	mkdir -p $(shell dirname "$@")
-	expander3 -a $(header) "$<" > "$@"
-	py/tv/include.py sv "$@"
+	$(call makePv,$@,$<)
 out = $(tvout)
 
 pvlog = $(shell find tv -name "*.pv")
 pvout = $(pvlog:tv/%.pv=sv/%.v)
 $(pvout): sv/%.v: tv/%.pv
-	@echo "[Expand] $< --> $@"
-	mkdir -p $(shell dirname "$@")
-	expander3 -a $(header) "$<" > "$@"
-	py/tv/include.py sv "$@"
+	$(call makePv,$@,$<)
 out += $(pvout)
 
 vlog =$(shell find tv -name "*.v")
 vout = $(vlog:tv/%.v=sv/%.v)
 $(vout): sv/%.v: tv/%.v
-	@echo "[Copy] $< --> $@"
-	mkdir -p $(shell dirname "$@")
-	cp "$<" "$@"
-	py/tv/include.py sv "$@"
+	$(call makeV,$@,$<)
 out += $(vout)
 
 svlog =$(shell find tv -name "*.sv")
 svout = $(svlog:tv/%.sv=sv/%.sv)
 $(svout): sv/%.sv: tv/%.sv
-	@echo "[Copy] $< --> $@"
-	mkdir -p $(shell dirname "$@")
-	cp "$<" "$@"
-	py/tv/include.py sv "$@"
+	$(call makeV,$@,$<)
 out += $(svout)
 
 .PHONY: all
@@ -43,7 +51,7 @@ all: $(out)
 
 .PHONY: clean
 clean:
-	rm -rvf sv
+	rm -rfv sv
 
 .PHONY: watch
 watch: all

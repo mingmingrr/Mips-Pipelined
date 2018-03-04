@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_SIGNAL_ALU_GENERATE_I
-`define MIPS_CONTROL_SIGNAL_ALU_GENERATE_I
-
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Control/Signal/Alu/Control.v"
@@ -36,5 +33,4 @@ assign control = `Mips_Control_Signal_Alu_Control_Init_Defaults;
 
 endmodule
 
-`endif
 

@@ -1,6 +1,2 @@
-`ifndef DATA_ARITH_SIGNEDUNSIGNED_M
-`define DATA_ARITH_SIGNEDUNSIGNED_M
-
 $(tv.makeEnum("Data_Arith_SignedUnsigned", "Signed Unsigned".split(' ')))
 
-`endif

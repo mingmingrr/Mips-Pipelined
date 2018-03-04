@@ -1,6 +1,3 @@
-`ifndef DATA_MEMORY_ROM_I
-`define DATA_MEMORY_ROM_I
-
 `include "Altera/Mf.v"
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
@@ -77,5 +74,3 @@ defparam
 	altsyncram_component.width_byteena_a        = 1;
 
 endmodule
-
-`endif

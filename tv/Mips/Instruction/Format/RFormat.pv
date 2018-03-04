@@ -1,6 +1,3 @@
-`ifndef MIPS_INSTRUCTION_FORMAT_RFORMAT_M
-`define MIPS_INSTRUCTION_FORMAT_RFORMAT_M
-
 $(tv.makeStruct("Mips_Instruction_Format_RFormat", [
 ("Op"    , 6 , 26) ,
 ("Rs"    , 5 , 21) ,
@@ -10,4 +7,3 @@ $(tv.makeStruct("Mips_Instruction_Format_RFormat", [
 ("Func"  , 6 , 0)  ,
 ]))
 
-`endif

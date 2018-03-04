@@ -1,8 +1,4 @@
-`ifndef MIPS_ALU_FUNC_M
-`define MIPS_ALU_FUNC_M
-
 $(tv.makeEnum("Mips_Alu_Func",
 "Add Sub Sll Srl Sra And Or Nor Xor Slts Sltu Muls Mulu Divs Divu Mfhi Mthi Mflo Mtlo None".split(' ')
 ))
 
-`endif

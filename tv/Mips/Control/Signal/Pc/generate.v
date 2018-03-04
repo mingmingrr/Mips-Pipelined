@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_SIGNAL_PC_GENERATE_I
-`define MIPS_CONTROL_SIGNAL_PC_GENERATE_I
-
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/OpFuncs.v"
@@ -46,5 +43,4 @@ assign control = `Mips_Control_Signal_Pc_Control_Init_Defaults;
 
 endmodule
 
-`endif
 

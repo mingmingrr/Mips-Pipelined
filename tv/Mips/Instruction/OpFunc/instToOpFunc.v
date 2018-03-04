@@ -1,6 +1,3 @@
-`ifndef MIPS_INSTRUCTION_OPFUNC_INSTTOOPFUNC_I
-`define MIPS_INSTRUCTION_OPFUNC_INSTTOOPFUNC_I
-
 `include "Mips/Instruction/Format/RFormat.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/Source.v"
@@ -21,4 +18,3 @@ assign opFunc
 
 endmodule
 
-`endif

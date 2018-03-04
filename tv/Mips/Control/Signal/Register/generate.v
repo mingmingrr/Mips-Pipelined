@@ -1,6 +1,3 @@
-`ifndef MIPS_CONTROL_SIGNAL_REGISTER_GENERATE_I
-`define MIPS_CONTROL_SIGNAL_REGISTER_GENERATE_I
-
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Control/Signal/Register/Control.v"
@@ -65,5 +62,4 @@ assign control = `Mips_Control_Signal_Register_Control_Init_Defaults;
 
 endmodule
 
-`endif
 

@@ -1,6 +1,3 @@
-`ifndef ALU_HILO_I
-`define ALU_HILO_I
-
 `include "Util/Math.v"
 `include "Mips/Alu/Func.v"
 `include "Mips/Alu/Status.v"
@@ -48,8 +45,8 @@ always @(*)
 	case(func)
 		`Mips_Alu_Func_Mulu : {store_hi, store_lo} = 2'b11;
 		`Mips_Alu_Func_Muls : {store_hi, store_lo} = 2'b11;
-		`Mips_Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
-		`Mips_Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
+		// `Mips_Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
+		// `Mips_Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
 		`Mips_Alu_Func_Mthi : {store_hi, store_lo} = 2'b10;
 		`Mips_Alu_Func_Mtlo : {store_hi, store_lo} = 2'b01;
 		default             : {store_hi, store_lo} = 2'b00;
@@ -89,5 +86,4 @@ endmodule
 `undef Mips_Alu_hilo_Type_Data_T
 `undef Mips_Alu_hilo_Type_Shamt_T
 
-`endif
 

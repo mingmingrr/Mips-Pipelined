@@ -1,9 +1,5 @@
-`ifndef MIPS_INSTRUCTION_FORMAT_JFORMAT_M
-`define MIPS_INSTRUCTION_FORMAT_JFORMAT_M
-
 $(tv.makeStruct("Mips_Instruction_Format_JFormat", [
 ("Op"     , 6  , 26) ,
 ("Target" , 26 , 0)  ,
 ]))
 
-`endif

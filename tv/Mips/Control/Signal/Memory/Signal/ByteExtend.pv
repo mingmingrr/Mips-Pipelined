@@ -1,9 +1,5 @@
-`ifndef MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_BYTEEXTEND_M
-`define MIPS_CONTROL_SIGNAL_MEMORY_SIGNAL_BYTEEXTEND_M
-
 $(tv.makeEnum("Mips_Control_Signal_Memory_Signal_ByteExtend",
 	"Signed Unsigned".split(" ")))
 
-`endif
 
 

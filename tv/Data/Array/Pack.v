@@ -1,6 +1,3 @@
-`ifndef DATA_ARRAY_PACK_M
-`define DATA_ARRAY_PACK_M
-
 `define Data_Array_Pack_T(T,a,b) T [a*b-1:0]
 
 `define Data_Array_Pack_Packed_T(T,a,b,x) T [a*b-1:0] x;
@@ -28,5 +25,4 @@
 	`Data_Array_Pack_Unpacked_T(T,a,b,x) \
 	`Data_Array_Pack_pack(a,b,x,y,i,l)
 
-`endif
 
