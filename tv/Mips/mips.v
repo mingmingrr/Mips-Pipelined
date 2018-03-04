@@ -75,7 +75,7 @@ wire [8:0] ram_addr  ;
 `Mips_Type_Word_T (wire) ram_data  ;
 `Mips_Type_Word_T (wire) ram_out   ;
 Mips_Datapath_Memory_bam #
-	( .ADDR_L  (512)
+	( .ADDR_L  (128)
 	) RAM_G
 	( .addr  (ram_addr)
 	, .data  (ram_data)
