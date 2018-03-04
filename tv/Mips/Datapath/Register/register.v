@@ -8,10 +8,10 @@ module Mips_Datapath_Register_register #
 	)
 	( `Data_Control_Control_T (input ) ctrl
 	, `Mips_Type_RegAddr_T    (input ) rd1Addr
-	, `Mips_Type_RegAddr_T    (input ) rd2Addr
-	, `Mips_Type_RegAddr_T    (input ) wrAddr
 	, `Mips_Type_Word_T       (output) rd1Data
+	, `Mips_Type_RegAddr_T    (input ) rd2Addr
 	, `Mips_Type_Word_T       (output) rd2Data
+	, `Mips_Type_RegAddr_T    (input ) wrAddr
 	, `Mips_Type_Word_T       (input ) wrData
 	, input                            wrEnable
 	);
