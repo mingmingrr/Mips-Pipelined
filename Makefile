@@ -55,7 +55,7 @@ clean:
 
 .PHONY: watch
 watch: all
-	inotifywait -e modify -r -m tv | python3 watch.py
+	inotifywait -e modify -e delete -r -m tv | python3 watch.py
 	# while true; do \
 	# 	make --quiet || \
 	# 		notify-send -a make "make failed" \

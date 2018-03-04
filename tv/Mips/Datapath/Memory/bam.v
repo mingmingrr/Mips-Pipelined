@@ -1,14 +1,15 @@
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
 `include "Data/Memory/bam.v"
+
 `include "Mips/Control/Type/Signal/Memory/Control.v"
 `include "Mips/Control/Type/Signal/Memory/Signal/ByteEnable.v"
 `include "Mips/Control/Type/Signal/Memory/Signal/ByteExtend.v"
 `include "Mips/Control/Type/Signal/Memory/Signal/WriteEnable.v"
-`include "Mips/Type/Word.v"
-`include "Mips/Type/Byte.v"
 
-module Mips_Datapath_Memory_bam #
+`include "Mips/Type/Word.v"
+
+module Mips_Datapath_Memory_datapath #
 	( parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	)

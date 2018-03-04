@@ -1,5 +1,5 @@
 `include "Util/Math.v"
-`include "Mips/Datapath/Alu/Func.v"
+`include "Mips/Control/Type/Signal/Alu/Signal/Func.v"
 `include "Mips/Datapath/Alu/Status.v"
 `include "Mips/Datapath/Alu/alu.v"
 `include "Data/Control/Control.v"
@@ -14,7 +14,7 @@ module Mips_Datapath_Alu_hilo #
 	( `Data_Control_Control_T     (input)  ctrl
 	, `Mips_Datapath_Alu_hilo_Type_Data_T  (input)  data1
 	, `Mips_Datapath_Alu_hilo_Type_Data_T  (input)  data2
-	, `Mips_Datapath_Alu_Func_T            (input)  func
+	, `Mips_Control_Type_Signal_Alu_Signal_Func_T (input)  func
 	, `Mips_Datapath_Alu_hilo_Type_Data_T  (output) result
 	, `Mips_Datapath_Alu_Status_T          (output) status
 	);
@@ -41,13 +41,13 @@ Mips_Datapath_Alu_alu #
 reg store_hi, store_lo;
 always @(*)
 	case(func)
-		`Mips_Datapath_Alu_Func_Mulu : {store_hi, store_lo} = 2'b11;
-		`Mips_Datapath_Alu_Func_Muls : {store_hi, store_lo} = 2'b11;
-		// `Mips_Datapath_Alu_Func_Divu : {store_hi, store_lo} = 2'b11;
-		// `Mips_Datapath_Alu_Func_Divs : {store_hi, store_lo} = 2'b11;
-		`Mips_Datapath_Alu_Func_Mthi : {store_hi, store_lo} = 2'b10;
-		`Mips_Datapath_Alu_Func_Mtlo : {store_hi, store_lo} = 2'b01;
-		default             : {store_hi, store_lo} = 2'b00;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Mulu : {store_hi, store_lo} = 2'b11;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Muls : {store_hi, store_lo} = 2'b11;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Divu : {store_hi, store_lo} = 2'b11;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Divs : {store_hi, store_lo} = 2'b11;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Mthi : {store_hi, store_lo} = 2'b10;
+		`Mips_Control_Type_Signal_Alu_Signal_Func_Mtlo : {store_hi, store_lo} = 2'b01;
+		default                                        : {store_hi, store_lo} = 2'b00;
 	endcase
 
 always @(posedge `Data_Control_Control_Clock(ctrl))

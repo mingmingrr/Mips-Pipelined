@@ -10,10 +10,12 @@ if __name__ != '__main__':
 
 while True:
 	line = sys.stdin.readline()
-	if 'MODIFY' not in line: continue
-	time.sleep(0.5)
-	sys.stdin.flush()
-	try:
-		subprocess.run(['make', '--silent'], check=True)
-	except subprocess.CalledProcessError:
-		subprocess.run(['notify-send', '-a', 'make', '"make failed"'])
+	if 'DELETE' in line:
+		pass
+	if 'MODIFY' in line:
+		time.sleep(0.5)
+		sys.stdin.flush()
+		try:
+			subprocess.run(['make', '--silent'], check=True)
+		except subprocess.CalledProcessError:
+			subprocess.run(['notify-send', '-a', 'make', '"make failed"'])

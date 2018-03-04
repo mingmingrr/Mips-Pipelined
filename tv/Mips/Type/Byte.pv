@@ -1,6 +1,6 @@
 $(tv.makeStruct(
-"Mips_Type_Byte", [
+"Mips_Type", [
 ("Byte", 8),
-]))
+]).split("\n\n")[0])
 
 

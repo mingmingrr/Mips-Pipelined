@@ -1,7 +1,7 @@
 $(tv.makeStruct(
-"Mips_Type_RegAddr", [
+"Mips_Type", [
 ("RegAddr", 5),
-]))
+]).split("\n\n")[0])
 
 
 

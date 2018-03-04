@@ -108,7 +108,7 @@ defparam
 	altsyncram_component.outdata_aclr_b                     = "NONE",
 	altsyncram_component.outdata_reg_a                      = "CLOCK0",
 	altsyncram_component.outdata_reg_b                      = "CLOCK0",
-	altsyncram_component.power_up_uninitialized             = "TRUE",
+	// altsyncram_component.power_up_uninitialized             = "TRUE",
 	altsyncram_component.read_during_write_mode_mixed_ports = "DONT_CARE",
 	altsyncram_component.read_during_write_mode_port_a      = "NEW_DATA_WITH_NBE_READ",
 	altsyncram_component.read_during_write_mode_port_b      = "NEW_DATA_WITH_NBE_READ",

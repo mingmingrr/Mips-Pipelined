@@ -28,7 +28,7 @@ module Mips_Datapath_Register_datapath
 `Mips_Type_Word_T    (wire) rd2Data ;
 `Mips_Type_RegAddr_T (wire) wrAddr  ;
 `Mips_Type_Word_T    (wire) wrData  ;
-Mips_Datapath_Register_register REG_G
+Mips_Datapath_Register_register REG
 	( .ctrl    (ctrl)
 	, .rd1Addr (rd1Addr)
 	, .rd1Data (rd1Data)
@@ -52,7 +52,7 @@ always @(*)
 		`Mips_Control_Type_Signal_Register_Signal_Port1AddrSource_Rs   : rd1Addr$ = rs;
 		`Mips_Control_Type_Signal_Register_Signal_Port1AddrSource_Rt   : rd1Addr$ = rt;
 		`Mips_Control_Type_Signal_Register_Signal_Port1AddrSource_None : rd1Addr$ = 5'b0;
-		default                                                   : rd1Addr$ = 5'b0;
+		default                                                        : rd1Addr$ = 5'b0;
 	endcase
 assign rd1Addr = rd1Addr$;
 
@@ -62,7 +62,7 @@ always @(*)
 		`Mips_Control_Type_Signal_Register_Signal_Port2AddrSource_Rs   : rd2Addr$ = rs;
 		`Mips_Control_Type_Signal_Register_Signal_Port2AddrSource_Rt   : rd2Addr$ = rt;
 		`Mips_Control_Type_Signal_Register_Signal_Port2AddrSource_None : rd2Addr$ = 5'b0;
-		default                                                   : rd2Addr$ = 5'b0;
+		default                                                        : rd2Addr$ = 5'b0;
 	endcase
 assign rd2Addr = rd2Addr$;
 
@@ -73,7 +73,7 @@ always @(*)
 		`Mips_Control_Type_Signal_Register_Signal_WriteAddrSource_Rt   : wrAddr$ = rt;
 		`Mips_Control_Type_Signal_Register_Signal_WriteAddrSource_R31  : wrAddr$ = 5'd31;
 		`Mips_Control_Type_Signal_Register_Signal_WriteAddrSource_None : wrAddr$ = 5'b0;
-		default                                                   : wrAddr$ = 5'b0;
+		default                                                        : wrAddr$ = 5'b0;
 	endcase
 assign wrAddr = wrAddr$;
 
@@ -83,7 +83,7 @@ always @(*)
 		`Mips_Control_Type_Signal_Register_Signal_WriteDataSource_Memory : wrData$ = ramOut;
 		`Mips_Control_Type_Signal_Register_Signal_WriteDataSource_Pc     : wrData$ = pcAddr + 4;
 		`Mips_Control_Type_Signal_Register_Signal_WriteDataSource_Alu    : wrData$ = aluResult;
-		default                                                     : wrData$ = aluResult;
+		default                                                          : wrData$ = aluResult;
 	endcase
 assign wrData = wrData$;
 

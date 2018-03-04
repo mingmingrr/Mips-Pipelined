@@ -1,4 +1,0 @@
-$(tv.makeEnum("Mips_Control_Type_Signal_Immediate_Signal_Extend",
-	"Signed Unsigned".split(' ')))
-
-

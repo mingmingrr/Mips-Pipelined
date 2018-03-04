@@ -1,6 +1,6 @@
 $(tv.makeStruct(
-"Mips_Type_Bool", [
+"Mips_Type", [
 ("Bool", 1),
-]))
+]).split("\n\n")[0])
 
 
