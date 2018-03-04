@@ -1,0 +1,5 @@
+$(tv.makeEnum("Mips_Control_Signal_Memory_Signal_ByteExtend",
+	"Signed Unsigned".split(" ")))
+
+
+

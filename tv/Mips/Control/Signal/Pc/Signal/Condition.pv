@@ -1,0 +1,4 @@
+$(tv.makeEnum("Mips_Control_Signal_Pc_Signal_Condition",
+	"None EQ NE".split(' ')))
+
+

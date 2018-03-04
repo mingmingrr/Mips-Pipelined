@@ -1,0 +1,4 @@
+$(tv.makeBool("Mips_Control_Signal_Register_Signal_WriteEnable"))
+
+
+

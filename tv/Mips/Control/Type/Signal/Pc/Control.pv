@@ -1,8 +1,0 @@
-`include "Mips/Control/Type/Signal/Pc/Signal/Action.v"
-`include "Mips/Control/Type/Signal/Pc/Signal/Condition.v"
-
-$(tv.makeStruct("Mips_Control_Type_Signal_Pc_Control", [
-( "Action"    , "`Mips_Control_Type_Signal_Pc_Signal_Action_W"    ),
-( "Condition" , "`Mips_Control_Type_Signal_Pc_Signal_Condition_W" ),
-]))
-

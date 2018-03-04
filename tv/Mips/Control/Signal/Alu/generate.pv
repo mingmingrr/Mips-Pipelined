@@ -1,0 +1,128 @@
+`include "Mips/Instruction/Category/Category.v"
+`include "Mips/Instruction/OpFunc/OpFunc.v"
+`include "Mips/Instruction/OpFunc/OpFuncs.v"
+`include "Mips/Control/Signal/Alu/Control.v"
+`include "Mips/Control/Signal/Alu/Signal/Data2Source.v"
+`include "Mips/Control/Signal/Alu/Signal/Func.v"
+`include "Mips/Control/Signal/Alu/Signal/ImmShift.v"
+`include "Mips/Control/Signal/Alu/Signal/ImmExtend.v"
+
+module Mips_Control_Signal_Alu_generate
+	( `Mips_Instruction_OpFunc_OpFunc_T     (input)  opFunc
+	, `Mips_Instruction_Category_Category_T (input)  category
+	, `Mips_Control_Signal_Alu_Control_T    (output) control
+	);
+
+`Mips_Control_Signal_Alu_Control_Data2Source_T (reg) data2Source;
+`Mips_Control_Signal_Alu_Control_Func_T (reg) func;
+`Mips_Control_Signal_Alu_Control_ImmExtend_T (reg) immExtend ;
+`Mips_Control_Signal_Alu_Control_ImmShift_T  (reg) immShift  ;
+
+always @(*)
+	if(opFunc == `Mips_Instruction_OpFunc_OpFuncs_Lui)
+		immShift = `Mips_Control_Signal_Alu_Signal_ImmShift_Left16 ;
+	else
+		immShift = `Mips_Control_Signal_Alu_Signal_ImmShift_None   ;
+
+always @(*)
+	if(`Mips_Instruction_Category_Category_Logical(category))
+		immExtend = `Mips_Control_Signal_Alu_Signal_ImmExtend_Unsigned;
+	else
+		case(opFunc)
+			`Mips_Instruction_OpFunc_OpFuncs_Addiu : immExtend = `Mips_Control_Signal_Alu_Signal_ImmExtend_Unsigned;
+			`Mips_Instruction_OpFunc_OpFuncs_Sltiu : immExtend = `Mips_Control_Signal_Alu_Signal_ImmExtend_Unsigned;
+			default                                : immExtend = `Mips_Control_Signal_Alu_Signal_ImmExtend_Signed;
+		endcase
+
+always @(*)
+	if(
+		`Mips_Instruction_Category_Category_Shift(category) &&
+		(!`Mips_Instruction_Category_Category_ShiftV(category))
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Shamt;
+	else if(
+		`Mips_Instruction_Category_Category_Load(category) ||
+		`Mips_Instruction_Category_Category_Store(category)
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Immediate;
+	else if(
+		`Mips_Instruction_Category_Category_Register(category) ||
+		`Mips_Instruction_Category_Category_Branch(category)
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Register;
+	else
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Immediate;
+
+always @(*)
+	case(opFunc)
+$py(ops = r"""
+Add       Add
+Addi      Add
+Addiu     Add
+Addu      Add
+And       And
+Andi      And
+Lui       Add
+Nor       Nor
+Or        Or
+Ori       Or
+Slt       Slts
+Slti      Slts
+Sltiu     Sltu
+Sltu      Sltu
+Sub       Sub
+Subu      Sub
+Xor       Xor
+Xori      Xor
+Sll       Sll
+Sllv      Sll
+Sra       Sra
+Srav      Sra
+Srl       Srl
+Srlv      Srl
+Div       Divs
+Divu      Divu
+Mfhi      Mfhi
+Mflo      Mflo
+Mthi      Mthi
+Mtlo      Mtlo
+Mult      Muls
+Multu     Mulu
+Beq       Sub
+Bgez      None
+Bgezal    None
+Bgtz      None
+Blez      None
+Bltz      None
+Bltzal    None
+Bne       Sub
+Break     None
+Syscall   None
+J         None
+Jal       None
+Jalr      None
+Jr        None
+Mfc0      None
+Mtc0      None
+Lb        Add
+Lbu       Add
+Lh        Add
+Lhu       Add
+Lw        Add
+Sb        Add
+Sh        Add
+Sw        Add
+Nop       None
+""".strip().splitlines())
+$for(op in ops)
+$py(op, func = map(lambda x: x.strip(), op.strip().split()))
+		`Mips_Instruction_OpFunc_OpFuncs_$(op) : func = `Mips_Control_Signal_Alu_Signal_Func_$(func) ;
+$endfor
+		default : func = `Mips_Control_Signal_Alu_Signal_Func_None ;
+	endcase
+
+assign control = `Mips_Control_Signal_Alu_Control_Init_Defaults;
+
+endmodule
+
+

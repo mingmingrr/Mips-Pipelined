@@ -1,0 +1,5 @@
+$(tv.makeEnum("Mips_Control_Signal_Alu_Signal_ImmShift",
+	"None Left2 Left16".split(' ')))
+
+
+

@@ -1,5 +1,0 @@
-$(tv.makeEnum("Mips_Control_Type_Signal_Alu_Signal_Func",
-	"Add Sub Sll Srl Sra And Or Nor Xor Slts Sltu".split(' ') +
-	"Muls Mulu Divs Divu Mfhi Mthi Mflo Mtlo None".split(' ')
-))
-

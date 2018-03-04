@@ -1,3 +1,0 @@
-$(tv.makeEnum("Mips_Control_Type_Signal_Register_Signal_Port2AddrSource",
-	"None Rt Rs".split(' ')))
-

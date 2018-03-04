@@ -19,8 +19,8 @@
 `include "Mips/Datapath/Memory/datapath.v"
 `include "Mips/Datapath/Register/datapath.v"
 
-`include "Mips/Control/Type/Control.v"
-`include "Mips/Control/Type/generate.v"
+`include "Mips/Control/Control.v"
+`include "Mips/Control/generate.v"
 
 `define Mips_mips_Addr_T(T) T [ADDR_W-1:0]
 
@@ -37,8 +37,8 @@ module Mips_mips #
 
 `Mips_Type_Word_T (wire) instruction;
 
-`Mips_Control_Type_Control_T (wire) control;
-Mips_Control_Type_generate CTRLGEN
+`Mips_Control_Control_T (wire) control;
+Mips_Control_generate CTRLGEN
 	( .instruction (instruction)
 	, .control (control)
 	);
@@ -58,7 +58,7 @@ Mips_Datapath_Memory_datapath #
 	( .addr  (ram_addr)
 	, .data  (ram_data)
 	, .out   (ram_out)
-	, .control (`Mips_Control_Type_Control_Memory(control))
+	, .control (`Mips_Control_Control_Memory(control))
 	, .ctrl  (ctrl_inverted)
 	);
 
@@ -82,7 +82,7 @@ Data_Memory_rom #
 `Mips_Datapath_Alu_Status_T (wire) alu_status ;
 Mips_Datapath_Alu_datapath ALU
 	( .ctrl (ctrl)
-	, .control  (`Mips_Control_Type_Control_Alu(control))
+	, .control  (`Mips_Control_Control_Alu(control))
 	, .regPort1 (reg_port1)
 	, .regPort2 (reg_port2)
 	, .instruction (instruction)
@@ -93,7 +93,7 @@ Mips_Datapath_Alu_datapath ALU
 `Mips_Type_Word_T(wire) pc_addr_curr, pc_addr_next;
 Mips_Datapath_Pc_datapath PC
 	( .status  (alu_status)
-	, .control (`Mips_Control_Type_Control_Pc(control))
+	, .control (`Mips_Control_Control_Pc(control))
 	, .ctrl   (ctrl)
 	, .instruction (instruction)
 	, .regPort1    (reg_port1)
@@ -103,7 +103,7 @@ Mips_Datapath_Pc_datapath PC
 
 Mips_Datapath_Register_datapath REG
 	( .ctrl    (ctrl)
-	, .control (`Mips_Control_Type_Control_Register(control))
+	, .control (`Mips_Control_Control_Register(control))
 	, .pcAddr  (pc_addr_curr)
 	, .ramOut  (ram_out)
 	, .aluResult (alu_result)

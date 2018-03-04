@@ -1,5 +1,0 @@
-$(tv.makeEnum("Mips_Control_Type_Signal_Memory_Signal_ByteEnable",
-	"None Byte Half Word".split(" ")))
-
-
-
