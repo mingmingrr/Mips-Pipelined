@@ -1,0 +1,4 @@
+$(tv.makeEnum("Mips_Control_IfId_Signal_Register_Signal_WriteDataSource",
+	"Alu Memory Pc".split(' ')))
+
+

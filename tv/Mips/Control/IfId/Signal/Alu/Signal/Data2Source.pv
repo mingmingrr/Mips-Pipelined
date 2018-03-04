@@ -1,0 +1,4 @@
+$(tv.makeEnum("Mips_Control_IfId_Signal_Alu_Signal_Data2Source",
+	"Register Immediate Shamt".split(' ')))
+
+

@@ -1,0 +1,8 @@
+`include "Mips/Control/IfId/Signal/Pc/Signal/Action.v"
+`include "Mips/Control/IfId/Signal/Pc/Signal/Condition.v"
+
+$(tv.makeStruct("Mips_Control_IfId_Signal_Pc_Control", [
+( "Action"    , "`Mips_Control_IfId_Signal_Pc_Signal_Action_W"    ),
+( "Condition" , "`Mips_Control_IfId_Signal_Pc_Signal_Condition_W" ),
+]))
+

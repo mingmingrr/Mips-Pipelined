@@ -1,6 +1,0 @@
-`include "Mips/Control/Signal/Alu/Signal/Data2Source.v"
-
-$(tv.makeStruct("Mips_Control_Signal_Alu_Control", [
-("Data2Source", "`Mips_Control_Signal_Alu_Signal_Data2Source_W"),
-]))
-

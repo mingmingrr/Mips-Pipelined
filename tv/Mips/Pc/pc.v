@@ -1,6 +1,6 @@
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
-`include "Mips/Control/Signal/Pc/Signal/Action.v"
+`include "Mips/Control/IfId/Signal/Pc/Signal/Action.v"
 
 module Mips_Pc_pc #
 	( parameter ADDR_W = 32
@@ -11,7 +11,7 @@ module Mips_Pc_pc #
 	, parameter RESET = ADDR_W'(32'h400000)
 	)
 	( `Data_Control_Control_T(input) ctrl
-	, `Mips_Control_Signal_Pc_Signal_Action_T(input) action
+	, `Mips_Control_IfId_Signal_Pc_Signal_Action_T(input) action
 	, input [OFFSET_W-1:0] offset
 	, input [JUMP_W-1:0] jump
 	, input [ADDR_W-1:0] jumpr
@@ -36,11 +36,11 @@ assign offset$ = {{(ADDR_W-OFFSET_W){offset[OFFSET_W-1]}}, offset};
 
 always @(*)
 	case(action)
-		`Mips_Control_Signal_Pc_Signal_Action_None   : addr_next = addr_reg ;
-		`Mips_Control_Signal_Pc_Signal_Action_Inc    : addr_next = addr_reg + STEP;
-		`Mips_Control_Signal_Pc_Signal_Action_Branch : addr_next = addr_reg + (offset$ << SKIP) + STEP;
-		`Mips_Control_Signal_Pc_Signal_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
-		`Mips_Control_Signal_Pc_Signal_Action_JumpR  : addr_next = jumpr;
+		`Mips_Control_IfId_Signal_Pc_Signal_Action_None   : addr_next = addr_reg ;
+		`Mips_Control_IfId_Signal_Pc_Signal_Action_Inc    : addr_next = addr_reg + STEP;
+		`Mips_Control_IfId_Signal_Pc_Signal_Action_Branch : addr_next = addr_reg + (offset$ << SKIP) + STEP;
+		`Mips_Control_IfId_Signal_Pc_Signal_Action_Jump   : addr_next = {addr_reg[ADDR_W-1:JUMP_W+SKIP], jump, SKIP'(0)};
+		`Mips_Control_IfId_Signal_Pc_Signal_Action_JumpR  : addr_next = jumpr;
 		default                                      : addr_next = addr_reg ;
 	endcase
 

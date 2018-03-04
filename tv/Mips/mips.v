@@ -20,8 +20,8 @@
 `include "Mips/Datapath/Immediate/extendShift.v"
 `include "Mips/Datapath/Register/register.v"
 `include "Mips/Datapath/Alu/alu.v"
-`include "Mips/Control/Control.v"
-`include "Mips/Control/generate.v"
+`include "Mips/Control/IfId/Control.v"
+`include "Mips/Control/IfId/generate.v"
 `include "Mips/Register/register.v"
 `include "Mips/Type/RegAddr.v"
 `include "Mips/Type/Word.v"
@@ -58,8 +58,8 @@ Mips_Instruction_Category_categorize CATAGORY_G
 	, .category (category)
 	);
 
-`Mips_Control_Control_T (wire) control;
-Mips_Control_generate CTRLGEN_G
+`Mips_Control_IfId_Control_T (wire) control;
+Mips_Control_IfId_generate CTRLGEN_G
 	( .opFunc   (opFunc)
 	, .category (category)
 	, .control  (control)
@@ -80,7 +80,7 @@ Mips_Datapath_Memory_bam #
 	( .addr  (ram_addr)
 	, .data  (ram_data)
 	, .out   (ram_out)
-	, .control (`Mips_Control_Control_Memory(control))
+	, .control (`Mips_Control_IfId_Control_Memory(control))
 	, .ctrl  (ctrl_inverted)
 	);
 
@@ -99,7 +99,7 @@ Data_Memory_rom #
 
 `Mips_Type_Word_T (wire) immediate;
 Mips_Datapath_Immediate_extendShift IMM_G
-	( .control (`Mips_Control_Control_Immediate(control))
+	( .control (`Mips_Control_IfId_Control_Immediate(control))
 	, .immIn   (`Mips_Instruction_Format_IFormat_Imm(instruction))
 	, .immOut  (immediate)
 	);
@@ -112,7 +112,7 @@ Mips_Datapath_Immediate_extendShift IMM_G
 `Mips_Alu_Status_T (wire) alu_status ;
 Mips_Datapath_Alu_alu ALU_G
 	( .ctrl (ctrl)
-	, .control  (`Mips_Control_Control_Alu(control))
+	, .control  (`Mips_Control_IfId_Control_Alu(control))
 	, .opFunc   (opFunc)
 	, .regPort1 (reg_port1)
 	, .regPort2 (reg_port2)
@@ -123,10 +123,10 @@ Mips_Datapath_Alu_alu ALU_G
 	);
 assign alu_shamt = 32'(`Mips_Instruction_Format_RFormat_Shamt(instruction));
 
-`Mips_Control_Signal_Pc_Control_Action_T(wire) pc_action;
+`Mips_Control_IfId_Signal_Pc_Control_Action_T(wire) pc_action;
 Mips_Datapath_Pc_action PCACT_G
 	( .status  (alu_status)
-	, .control (`Mips_Control_Control_Pc(control))
+	, .control (`Mips_Control_IfId_Control_Pc(control))
 	, .action  (pc_action)
 	);
 
@@ -145,7 +145,7 @@ Mips_Pc_pc #
 
 Mips_Datapath_Register_register REG_G
 	( .ctrl    (ctrl)
-	, .control (`Mips_Control_Control_Register(control))
+	, .control (`Mips_Control_IfId_Control_Register(control))
 	, .pcAddr  (pc_addr_curr)
 	, .ramOut  (ram_out)
 	, .aluResult (alu_result)
