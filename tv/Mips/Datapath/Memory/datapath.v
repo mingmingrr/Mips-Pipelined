@@ -1,5 +1,6 @@
 `include "Util/Math.v"
 `include "Data/Control/Control.v"
+`include "Data/Control/invert.v"
 `include "Data/Memory/bam.v"
 
 `include "Mips/Control/Signal/Memory/Control.v"
@@ -25,10 +26,16 @@ module Mips_Datapath_Memory_datapath #
 reg [3:0] memBytes;
 `Mips_Type_Word_T(wire) memRead;
 
+`Data_Control_Control_T(wire) ctrl_inv;
+Data_Control_invert CTRLINV
+	( .in (ctrl)
+	, .out (ctrl_inv)
+	);
+
 Data_Memory_bam #
 	( .ADDR_WORD_L (ADDR_L)
 	) BAM
-	( .ctrl (ctrl)
+	( .ctrl (ctrl_inv)
 	, .addr (addr)
 	, .data (data)
 	, .bytes (memBytes)

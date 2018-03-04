@@ -1,6 +1,5 @@
 `include "Data/Array/Array.v"
 `include "Data/Control/Control.v"
-`include "Data/Control/invert.v"
 
 `include "Mips/Type/RegAddr.v"
 `include "Mips/Type/Word.v"
@@ -18,6 +17,7 @@
 `include "Mips/Datapath/Pc/datapath.v"
 `include "Mips/Datapath/Memory/datapath.v"
 `include "Mips/Datapath/Register/datapath.v"
+`include "Mips/Datapath/Instruction/datapath.v"
 
 `include "Mips/Control/Control.v"
 `include "Mips/Control/generate.v"
@@ -36,22 +36,34 @@ module Mips_mips #
 `Util_Math_log2_expr
 
 `Mips_Type_Word_T (wire) instruction;
-
 `Mips_Control_Control_T (wire) control;
-Mips_Control_generate CTRLGEN
-	( .instruction (instruction)
-	, .control (control)
-	);
-
-`Data_Control_Control_T(wire) ctrl_inverted;
-Data_Control_invert CTRLINV
-	( .in (ctrl)
-	, .out (ctrl_inverted)
-	);
+`Mips_Type_Word_T (wire) rom_addr;
 
 wire [8:0] ram_addr  ;
 `Mips_Type_Word_T (wire) ram_data  ;
 `Mips_Type_Word_T (wire) ram_out   ;
+
+`Mips_Type_Word_T (wire) reg_port1 ;
+`Mips_Type_Word_T (wire) reg_port2 ;
+
+`Mips_Type_Word_T  (wire) alu_result ;
+`Mips_Datapath_Alu_Status_T (wire) alu_status ;
+
+`Mips_Type_Word_T(wire) pc_addr_curr;
+`Mips_Type_Word_T(wire) pc_addr_next;
+
+Mips_Datapath_Instruction_datapath #
+	( .FILE    (FILE)
+	, .ADDR_L  (ADDR_L)
+	, .ADDR_W  (ADDR_W)
+	, .DATA_W  (`Mips_Type_Word_W)
+	) INST
+	( .ctrl        (ctrl)
+	, .romAddr     (rom_addr)
+	, .instruction (instruction)
+	, .control     (control)
+	);
+
 Mips_Datapath_Memory_datapath #
 	( .ADDR_L  (128)
 	) RAM
@@ -59,27 +71,9 @@ Mips_Datapath_Memory_datapath #
 	, .data  (ram_data)
 	, .out   (ram_out)
 	, .control (`Mips_Control_Control_Memory(control))
-	, .ctrl  (ctrl_inverted)
-	);
-
-`Mips_mips_Addr_T (wire) rom_addr ;
-`Mips_Type_Word_T (wire) rom_out  ;
-Data_Memory_rom #
-	( .FILE    (FILE)
-	, .ADDR_L  (ADDR_L)
-	, .ADDR_W  (ADDR_W)
-	, .DATA_W  (`Mips_Type_Word_W)
-	) ROM
-	( .addr  (rom_addr)
 	, .ctrl  (ctrl)
-	, .out   (rom_out)
 	);
 
-`Mips_Type_Word_T (wire) reg_port1 ;
-`Mips_Type_Word_T (wire) reg_port2 ;
-
-`Mips_Type_Word_T  (wire) alu_result ;
-`Mips_Datapath_Alu_Status_T (wire) alu_status ;
 Mips_Datapath_Alu_datapath ALU
 	( .ctrl (ctrl)
 	, .control  (`Mips_Control_Control_Alu(control))
@@ -90,7 +84,6 @@ Mips_Datapath_Alu_datapath ALU
 	, .status (alu_status)
 	);
 
-`Mips_Type_Word_T(wire) pc_addr_curr, pc_addr_next;
 Mips_Datapath_Pc_datapath PC
 	( .status  (alu_status)
 	, .control (`Mips_Control_Control_Pc(control))
@@ -112,10 +105,9 @@ Mips_Datapath_Register_datapath REG
 	, .port2   (reg_port2)
 	);
 
-assign rom_addr = pc_addr_next[7:2];
+assign rom_addr = pc_addr_next;
 assign ram_addr = alu_result[8:0];
 assign ram_data = reg_port2;
-assign instruction = rom_out;
 assign pcAddr = pc_addr_curr;
 
 endmodule
