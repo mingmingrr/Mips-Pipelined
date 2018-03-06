@@ -63,15 +63,20 @@ wire reg_port_eq ;
 `Mips_Pipeline_ExMem_Pipeline_T (wire) pipeExMem;
 `Mips_Pipeline_MemWb_Pipeline_T (wire) pipeMemWb;
 
-Mips_Datapath_Instruction_datapath #
+Mips_Datapath_Pc_datapath #
 	( .FILE    (FILE)
 	, .ADDR_L  (ADDR_L)
 	, .ADDR_W  (ADDR_W)
 	, .DATA_W  (`Mips_Type_Word_W)
-	) INST
-	( .ctrl        (ctrl)
-	, .romAddr     (rom_addr)
+	) PC
+	( .aluStatus   (alu_status)
+	, .control     (`Mips_Control_Control_Pc(control))
+	, .ctrl        (ctrl)
 	, .instruction (instruction)
+	, .regPort1    (reg_port1)
+	, .regPortEq   (reg_port_eq)
+	, .addrNext    (pc_addr_next)
+	, .addrCurr    (pc_addr_curr)
 	);
 
 Mips_Pipeline_IfId_generate IFID
@@ -135,17 +140,6 @@ Mips_Pipeline_MemWb_generate MEMWB
 	( .pipeIn (pipeExMem)
 	, .memOut (ram_out)
 	, .pipeOut (pipeMemWb)
-	);
-
-Mips_Datapath_Pc_datapath PC
-	( .aluStatus  (alu_status)
-	, .control (`Mips_Control_Control_Pc(control))
-	, .ctrl   (ctrl)
-	, .instruction (instruction)
-	, .regPort1  (reg_port1)
-	, .regPortEq (reg_port_eq)
-	, .addrNext (pc_addr_next)
-	, .addrCurr (pc_addr_curr)
 	);
 
 assign rom_addr = pc_addr_next;
