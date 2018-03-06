@@ -58,7 +58,7 @@ always @(*)
 	else
 		writeEnable = `Mips_Control_Signal_Register_Signal_WriteEnable_True  ;
 
-assign control = `Mips_Control_Signal_Register_Control_Init_Defaults;
+assign control = `Mips_Control_Signal_Register_Control_Pack_Defaults;
 
 endmodule
 

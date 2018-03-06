@@ -11,7 +11,7 @@ module Data_Control_invert
 assign reset =  `Data_Control_Control_Reset(in);
 assign clock = !`Data_Control_Control_Clock(in);
 
-assign out = `Data_Control_Control_Init_Defaults;
+assign out = `Data_Control_Control_Pack_Defaults;
 
 endmodule
 

@@ -39,7 +39,7 @@ always @(*)
 		default                                 : condition = `Mips_Control_Signal_Pc_Signal_Condition_None ;
 	endcase
 
-assign control = `Mips_Control_Signal_Pc_Control_Init_Defaults;
+assign control = `Mips_Control_Signal_Pc_Control_Pack_Defaults;
 
 endmodule
 

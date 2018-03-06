@@ -9,18 +9,20 @@
 `include "Mips/Datapath/Pc/action.v"
 
 module Mips_Datapath_Pc_datapath
-	( `Data_Control_Control_T                (input) ctrl
-	, `Mips_Type_Word_T                      (input) instruction
-	, `Mips_Type_Word_T                      (input) regPort1
-	, `Mips_Datapath_Alu_Status_T            (input) status
-	, `Mips_Control_Signal_Pc_Control_T (input) control
-	, `Mips_Type_Word_T                      (output) addrCurr
-	, `Mips_Type_Word_T                      (output) addrNext
+	( `Data_Control_Control_T           (input)  ctrl
+	, `Mips_Type_Word_T                 (input)  instruction
+	, `Mips_Datapath_Alu_Status_T       (input)  aluStatus
+	, `Mips_Control_Signal_Pc_Control_T (input)  control
+	, `Mips_Type_Word_T                 (output) addrCurr
+	, `Mips_Type_Word_T                 (output) addrNext
+	, `Mips_Type_Word_T                 (input)  regPort1
+	, input                                      regPortEq
 	);
 
 `Mips_Control_Signal_Pc_Control_Action_T(wire) action;
 Mips_Datapath_Pc_action ACT
-	( .status  (status)
+	( .status  (aluStatus)
+	, .portEq  (regPortEq)
 	, .control (control)
 	, .action  (action)
 	);

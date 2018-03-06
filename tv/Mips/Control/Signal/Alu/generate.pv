@@ -121,7 +121,7 @@ $endfor
 		default : func = `Mips_Control_Signal_Alu_Signal_Func_None ;
 	endcase
 
-assign control = `Mips_Control_Signal_Alu_Control_Init_Defaults;
+assign control = `Mips_Control_Signal_Alu_Control_Pack_Defaults;
 
 endmodule
 

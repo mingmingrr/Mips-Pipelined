@@ -12,7 +12,6 @@ module Mips_Datapath_Instruction_datapath #
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Type_Word_T       (input) romAddr
 	, `Mips_Type_Word_T       (output) instruction
-	, `Mips_Control_Control_T (output) control
 	);
 
 `Util_Math_log2_expr
@@ -26,11 +25,6 @@ Data_Memory_rom #
 	( .addr  (romAddr[7:2])
 	, .ctrl  (ctrl)
 	, .out   (instruction)
-	);
-
-Mips_Control_generate CTRLGEN
-	( .instruction (instruction)
-	, .control (control)
 	);
 
 endmodule

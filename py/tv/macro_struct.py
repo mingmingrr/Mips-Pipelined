@@ -17,10 +17,13 @@ def makeStruct(struct, fields):
 	output.append(f'`define {struct}_W (\\\n\t'
 		+ ' + \\\n\t'.join(map(str, (i[1] for i in fields))) + ')')
 	output.append(f'`define {struct}_T(T) T [`{struct}_W-1:0]')
-	output.append(f'`define {struct}_Init(' + ', '.join(i[0] for i in fields) + ') { \\\n\t'
+	output.append(f'`define {struct}_Pack(' + ', '.join(i[0] for i in fields) + ') { \\\n\t'
 		+ ', \\\n\t'.join(f'{i[0]}' for i in reversed(fields)) # `{struct}_{i[0]}_W\'
 		+ ' \\\n\t}')
-	output.append(f'`define {struct}_Init_Defaults \\\n\t`{struct}_Init('
+	output.append(f'`define {struct}_Pack_Defaults \\\n\t`{struct}_Pack('
 		+ ', '.join(i[0][0].lower() + i[0][1:] for i in fields) + ')')
+	output.append(f'`define {struct}_Decl \\\n\t'
+		+ ' \\\n\t'.join(f'`{struct}_{name}_T(wire) {i[0][0].lower() + i[0][1:]};'
+			for i in fields))
 	return '\n'.join(output)
 

@@ -75,7 +75,7 @@ assign less = data1 < data2;
 wire equal;
 assign equal = data1 == data2;
 
-assign status = `Mips_Datapath_Alu_Status_Init_Defaults;
+assign status = `Mips_Datapath_Alu_Status_Pack_Defaults;
 
 endmodule
 

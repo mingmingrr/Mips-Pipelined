@@ -39,7 +39,7 @@ always @(*)
 		default                              : byteExtend = `Mips_Control_Signal_Memory_Signal_ByteExtend_Signed ;
 	endcase
 
-assign control = `Mips_Control_Signal_Memory_Control_Init_Defaults;
+assign control = `Mips_Control_Signal_Memory_Control_Pack_Defaults;
 
 endmodule
 

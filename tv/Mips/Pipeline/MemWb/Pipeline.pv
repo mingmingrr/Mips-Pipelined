@@ -1,0 +1,12 @@
+`include "Mips/Type/Word.v"
+`include "Mips/Control/Control.v"
+`include "Mips/Datapath/Alu/Status.v"
+
+$(tv.makeStruct(
+"Mips_Pipeline_MemWb_Pipeline", [
+("Instruction" , "`Mips_Type_Word_W"           ),
+("Control"     , "`Mips_Control_Control_W"     ),
+("RegPort1"    , "`Mips_Type_Word_W"           ),
+("AluStatus"   , "`Mips_Datapath_Alu_Status_W" ),
+("MemOut"      , "`Mips_Type_Word_W"           ),
+]))

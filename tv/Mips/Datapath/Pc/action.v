@@ -5,8 +5,9 @@
 
 module Mips_Datapath_Pc_action
 	( `Mips_Datapath_Alu_Status_T              (input)  status
-	, `Mips_Control_Signal_Pc_Control_T   (input)  control
+	, `Mips_Control_Signal_Pc_Control_T        (input)  control
 	, `Mips_Control_Signal_Pc_Control_Action_T (output) action
+	, input portEq
 	);
 
 `Mips_Control_Signal_Pc_Control_Action_T (reg) action$;
@@ -18,7 +19,7 @@ always @(*)
 			if(
 				`Mips_Control_Signal_Pc_Control_Action(control) ==
 					`Mips_Control_Signal_Pc_Signal_Action_Branch &&
-				!`Mips_Datapath_Alu_Status_Zero(status)
+				!portEq // !`Mips_Datapath_Alu_Status_Zero(status)
 			)
 				action$ = `Mips_Control_Signal_Pc_Signal_Action_Inc;
 			else
@@ -27,7 +28,7 @@ always @(*)
 			if(
 				`Mips_Control_Signal_Pc_Control_Action(control) ==
 					`Mips_Control_Signal_Pc_Signal_Action_Branch &&
-				`Mips_Datapath_Alu_Status_Zero(status)
+				portEq // `Mips_Datapath_Alu_Status_Zero(status)
 			)
 				action$ = `Mips_Control_Signal_Pc_Signal_Action_Inc;
 			else

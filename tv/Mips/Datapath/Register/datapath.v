@@ -20,6 +20,7 @@ module Mips_Datapath_Register_datapath
 	, `Mips_Type_Word_T(input) instruction
 	, `Mips_Type_Word_T(output) port1
 	, `Mips_Type_Word_T(output) port2
+	, output portEq
 	);
 
 `Mips_Type_RegAddr_T (wire) rd1Addr ;
@@ -89,5 +90,6 @@ assign wrData = wrData$;
 
 assign port1 = rd1Data;
 assign port2 = rd2Data;
+assign portEq = port1 == port2;
 
 endmodule

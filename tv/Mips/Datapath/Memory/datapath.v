@@ -16,9 +16,9 @@ module Mips_Datapath_Memory_datapath #
 	)
 	( `Data_Control_Control_T               (input)  ctrl
 	, `Mips_Control_Signal_Memory_Control_T (input)  control
+	, `Mips_Type_Word_T                     (input)  addr
 	, `Mips_Type_Word_T                     (input)  data
 	, `Mips_Type_Word_T                     (output) out
-	, input [ADDR_W+1:0] addr
 	);
 
 `Util_Math_log2_expr
@@ -36,7 +36,7 @@ Data_Memory_bam #
 	( .ADDR_WORD_L (ADDR_L)
 	) BAM
 	( .ctrl (ctrl_inv)
-	, .addr (addr)
+	, .addr (addr[ADDR_W+1:0])
 	, .data (data)
 	, .bytes (memBytes)
 	, .out (memRead)

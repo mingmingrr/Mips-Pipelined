@@ -1,7 +1,7 @@
 `include "Mips/Instruction/OpFunc/Source.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 
-$('\n'.join("`define Mips_Instruction_OpFunc_OpFuncs_{} `Mips_Instruction_OpFunc_OpFunc_Init(`Mips_Instruction_OpFunc_Source_{}, 6'b{:0>6b})".format(*i) for i in [
+$('\n'.join("`define Mips_Instruction_OpFunc_OpFuncs_{} `Mips_Instruction_OpFunc_OpFunc_Pack(`Mips_Instruction_OpFunc_Source_{}, 6'b{:0>6b})".format(*i) for i in [
 ( "Add"     , "Func" , 0b100000 ) ,
 ( "Addi"    , "Op"   , 0b001000 ) ,
 ( "Addiu"   , "Op"   , 0b001001 ) ,

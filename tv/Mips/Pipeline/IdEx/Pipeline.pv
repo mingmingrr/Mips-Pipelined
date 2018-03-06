@@ -1,0 +1,10 @@
+`include "Mips/Type/Word.v"
+`include "Mips/Control/Control.v"
+
+$(tv.makeStruct(
+"Mips_Pipeline_IdEx_Pipeline", [
+("Instruction" , "`Mips_Type_Word_W"       ),
+("Control"     , "`Mips_Control_Control_W" ),
+("RegPort1"    , "`Mips_Type_Word_W"       ),
+("RegPort2"    , "`Mips_Type_Word_W"       ),
+]))

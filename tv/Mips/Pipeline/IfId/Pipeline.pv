@@ -1,0 +1,7 @@
+`include "Mips/Type/Word.v"
+`include "Mips/Control/Control.v"
+
+$(tv.makeStruct(
+"Mips_Pipeline_IfId_Pipeline", [
+("Instruction", "`Mips_Type_Word_W"),
+]))

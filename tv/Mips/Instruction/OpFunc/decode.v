@@ -10,9 +10,9 @@ module Mips_Instruction_OpFunc_decode
 
 assign opFunc
 	= (|op)
-	? `Mips_Instruction_OpFunc_OpFunc_Init
+	? `Mips_Instruction_OpFunc_OpFunc_Pack
 		( `Mips_Instruction_OpFunc_Source_Op   , op   )
-	: `Mips_Instruction_OpFunc_OpFunc_Init
+	: `Mips_Instruction_OpFunc_OpFunc_Pack
 		( `Mips_Instruction_OpFunc_Source_Func , func )
 	;
 

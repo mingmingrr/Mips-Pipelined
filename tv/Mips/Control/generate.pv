@@ -40,7 +40,7 @@ Mips_Control_Signal_$(i)_generate $(i.upper())
 	);
 $endfor
 
-assign control = `Mips_Control_Control_Init_Defaults;
+assign control = `Mips_Control_Control_Pack_Defaults;
 
 endmodule
 
