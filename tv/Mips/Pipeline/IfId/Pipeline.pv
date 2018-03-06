@@ -3,5 +3,6 @@
 
 $(tv.makeStruct(
 "Mips_Pipeline_IfId_Pipeline", [
-("Instruction", "`Mips_Type_Word_W"),
+("Instruction" , "`Mips_Type_Word_W"),
+("PcAddr"      , "`Mips_Type_Word_W"),
 ]))

@@ -31,9 +31,10 @@ always @(*)
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rt;
 	else if(`Mips_Instruction_Category_Category_Link(category))
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_R31;
-	else if(`Mips_Instruction_Category_Category_Shift(category))
-		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rd;
-	else if(`Mips_Instruction_Category_Category_Register(category))
+	else if(
+		`Mips_Instruction_Category_Category_Shift(category) ||
+		`Mips_Instruction_Category_Category_Register(category)
+	)
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rd;
 	else
 		writeAddrSource = `Mips_Control_Signal_Register_Signal_WriteAddrSource_Rt;

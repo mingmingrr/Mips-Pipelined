@@ -23,7 +23,9 @@ def makeStruct(struct, fields):
 	output.append(f'`define {struct}_Pack_Defaults \\\n\t`{struct}_Pack('
 		+ ', '.join(i[0][0].lower() + i[0][1:] for i in fields) + ')')
 	output.append(f'`define {struct}_Decl \\\n\t'
-		+ ' \\\n\t'.join(f'`{struct}_{name}_T(wire) {i[0][0].lower() + i[0][1:]};'
+		+ ' \\\n\t'.join(f'`{struct}_{i[0]}_T(wire) {i[0][0].lower() + i[0][1:]};'
 			for i in fields))
+	output.append(f'`define {struct}_Unpack(x) \\\n\t`{struct}_Decl \\\n\t'
+		+ f'assign `{struct}_Pack_Defaults = x ;')
 	return '\n'.join(output)
 

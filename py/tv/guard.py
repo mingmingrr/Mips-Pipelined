@@ -35,16 +35,19 @@ if __name__ == '__main__':
 		default=os.path.abspath(__file__),
 	)
 	parser.add_argument(
-		'-o', '--out',
-		type=os.path.abspath,
-		default='--',
+		'-i', '--input',
+		type=argparse.FileType('r'),
+		default=sys.stdin
+	)
+	parser.add_argument(
+		'-o', '--output',
+		type=argparse.FileType('w'),
+		default=sys.stdout
 	)
 	args = parser.parse_args()
 
-	with open(args.file, 'r') as file:
+	with args.input as file:
 		lines = list(makeGuards(args.base, args.file, file))
-	if args.out == os.path.abspath('--'):
-		print(*lines, sep='')
-	else:
-		with open(args.out, 'w') as file:
-			file.writelines(lines)
+	with args.output as file:
+		file.writelines(lines)
+

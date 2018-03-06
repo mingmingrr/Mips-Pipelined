@@ -17,7 +17,6 @@
 `include "Mips/Datapath/Pc/datapath.v"
 `include "Mips/Datapath/Memory/datapath.v"
 `include "Mips/Datapath/Register/datapath.v"
-`include "Mips/Datapath/Instruction/datapath.v"
 
 `include "Mips/Control/Control.v"
 `include "Mips/Control/generate.v"
@@ -42,26 +41,22 @@ module Mips_mips #
 
 `Mips_Type_Word_T       (wire) instruction;
 `Mips_Control_Control_T (wire) control;
-`Mips_Type_Word_T       (wire) rom_addr;
 
-`Mips_Type_Word_T       (wire) ram_addr  ;
-`Mips_Type_Word_T       (wire) ram_data  ;
-`Mips_Type_Word_T       (wire) ram_out   ;
+`Mips_Type_Word_T (wire) ramOut   ;
 
-`Mips_Type_Word_T       (wire) reg_port1 ;
-`Mips_Type_Word_T       (wire) reg_port2 ;
+`Mips_Type_Word_T (wire) regPort1 ;
+`Mips_Type_Word_T (wire) regPort2 ;
 wire reg_port_eq ;
 
-`Mips_Type_Word_T           (wire) alu_result ;
-`Mips_Datapath_Alu_Status_T (wire) alu_status ;
+`Mips_Type_Word_T           (wire) aluResult ;
+`Mips_Datapath_Alu_Status_T (wire) aluStatus ;
 
-`Mips_Type_Word_T (wire) pc_addr_curr;
-`Mips_Type_Word_T (wire) pc_addr_next;
+`Mips_Pipeline_IfId_Pipeline_T  (wire) pipeIfId  ;
+`Mips_Pipeline_IdEx_Pipeline_T  (wire) pipeIdEx  ;
+`Mips_Pipeline_ExMem_Pipeline_T (wire) pipeExMem ;
+`Mips_Pipeline_MemWb_Pipeline_T (wire) pipeMemWb ;
 
-`Mips_Pipeline_IfId_Pipeline_T  (wire) pipeIfId;
-`Mips_Pipeline_IdEx_Pipeline_T  (wire) pipeIdEx;
-`Mips_Pipeline_ExMem_Pipeline_T (wire) pipeExMem;
-`Mips_Pipeline_MemWb_Pipeline_T (wire) pipeMemWb;
+`Mips_Type_Word_T (wire) pcNext ;
 
 Mips_Datapath_Pc_datapath #
 	( .FILE    (FILE)
@@ -69,19 +64,20 @@ Mips_Datapath_Pc_datapath #
 	, .ADDR_W  (ADDR_W)
 	, .DATA_W  (`Mips_Type_Word_W)
 	) PC
-	( .aluStatus   (alu_status)
+	( .aluStatus   (aluStatus)
 	, .control     (`Mips_Control_Control_Pc(control))
 	, .ctrl        (ctrl)
 	, .instruction (instruction)
-	, .regPort1    (reg_port1)
+	, .regPort1    (regPort1)
 	, .regPortEq   (reg_port_eq)
-	, .addrNext    (pc_addr_next)
-	, .addrCurr    (pc_addr_curr)
+	, .addrNext    (pcNext)
+	, .addrCurr    (pcAddr)
 	);
 
 Mips_Pipeline_IfId_generate IFID
 	( .instruction (instruction)
-	, .pipeOut (pipeIfId)
+	, .pcAddr      (pcAddr)
+	, .pipeOut     (pipeIfId)
 	);
 
 Mips_Control_generate CTRL
@@ -90,62 +86,52 @@ Mips_Control_generate CTRL
 	);
 
 Mips_Datapath_Register_datapath REG
-	( .ctrl    (ctrl)
-	, .control (`Mips_Control_Control_Register(control))
-	, .pcAddr  (pc_addr_curr)
-	, .ramOut  (ram_out)
-	, .aluResult (alu_result)
+	( .ctrl        (ctrl)
+	, .control     (`Mips_Control_Control_Register(control))
+	, .pcAddr      (pcAddr)
+	, .ramOut      (ramOut)
+	, .aluResult   (aluResult)
 	, .instruction (instruction)
-	, .port1   (reg_port1)
-	, .port2   (reg_port2)
-	, .portEq  (reg_port_eq)
+	, .port1       (regPort1)
+	, .port2       (regPort2)
+	, .portEq      (reg_port_eq)
 	);
 
 Mips_Pipeline_IdEx_generate IDEX
-	( .pipeIn (pipeIfId)
-	, .control (control)
-	, .regPort1 (reg_port1)
-	, .regPort2 (reg_port2)
-	, .pipeOut (pipeIdEx)
+	( .pipeIn   (pipeIfId)
+	, .control  (control)
+	, .regPort1 (regPort1)
+	, .regPort2 (regPort2)
+	, .pipeOut  (pipeIdEx)
 	);
 
 Mips_Datapath_Alu_datapath ALU
-	( .ctrl (ctrl)
-	, .control  (`Mips_Control_Control_Alu(control))
-	, .regPort1 (reg_port1)
-	, .regPort2 (reg_port2)
-	, .instruction (instruction)
-	, .result (alu_result)
-	, .status (alu_status)
+	( .ctrl     (ctrl)
+	, .pipeIdEx (pipeIdEx)
+	, .result   (aluResult)
+	, .status   (aluStatus)
 	);
 
 Mips_Pipeline_ExMem_generate EXMEM
-	( .pipeIn (pipeIdEx)
-	, .aluResult (alu_result)
-	, .aluStatus (alu_status)
-	, .pipeOut (pipeExMem)
+	( .pipeIn    (pipeIdEx)
+	, .aluResult (aluResult)
+	, .aluStatus (aluStatus)
+	, .pipeOut   (pipeExMem)
 	);
 
 Mips_Datapath_Memory_datapath #
 	( .ADDR_L  (128)
 	) RAM
-	( .addr  (ram_addr)
-	, .data  (ram_data)
-	, .out   (ram_out)
-	, .control (`Mips_Control_Control_Memory(control))
-	, .ctrl  (ctrl)
+	( .ctrl      (ctrl)
+	, .pipeExMem (pipeExMem)
+	, .out       (ramOut)
 	);
 
 Mips_Pipeline_MemWb_generate MEMWB
-	( .pipeIn (pipeExMem)
-	, .memOut (ram_out)
+	( .pipeIn  (pipeExMem)
+	, .memOut  (ramOut)
 	, .pipeOut (pipeMemWb)
 	);
-
-assign rom_addr = pc_addr_next;
-assign ram_addr = alu_result;
-assign ram_data = reg_port2;
-assign pcAddr = pc_addr_curr;
 
 endmodule
 

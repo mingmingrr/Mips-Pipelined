@@ -6,19 +6,19 @@ define makePre
 endef
 
 define makePost
-	python3 py/tv/include.py --base sv --file "$1" --out "$1"
-	python3 py/tv/guard.py --base sv --file "$1" --out "$1"
+	python3 py/tv/include.py --base sv --file "$1" | \
+	python3 py/tv/guard.py --base sv --file "$1" --output "$1"
 endef
 
 define makePv
 	$(call makePre,$1,$2)
-	expander3 -a "py/tv/header.py" "$2" > "$1"
+	expander3 -a "py/tv/header.py" "$2" | \
 	$(call makePost,$1,$2)
 endef
 
 define makeV
 	$(call makePre,$1,$2)
-	cp "$2" "$1"
+	cat "$2" | \
 	$(call makePost,$1,$2)
 endef
 

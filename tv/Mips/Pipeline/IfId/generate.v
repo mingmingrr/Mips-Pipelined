@@ -4,6 +4,7 @@
 
 module Mips_Pipeline_IfId_generate
 	( `Mips_Type_Word_T(input) instruction
+	, `Mips_Type_Word_T(input) pcAddr
 	, `Mips_Pipeline_IfId_Pipeline_T(output) pipeOut
 	);
 

@@ -11,8 +11,7 @@ module Mips_Pipeline_MemWb_generate
 
 `Mips_Pipeline_MemWb_Pipeline_T(wire) pipeOut$;
 
-`Mips_Pipeline_ExMem_Pipeline_Decl
-assign `Mips_Pipeline_ExMem_Pipeline_Pack_Defaults = pipeIn;
+`Mips_Pipeline_ExMem_Pipeline_Unpack(pipeIn)
 
 assign pipeOut$ = `Mips_Pipeline_MemWb_Pipeline_Pack_Defaults;
 assign pipeOut = pipeOut$;

@@ -52,7 +52,7 @@ wire [BYTE_L-1:0] byteen_b;
 `endif
 
 assign {addr_a, offset} = addr;
-assign addr_b = addr_a + 1;
+assign addr_b = addr_a + ADDR_WORD_W'(1);
 assign {byteen_b, byteen_a} = {BYTE_L'(0), bytes} << offset;
 always @(posedge `Data_Control_Control_Clock(ctrl)) offset$ = offset;
 
