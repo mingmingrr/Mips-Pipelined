@@ -6,11 +6,13 @@
 
 `include "Mips/Control/Control.v"
 `include "Mips/Control/Signal/Alu/Control.v"
+`include "Mips/Control/Signal/Alu/Signal/Data1Source.v"
 `include "Mips/Control/Signal/Alu/Signal/Data2Source.v"
 `include "Mips/Control/Signal/Alu/Signal/Func.v"
 
 `include "Mips/Datapath/Alu/hilo.v"
 `include "Mips/Datapath/Alu/immediate.v"
+`include "Mips/Datapath/Alu/data1.v"
 `include "Mips/Datapath/Alu/data2.v"
 
 module Mips_Datapath_Alu_datapath
@@ -49,12 +51,16 @@ Mips_Datapath_Alu_hilo #
 	, .status (status)
 	);
 
-assign data1 = regPort1;
+Mips_Datapath_Alu_data1 DATA1
+	( .control   (`Mips_Control_Signal_Alu_Control_Data1Source(aluControl))
+	, .shamt     (shamt)
+	, .regPort1  (regPort1)
+	, .data1     (data1)
+	);
 
 Mips_Datapath_Alu_data2 DATA2
 	( .control   (`Mips_Control_Signal_Alu_Control_Data2Source(aluControl))
 	, .immediate (immediate)
-	, .shamt     (shamt)
 	, .regPort2  (regPort2)
 	, .data2     (data2)
 	);

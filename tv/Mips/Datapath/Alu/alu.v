@@ -28,16 +28,16 @@ assign data1$ = data1;
 assign data2$ = data2;
 assign {mul_hi, mul_lo} = data1 * data2;
 assign {mul_hi$, mul_lo$} = data1$ * data2$;
-assign shamt = data2[Util_Math_log2(DATA_W)-1:0];
+assign shamt = data1[Util_Math_log2(DATA_W)-1:0];
 
 `Mips_Datapath_Alu_alu_Data_T(reg) res_lo$;
 always @(*)
 	case(func)
 		`Mips_Control_Signal_Alu_Signal_Func_Add  : res_lo$ =          data1   +   data2  ;
 		`Mips_Control_Signal_Alu_Signal_Func_Sub  : res_lo$ =          data1   -   data2  ;
-		`Mips_Control_Signal_Alu_Signal_Func_Sll  : res_lo$ =          data1   <<  shamt  ;
-		`Mips_Control_Signal_Alu_Signal_Func_Sra  : res_lo$ =          data1$  >>> shamt  ;
-		`Mips_Control_Signal_Alu_Signal_Func_Srl  : res_lo$ =          data1   >>  shamt  ;
+		`Mips_Control_Signal_Alu_Signal_Func_Sll  : res_lo$ =          data2   <<  shamt  ;
+		`Mips_Control_Signal_Alu_Signal_Func_Sra  : res_lo$ =          data2$  >>> shamt  ;
+		`Mips_Control_Signal_Alu_Signal_Func_Srl  : res_lo$ =          data2   >>  shamt  ;
 		`Mips_Control_Signal_Alu_Signal_Func_And  : res_lo$ =          data1   &   data2  ;
 		`Mips_Control_Signal_Alu_Signal_Func_Or   : res_lo$ =          data1   |   data2  ;
 		`Mips_Control_Signal_Alu_Signal_Func_Nor  : res_lo$ = ~(       data1   |   data2  );
@@ -52,7 +52,7 @@ always @(*)
 		`Mips_Control_Signal_Alu_Signal_Func_Mthi : res_lo$ =          data1   ;
 		`Mips_Control_Signal_Alu_Signal_Func_Mflo : res_lo$ =          reg_lo  ;
 		`Mips_Control_Signal_Alu_Signal_Func_Mfhi : res_lo$ =          reg_hi  ;
-		default                      : res_lo$ =          data1   ;
+		default                                   : res_lo$ =          data1   ;
 	endcase
 assign res_lo = res_lo$;
 
@@ -64,7 +64,7 @@ always @(*)
 		// `Mips_Control_Signal_Alu_Signal_Func_Divs : res_hi$ = data1$ % data2$;
 		// `Mips_Control_Signal_Alu_Signal_Func_Divu : res_hi$ = data1 % data2;
 		`Mips_Control_Signal_Alu_Signal_Func_Mthi : res_hi$ = data1;
-		default                      : res_hi$ = DATA_W'(0);
+		default                                   : res_hi$ = DATA_W'(0);
 	endcase
 assign res_hi = res_hi$;
 

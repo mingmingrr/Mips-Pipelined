@@ -5,7 +5,6 @@
 module Mips_Datapath_Alu_data2
 	( `Mips_Control_Signal_Alu_Signal_Data2Source_T (input) control
 	, `Mips_Type_Word_T (input) immediate
-	, `Mips_Type_Word_T (input) shamt
 	, `Mips_Type_Word_T (input) regPort2
 	, `Mips_Type_Word_T (output) data2
 	);
@@ -14,7 +13,6 @@ module Mips_Datapath_Alu_data2
 always @(*)
 	case(control)
 		`Mips_Control_Signal_Alu_Signal_Data2Source_Immediate : data2$ = immediate;
-		`Mips_Control_Signal_Alu_Signal_Data2Source_Shamt     : data2$ = shamt;
 		`Mips_Control_Signal_Alu_Signal_Data2Source_Register  : data2$ = regPort2;
 		default                                               : data2$ = regPort2;
 	endcase

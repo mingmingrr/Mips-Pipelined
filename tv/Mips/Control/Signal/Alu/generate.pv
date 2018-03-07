@@ -1,7 +1,9 @@
 `include "Mips/Instruction/Category/Category.v"
 `include "Mips/Instruction/OpFunc/OpFunc.v"
 `include "Mips/Instruction/OpFunc/OpFuncs.v"
+
 `include "Mips/Control/Signal/Alu/Control.v"
+`include "Mips/Control/Signal/Alu/Signal/Data1Source.v"
 `include "Mips/Control/Signal/Alu/Signal/Data2Source.v"
 `include "Mips/Control/Signal/Alu/Signal/Func.v"
 `include "Mips/Control/Signal/Alu/Signal/ImmShift.v"
@@ -13,6 +15,7 @@ module Mips_Control_Signal_Alu_generate
 	, `Mips_Control_Signal_Alu_Control_T    (output) control
 	);
 
+`Mips_Control_Signal_Alu_Control_Data1Source_T (reg) data1Source;
 `Mips_Control_Signal_Alu_Control_Data2Source_T (reg) data2Source;
 `Mips_Control_Signal_Alu_Control_Func_T (reg) func;
 `Mips_Control_Signal_Alu_Control_ImmExtend_T (reg) immExtend ;
@@ -39,7 +42,16 @@ always @(*)
 		`Mips_Instruction_Category_Category_Shift(category) &&
 		(!`Mips_Instruction_Category_Category_ShiftV(category))
 	)
-		data2Source = `Mips_Control_Signal_Alu_Signal_Data2Source_Shamt;
+		data1Source = `Mips_Control_Signal_Alu_Signal_Data1Source_Shamt;
+	else
+		data1Source = `Mips_Control_Signal_Alu_Signal_Data1Source_Register;
+
+always @(*)
+	if(
+		`Mips_Instruction_Category_Category_Shift(category) &&
+		(!`Mips_Instruction_Category_Category_ShiftV(category))
+	)
+		data2Source = `Mips_Control_Signal_Alu_Signal_Data1Source_Register;
 	else if(
 		`Mips_Instruction_Category_Category_Load(category) ||
 		`Mips_Instruction_Category_Category_Store(category)
