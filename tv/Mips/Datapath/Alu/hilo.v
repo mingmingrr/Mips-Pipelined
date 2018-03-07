@@ -1,6 +1,6 @@
 `include "Util/Math.v"
 `include "Mips/Control/Signal/Alu/Signal/Func.v"
-`include "Mips/Datapath/Alu/Status.v"
+`include "Mips/Type/AluStatus.v"
 `include "Mips/Datapath/Alu/alu.v"
 `include "Data/Control/Control.v"
 
@@ -16,14 +16,14 @@ module Mips_Datapath_Alu_hilo #
 	, `Mips_Datapath_Alu_hilo_Type_Data_T  (input)  data2
 	, `Mips_Control_Signal_Alu_Signal_Func_T (input)  func
 	, `Mips_Datapath_Alu_hilo_Type_Data_T  (output) result
-	, `Mips_Datapath_Alu_Status_T          (output) status
+	, `Mips_Type_AluStatus_T          (output) status
 	);
 
 `Util_Math_log2_expr
 
 `Mips_Datapath_Alu_hilo_Type_Data_T (reg)  reg_hi, reg_lo;
 `Mips_Datapath_Alu_hilo_Type_Data_T (wire) res_hi, res_lo;
-`Mips_Datapath_Alu_Status_T         (wire) status$;
+`Mips_Type_AluStatus_T         (wire) status$;
 
 Mips_Datapath_Alu_alu #
 	( .DATA_W  (DATA_W)

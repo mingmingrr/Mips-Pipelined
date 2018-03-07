@@ -1,14 +1,15 @@
 `include "Mips/Type/Word.v"
 `include "Mips/Control/Control.v"
-`include "Mips/Datapath/Alu/Status.v"
+`include "Mips/Type/AluStatus.v"
 
-$(tv.makeStruct(
-"Mips_Pipeline_ExMem_Pipeline", [
-("Instruction" , "`Mips_Type_Word_W"           ),
-("PcAddr"      , "`Mips_Type_Word_W"           ),
-("Control"     , "`Mips_Control_Control_W"     ),
-("RegPort1"    , "`Mips_Type_Word_W"           ),
-("RegPort2"    , "`Mips_Type_Word_W"           ),
-("AluResult"   , "`Mips_Type_Word_W"           ),
-("AluStatus"   , "`Mips_Datapath_Alu_Status_W" ),
-]))
+$py(name, parts = "Mips_Pipeline_ExMem", [
+("Instruction" , "Mips_Type_Word"       ),
+("PcAddr"      , "Mips_Type_Word"       ),
+("Control"     , "Mips_Control_Control" ),
+("RegPort1"    , "Mips_Type_Word"       ),
+("RegPort2"    , "Mips_Type_Word"       ),
+("AluResult"   , "Mips_Type_Word"       ),
+("AluStatus"   , "Mips_Type_AluStatus"  ),
+])
+$include("inc/pipeline.inc")
+

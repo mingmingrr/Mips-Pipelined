@@ -1,0 +1,6 @@
+$(tv.makeStruct("Mips_Type_AluStatus", [
+("Zero", 1),
+("Less", 1),
+("Equal", 1),
+]))
+

@@ -1,6 +1,6 @@
 `include "Data/Control/Control.v"
 
-module Util_Delay_gen #
+module Util_Delay_single #
 	( parameter DELAY = 0
 	, parameter RESET = 1'b0
 	)

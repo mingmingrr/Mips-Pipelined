@@ -1,6 +1,6 @@
 `include "Util/Math.v"
 `include "Mips/Control/Signal/Alu/Signal/Func.v"
-`include "Mips/Datapath/Alu/Status.v"
+`include "Mips/Type/AluStatus.v"
 
 `define Mips_Datapath_Alu_alu_Data_T(T) T [DATA_W-1:0]
 
@@ -14,7 +14,7 @@ module Mips_Datapath_Alu_alu #
 	, `Mips_Datapath_Alu_alu_Data_T (input)  reg_hi
 	, `Mips_Datapath_Alu_alu_Data_T (output) res_lo
 	, `Mips_Datapath_Alu_alu_Data_T (output) res_hi
-	, `Mips_Datapath_Alu_Status_T   (output) status
+	, `Mips_Type_AluStatus_T (output) status
 	);
 
 `Util_Math_log2_expr
@@ -75,7 +75,7 @@ assign less = data1 < data2;
 wire equal;
 assign equal = data1 == data2;
 
-assign status = `Mips_Datapath_Alu_Status_Pack_Defaults;
+assign status = `Mips_Type_AluStatus_Pack_Defaults;
 
 endmodule
 

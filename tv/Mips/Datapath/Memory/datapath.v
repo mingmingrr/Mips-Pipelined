@@ -3,8 +3,7 @@
 `include "Data/Control/invert.v"
 `include "Data/Memory/bam.v"
 
-`include "Mips/Pipeline/ExMem/Pipeline.v"
-
+`include "Mips/Control/Control.v"
 `include "Mips/Control/Signal/Memory/Control.v"
 `include "Mips/Control/Signal/Memory/Signal/ByteEnable.v"
 `include "Mips/Control/Signal/Memory/Signal/ByteExtend.v"
@@ -19,14 +18,14 @@ module Mips_Datapath_Memory_datapath #
 	( parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	)
-	( `Data_Control_Control_T               (input)  ctrl
-	, `Mips_Pipeline_ExMem_Pipeline_T       (input)  pipeExMem
-	, `Mips_Type_Word_T                     (output) out
+	( `Data_Control_Control_T (input) ctrl
+	, `Mips_Type_Word_T       (input) aluResult
+	, `Mips_Type_Word_T       (input) regPort2
+	, `Mips_Control_Control_T (input) control
+	, `Mips_Type_Word_T       (output) out
 	);
 
 `Util_Math_log2_expr
-
-`Mips_Pipeline_ExMem_Pipeline_Unpack(pipeExMem)
 
 `Mips_Control_Signal_Memory_Control_T(wire) memControl;
 assign memControl = `Mips_Control_Control_Memory(control);
