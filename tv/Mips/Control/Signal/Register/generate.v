@@ -8,15 +8,9 @@ module Mips_Control_Signal_Register_generate
 	, `Mips_Control_Signal_Register_Control_T (output) control
 	);
 
-`Mips_Control_Signal_Register_Control_Port1AddrSource_T (wire) port1AddrSource ;
-`Mips_Control_Signal_Register_Control_Port2AddrSource_T (wire) port2AddrSource ;
 `Mips_Control_Signal_Register_Control_WriteAddrSource_T (reg)  writeAddrSource ;
 `Mips_Control_Signal_Register_Control_WriteDataSource_T (reg)  writeDataSource ;
 `Mips_Control_Signal_Register_Control_WriteEnable_T     (reg)  writeEnable     ;
-
-assign port1AddrSource = `Mips_Control_Signal_Register_Signal_Port1AddrSource_Rs ;
-
-assign port2AddrSource = `Mips_Control_Signal_Register_Signal_Port2AddrSource_Rt;
 
 always @(*)
 	if(`Mips_Instruction_Category_Category_Load(category))

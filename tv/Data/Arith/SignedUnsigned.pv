@@ -1,2 +1,4 @@
-$(tv.makeEnum("Data_Arith_SignedUnsigned", "Signed Unsigned".split(' ')))
+$py(name, parts = "Data_Arith_SignedUnsigned", "Signed Unsigned".split(' '))
+
+$include("inc/enum.inc")
 

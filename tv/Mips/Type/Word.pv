@@ -1,17 +1,19 @@
-$("\n".join(
-f"`define Mips_Type_Word_{name}(x) x[{width}-1:0]"
-for name, width in [
+$py(sections = [
 ("Byte", 8),
 ("Half", 16),
 ("Word", 32),
-]))
+])
+$for((name, width) in sections)
+`define Mips_Type_Word_$(name)(x) \\
+	x[$(width) - 1 : 0]
+$endfor
 
-$(tv.makeStruct(
-"Mips_Type_Word", [
+$py(name, parts = "Mips_Type_Word", [
 ("Byte0", 8, 0),
 ("Byte1", 8, 8),
 ("Byte2", 8, 16),
 ("Byte3", 8, 24),
-]))
+])
 
+$include("inc/struct.inc")
 

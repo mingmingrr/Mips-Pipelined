@@ -1,7 +1,4 @@
-$(tv.makeStruct(
-"Mips_Type", [
-("RegAddr", 5),
-]).split("\n\n")[0])
+$py(name, parts = "Mips_Type_RegAddr", 5)
 
-
+$include("inc/alias.inc")
 

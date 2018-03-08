@@ -1,14 +1,12 @@
-`include "Mips/Control/Signal/Register/Signal/Port1AddrSource.v"
-`include "Mips/Control/Signal/Register/Signal/Port2AddrSource.v"
 `include "Mips/Control/Signal/Register/Signal/WriteAddrSource.v"
 `include "Mips/Control/Signal/Register/Signal/WriteDataSource.v"
 `include "Mips/Control/Signal/Register/Signal/WriteEnable.v"
 
-$(tv.makeStruct("Mips_Control_Signal_Register_Control", [
-("Port1AddrSource" , "`Mips_Control_Signal_Register_Signal_Port1AddrSource_W" ),
-("Port2AddrSource" , "`Mips_Control_Signal_Register_Signal_Port2AddrSource_W" ),
+$py(name, parts = "Mips_Control_Signal_Register_Control", [
 ("WriteAddrSource" , "`Mips_Control_Signal_Register_Signal_WriteAddrSource_W" ),
 ("WriteDataSource" , "`Mips_Control_Signal_Register_Signal_WriteDataSource_W" ),
 ("WriteEnable"     , "`Mips_Control_Signal_Register_Signal_WriteEnable_W"     ),
-]))
+])
+
+$include("inc/struct.inc")
 

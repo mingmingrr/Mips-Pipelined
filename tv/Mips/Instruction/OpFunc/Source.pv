@@ -1,4 +1,4 @@
-$(tv.makeEnum("Mips_Instruction_OpFunc_Source",
-	"Op Func".split(' ')))
+$py(name, parts = "Mips_Instruction_OpFunc_Source", "Op Func".split(' '))
 
+$include("inc/enum.inc")
 

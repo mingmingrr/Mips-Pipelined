@@ -1,4 +1,6 @@
-$(tv.makeEnum("Mips_Control_Signal_Pc_Signal_Condition",
+$py(name, parts = ("Mips_Control_Signal_Pc_Signal_Condition",
 	"None EQ NE".split(' ')))
+
+$include("inc/enum.inc")
 
 

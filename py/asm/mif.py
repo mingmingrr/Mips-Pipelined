@@ -13,9 +13,14 @@ def fromBin(bin):
 		yield f'{n:0>3x} : {int(i,2):0>8x};'
 	yield 'END;'
 
+def fromHex(hex):
+	yield from fromBin(f'{int(i,16):b}' for i in hex)
+
 import sys
 
 if sys.argv[1] == 'to':
 	list(map(print, toBin(sys.stdin)))
 elif sys.argv[1] == 'from':
 	list(map(print, fromBin(sys.stdin)))
+elif sys.argv[1] == 'fromhex':
+	list(map(print, fromHex(sys.stdin)))

@@ -1,7 +1,9 @@
 `include "Mips/Instruction/OpFunc/Source.v"
 
-$(tv.makeStruct("Mips_Instruction_OpFunc_OpFunc", [
-("Source", 1, 6),
+$py(name, parts = "Mips_Instruction_OpFunc_OpFunc", [
 ("OpFunc", 6, 0),
-]))
+("Source", 1, 6),
+])
+
+$include("inc/struct.inc")
 

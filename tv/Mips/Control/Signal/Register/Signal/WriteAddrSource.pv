@@ -1,3 +1,6 @@
-$(tv.makeEnum("Mips_Control_Signal_Register_Signal_WriteAddrSource",
+$py(name, parts = (
+	"Mips_Control_Signal_Register_Signal_WriteAddrSource",
 	"None Rt Rd R31".split(' ')))
+
+$include("inc/enum.inc")
 

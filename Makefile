@@ -12,7 +12,8 @@ endef
 
 define makePv
 	$(call makePre,$1,$2)
-	expander3 -a "py/tv/header.py" "$2" | \
+	expander3 -a -i "py/tv/header.py" "$2" > "$1"
+	cat "$1" | \
 	$(call makePost,$1,$2)
 endef
 
@@ -59,8 +60,7 @@ prune:
 	find sv -type f -name "*.v" > temp2
 	find sv -type f -name "*.sv" >> temp2
 	cat temp2 | sort > temp3
-	comm -13 temp1 temp3 | xargs rm
-	rm temp1 temp2 temp3
+	comm -13 temp1 temp3 | xargs rm -v temp1 temp2 temp3
 
 .PHONY: watch
 watch: all

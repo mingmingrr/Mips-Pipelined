@@ -25,10 +25,11 @@ module Mips_mips #
 
 `Util_Math_log2_expr
 
-`Mips_Type_Word_T       (wire) instruction;
-`Mips_Control_Control_T (wire) control;
+`Mips_Type_Word_T (wire) instruction ;
 
-`Mips_Type_Word_T (wire) memOut   ;
+`Mips_Control_Control_T (wire) control ;
+
+`Mips_Type_Word_T (wire) memOut ;
 
 `Mips_Type_Word_T (wire) regPort1 ;
 `Mips_Type_Word_T (wire) regPort2 ;
@@ -45,9 +46,9 @@ Mips_Datapath_Pc_datapath #
 	, .ADDR_W  (ADDR_W)
 	, .DATA_W  (`Mips_Type_Word_W)
 	) PC
-	( .aluStatus   (aluStatus)
+	( .ctrl (ctrl)
+	, .aluStatus   (aluStatus)
 	, .control     (control)
-	, .ctrl        (ctrl)
 	, .instruction (instruction)
 	, .regPort1    (regPort1)
 	, .regPortEq   (regPortEq)
@@ -61,31 +62,31 @@ Mips_Control_generate CTRL
 	);
 
 Mips_Datapath_Register_datapath REG
-	( .ctrl      (ctrl)
-	, .control   (control)
+	( .ctrl (ctrl)
+	, .control     (control)
 	, .instruction (instruction)
-	, .pcAddr      (pcAddr     )
-	, .memOut      (memOut     )
-	, .aluResult   (aluResult  )
-	, .port1     (regPort1)
-	, .port2     (regPort2)
-	, .portEq    (regPortEq)
+	, .pcAddr      (pcAddr)
+	, .memOut      (memOut)
+	, .aluResult   (aluResult)
+	, .port1       (regPort1)
+	, .port2       (regPort2)
+	, .portEq      (regPortEq)
 	);
 
 Mips_Datapath_Alu_datapath ALU
-	( .ctrl     (ctrl)
+	( .ctrl (ctrl)
 	, .instruction (instruction)
 	, .regPort1    (regPort1)
 	, .regPort2    (regPort2)
 	, .control     (control)
-	, .result   (aluResult)
-	, .status   (aluStatus)
+	, .result      (aluResult)
+	, .status      (aluStatus)
 	);
 
 Mips_Datapath_Memory_datapath #
 	( .ADDR_L  (128)
 	) RAM
-	( .ctrl      (ctrl)
+	( .ctrl (ctrl)
 	, .aluResult (aluResult)
 	, .regPort2  (regPort2)
 	, .control   (control)

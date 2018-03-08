@@ -48,8 +48,8 @@ always @(*)
 
 always @(*)
 	if(
-		`Mips_Instruction_Category_Category_Shift(category) &&
-		(!`Mips_Instruction_Category_Category_ShiftV(category))
+		`Mips_Instruction_Category_Category_Shift(category)
+		// && !`Mips_Instruction_Category_Category_ShiftV(category)
 	)
 		data2Source = `Mips_Control_Signal_Alu_Signal_Data1Source_Register;
 	else if(

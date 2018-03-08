@@ -4,11 +4,13 @@
 `include "Mips/Control/Signal/Alu/Signal/ImmExtend.v"
 `include "Mips/Control/Signal/Alu/Signal/ImmShift.v"
 
-$(tv.makeStruct("Mips_Control_Signal_Alu_Control", [
+$py(name, parts = "Mips_Control_Signal_Alu_Control", [
 ("Data1Source" , "`Mips_Control_Signal_Alu_Signal_Data1Source_W" ),
 ("Data2Source" , "`Mips_Control_Signal_Alu_Signal_Data2Source_W" ),
 ("Func"        , "`Mips_Control_Signal_Alu_Signal_Func_W"        ),
 ("ImmExtend"   , "`Mips_Control_Signal_Alu_Signal_ImmExtend_W" ),
 ("ImmShift"    , "`Mips_Control_Signal_Alu_Signal_ImmShift_W"  ),
-]))
+])
+
+$include("inc/struct.inc")
 

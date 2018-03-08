@@ -1,7 +1,9 @@
-$(tv.makeStruct("Mips_Instruction_Format_IFormat", [
-("Op"   , 6  , 26) ,
-("Rs"   , 5  , 21) ,
-("Rt"   , 5  , 16) ,
+$py(name, parts = "Mips_Instruction_Format_IFormat", [
 ("Imm"  , 16 , 0)  ,
-]))
+("Rt"   , 5  , 16) ,
+("Rs"   , 5  , 21) ,
+("Op"   , 6  , 26) ,
+])
+
+$include("inc/struct.inc")
 

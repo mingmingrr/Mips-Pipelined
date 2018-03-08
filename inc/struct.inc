@@ -14,7 +14,7 @@ $for((id, width, index) in parts)
 	($(width))
 `define $(name)_$(id)_I \\
 	($(index))
-$if(width in {'1', 1})
+$if(width in {"1", 1})
 `define $(name)_$(id)_T(T) T
 `define $(name)_$(id)(x) \\
 	x [ `$(name)_$(id)_I ]
@@ -23,7 +23,7 @@ $else
 	T [ `$(name)_$(id)_W - 1 : 0 ]
 `define $(name)_$(id)(x) \\
 	x \\
-	[ `$(name)_$(id)_I' \\
+	[ `$(name)_$(id)_I \\
 	+ `$(name)_$(id)_W - 1 \\
 	: `$(name)_$(id)_I ]
 $("\n")

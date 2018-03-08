@@ -1,6 +1,4 @@
-$(tv.makeStruct(
-"Mips_Type", [
-("Byte", 8),
-]).split("\n\n")[0])
+$py(name, parts = "Mips_Type_Byte", 8)
 
+$include("inc/alias.inc")
 

@@ -1,4 +1,4 @@
-$(tv.makeBool("Mips_Control_Signal_Memory_Signal_WriteEnable"))
+$py(name = "Mips_Control_Signal_Memory_Signal_WriteEnable")
 
-
+$include("inc/bool.inc")
 

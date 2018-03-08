@@ -1,6 +1,7 @@
-$(tv.makeStruct(
-"Mips_Type", [
-("Bool", 1),
-]).split("\n\n")[0])
+$py(name, parts = "Mips_Type_Bool", [
+("True"  , 1),
+("False" , 0),
+])
 
+$include("inc/enum.inc")
 

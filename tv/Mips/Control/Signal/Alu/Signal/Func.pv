@@ -1,5 +1,7 @@
-$(tv.makeEnum("Mips_Control_Signal_Alu_Signal_Func",
+$py(name, parts = ("Mips_Control_Signal_Alu_Signal_Func",
 	"Add Sub Sll Srl Sra And Or Nor Xor Slts Sltu".split(' ') +
-	"Muls Mulu Divs Divu Mfhi Mthi Mflo Mtlo None".split(' ')
-))
+	"Muls Mulu Divs Divu Mfhi Mthi Mflo Mtlo None".split(' '))
+)
+
+$include("inc/enum.inc")
 

@@ -4,12 +4,12 @@
 `include "Mips/Control/Signal/Memory/Control.v"
 `include "Mips/Control/Signal/Register/Control.v"
 
-$(tv.makeStruct(
-"Mips_Control_Control", [
+$py(name, parts = "Mips_Control_Control", [
 ("Pc"        , "`Mips_Control_Signal_Pc_Control_W"        ),
 ("Alu"       , "`Mips_Control_Signal_Alu_Control_W"       ),
 ("Memory"    , "`Mips_Control_Signal_Memory_Control_W"    ),
 ("Register"  , "`Mips_Control_Signal_Register_Control_W"  ),
-]))
+])
 
+$include("inc/struct.inc")
 

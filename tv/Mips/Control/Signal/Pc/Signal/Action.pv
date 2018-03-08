@@ -1,3 +1,5 @@
-$(tv.makeEnum("Mips_Control_Signal_Pc_Signal_Action",
+$py(name, parts = ("Mips_Control_Signal_Pc_Signal_Action",
 	"None Inc Branch Jump JumpR".split(' ')))
+
+$include("inc/enum.inc")
 

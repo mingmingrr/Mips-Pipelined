@@ -6,8 +6,6 @@
 `include "Mips/Control/Control.v"
 `include "Mips/Control/Signal/Register/Control.v"
 
-`include "Mips/Datapath/Register/rd1Addr.v"
-`include "Mips/Datapath/Register/rd2Addr.v"
 `include "Mips/Datapath/Register/wrAddr.v"
 `include "Mips/Datapath/Register/wrData.v"
 `include "Mips/Datapath/Register/register.v"
@@ -28,18 +26,9 @@ module Mips_Datapath_Register_datapath
 assign regControl = `Mips_Control_Control_Register(control);
 
 `Mips_Type_RegAddr_T (wire) rd1Addr;
-Mips_Datapath_Register_rd1Addr RD1
-	( .control     (`Mips_Control_Signal_Register_Control_Port1AddrSource(regControl))
-	, .instruction (instruction)
-	, .rd1Addr     (rd1Addr)
-	);
-
 `Mips_Type_RegAddr_T (wire) rd2Addr;
-Mips_Datapath_Register_rd2Addr RD2
-	( .control     (`Mips_Control_Signal_Register_Control_Port2AddrSource(regControl))
-	, .instruction (instruction)
-	, .rd2Addr     (rd2Addr)
-	);
+assign rd1Addr = `Mips_Instruction_Format_RFormat_Rs(instruction);
+assign rd2Addr = `Mips_Instruction_Format_RFormat_Rt(instruction);
 
 `Mips_Type_RegAddr_T (wire) wrAddr;
 Mips_Datapath_Register_wrAddr WRA

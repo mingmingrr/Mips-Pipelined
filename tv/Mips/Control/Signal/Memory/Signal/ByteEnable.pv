@@ -1,5 +1,5 @@
-$(tv.makeEnum("Mips_Control_Signal_Memory_Signal_ByteEnable",
+$py(name, parts = ("Mips_Control_Signal_Memory_Signal_ByteEnable",
 	"None Byte Half Word".split(" ")))
 
-
+$include("inc/enum.inc")
 

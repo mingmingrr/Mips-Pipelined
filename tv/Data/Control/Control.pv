@@ -1,5 +1,7 @@
-$(tv.makeStruct("Data_Control_Control", [
+$py(name, parts = "Data_Control_Control", [
 ("Clock", 1),
 ("Reset", 1),
-]))
+])
+
+$include("inc/struct.inc")
 

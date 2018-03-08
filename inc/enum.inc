@@ -13,18 +13,18 @@ for i in range(len(parts)):
 )
 
 $for((id, index) in parts)
-`define $(enum)_$(id) `$(enum)_W\'($(index))
+`define $(name)_$(id) `$(name)_W'($(index))
 $endfor
 
-`define $(enum)_L $(len(parts))
+`define $(name)_L $(len(parts))
 
-$py(width = math.floor(math.log2(max(indexes))) + 1)
-`define $(enum)_W $(width)
+$py(width = math.floor(math.log2(max(part[1] for part in parts))) + 1)
+`define $(name)_W $(width)
 
 $if(width == 1)
-`define $(enum)_T(T) T
+`define $(name)_T(T) T
 $else
-`define $(enum)_T(T) \
-	T [`$(enum)_W - 1 : 0]
+`define $(name)_T(T) \\
+	T [`$(name)_W - 1 : 0]
 $endif
 
