@@ -1,6 +1,7 @@
 `include "Util/Math.v"
 `include "Mips/Control/Signal/Alu/Signal/Func.v"
 `include "Mips/Type/AluStatus.v"
+`include "Mips/Type/Word.v"
 
 `define Mips_Datapath_Alu_alu_Data_T(T) T [DATA_W-1:0]
 
@@ -8,20 +9,20 @@ module Mips_Datapath_Alu_alu #
 	( parameter DATA_W  = 32
 	)
 	( `Mips_Control_Signal_Alu_Signal_Func_T (input) func
-	, `Mips_Datapath_Alu_alu_Data_T (input)  data1
-	, `Mips_Datapath_Alu_alu_Data_T (input)  data2
-	, `Mips_Datapath_Alu_alu_Data_T (input)  reg_lo
-	, `Mips_Datapath_Alu_alu_Data_T (input)  reg_hi
-	, `Mips_Datapath_Alu_alu_Data_T (output) res_lo
-	, `Mips_Datapath_Alu_alu_Data_T (output) res_hi
+	, `Mips_Type_Word_T (input)  data1
+	, `Mips_Type_Word_T (input)  data2
+	, `Mips_Type_Word_T (input)  reg_lo
+	, `Mips_Type_Word_T (input)  reg_hi
+	, `Mips_Type_Word_T (output) res_lo
+	, `Mips_Type_Word_T (output) res_hi
 	, `Mips_Type_AluStatus_T (output) status
 	);
 
 `Util_Math_log2_expr
 
-`Mips_Datapath_Alu_alu_Data_T (wire signed) data1$  , data2$  ;
-`Mips_Datapath_Alu_alu_Data_T (wire signed) mul_lo$ , mul_hi$ ;
-`Mips_Datapath_Alu_alu_Data_T (wire)        mul_lo  , mul_hi  ;
+`Mips_Type_Word_T (wire signed) data1$  , data2$  ;
+`Mips_Type_Word_T (wire signed) mul_lo$ , mul_hi$ ;
+`Mips_Type_Word_T (wire)        mul_lo  , mul_hi  ;
 wire [Util_Math_log2(DATA_W)-1:0] shamt;
 
 assign data1$ = data1;
@@ -30,7 +31,7 @@ assign {mul_hi, mul_lo} = data1 * data2;
 assign {mul_hi$, mul_lo$} = data1$ * data2$;
 assign shamt = data1[Util_Math_log2(DATA_W)-1:0];
 
-`Mips_Datapath_Alu_alu_Data_T(reg) res_lo$;
+`Mips_Type_Word_T (reg) res_lo$;
 always @(*)
 	case(func)
 		`Mips_Control_Signal_Alu_Signal_Func_Add  : res_lo$ =          data1   +   data2  ;
@@ -56,7 +57,7 @@ always @(*)
 	endcase
 assign res_lo = res_lo$;
 
-`Mips_Datapath_Alu_alu_Data_T(reg) res_hi$;
+`Mips_Type_Word_T (reg) res_hi$;
 always @(*)
 	case(func)
 		`Mips_Control_Signal_Alu_Signal_Func_Muls : res_hi$ = mul_hi$;
@@ -79,4 +80,3 @@ assign status = `Mips_Type_AluStatus_Pack_Defaults;
 
 endmodule
 
-`undef Mips_Datapath_Alu_alu_Data_T

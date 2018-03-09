@@ -1,9 +1,9 @@
-`include "Mips/mips.v"
+`include "Mips/mips_pipeline.v"
 `include "Mips/Type/Word.v"
 `include "Util/Math.v"
 
 module top #
-	( parameter FILE = "asm/test0.mif"
+	( parameter FILE = "asm/old/test0.mif"
 	, parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	)
@@ -13,7 +13,7 @@ module top #
 
 `Util_Math_log2_expr
 
-Mips_mips #
+Mips_mips_pipeline #
 	( .FILE   (FILE)
 	, .ADDR_L (ADDR_L)
 	, .ADDR_W (ADDR_W)

@@ -1,12 +1,12 @@
-`include "Mips/mips.v"
+`include "Mips/mips_pipeline.v"
 `include "Data/Control/Control.v"
 
 module Mips_mips_tb;
 
 `Data_Control_Control_T(reg) ctrl;
 
-Mips_mips #
-	( .FILE ("asm/test0.mif")
+Mips_mips_pipeline #
+	( .FILE ("asm/old/test0.mif")
 	) DUT
 	( .ctrl (ctrl)
 	, .pcAddr ()

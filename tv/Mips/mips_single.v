@@ -12,10 +12,8 @@
 `include "Mips/Control/Control.v"
 `include "Mips/Control/generate.v"
 
-`define Mips_mips_Addr_T(T) T [ADDR_W-1:0]
-
-module Mips_mips #
-	( parameter FILE = "asm/test0.mif"
+module Mips_mips_single #
+	( parameter FILE = "asm/old/test0.mif"
 	, parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	)
@@ -36,7 +34,7 @@ module Mips_mips #
 wire regPortEq ;
 
 `Mips_Type_Word_T      (wire) aluResult ;
-`Mips_Type_AluStatus_T (wire) aluStatus ;
+`Mips_Type_AluStatus_T (wire) aluStatus ; // unused
 
 `Mips_Type_Word_T (wire) pcNext ;
 
@@ -47,7 +45,6 @@ Mips_Datapath_Pc_datapath #
 	, .DATA_W  (`Mips_Type_Word_W)
 	) PC
 	( .ctrl (ctrl)
-	, .aluStatus   (aluStatus)
 	, .control     (control)
 	, .instruction (instruction)
 	, .regPort1    (regPort1)
@@ -63,14 +60,15 @@ Mips_Control_generate CTRL
 
 Mips_Datapath_Register_datapath REG
 	( .ctrl (ctrl)
-	, .control     (control)
-	, .instruction (instruction)
-	, .pcAddr      (pcAddr)
-	, .memOut      (memOut)
-	, .aluResult   (aluResult)
-	, .port1       (regPort1)
-	, .port2       (regPort2)
-	, .portEq      (regPortEq)
+	, .writeControl     (control)
+	, .readInstruction  (instruction)
+	, .writeInstruction (instruction)
+	, .pcAddr           (pcAddr)
+	, .memOut           (memOut)
+	, .aluResult        (aluResult)
+	, .port1            (regPort1)
+	, .port2            (regPort2)
+	, .portEq           (regPortEq)
 	);
 
 Mips_Datapath_Alu_datapath ALU
@@ -84,7 +82,8 @@ Mips_Datapath_Alu_datapath ALU
 	);
 
 Mips_Datapath_Memory_datapath #
-	( .ADDR_L  (128)
+	( .ADDR_L      (128)
+	, .INVERT_CTRL (1)
 	) RAM
 	( .ctrl (ctrl)
 	, .aluResult (aluResult)

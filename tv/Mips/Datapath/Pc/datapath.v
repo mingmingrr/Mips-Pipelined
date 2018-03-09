@@ -5,7 +5,6 @@
 `include "Mips/Instruction/Format/IFormat.v"
 `include "Mips/Instruction/Format/JFormat.v"
 
-`include "Mips/Type/AluStatus.v"
 `include "Mips/Datapath/Pc/pc.v"
 `include "Mips/Datapath/Pc/action.v"
 `include "Mips/Control/Control.v"
@@ -20,7 +19,6 @@ module Mips_Datapath_Pc_datapath #
 	)
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Control_Control_T (input) control
-	, `Mips_Type_AluStatus_T (input) aluStatus
 	, `Mips_Type_Word_T (input)  regPort1
 	,                    input   regPortEq
 	, `Mips_Type_Word_T (output) addrCurr
@@ -46,8 +44,7 @@ assign pcControl = `Mips_Control_Control_Pc(control);
 
 `Mips_Control_Signal_Pc_Control_Action_T(wire) action;
 Mips_Datapath_Pc_action ACT
-	( .status  (aluStatus)
-	, .portEq  (regPortEq)
+	( .portEq  (regPortEq)
 	, .control (pcControl)
 	, .action  (action)
 	);

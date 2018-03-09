@@ -1,0 +1,10 @@
+`include "Mips/Control/Control.v"
+`include "Mips/Type/Bool.v"
+`include "Mips/Type/Word.v"
+
+$py(name, parts = "Mips_Pipeline_RegPc", [
+("RegPort1"  , "Mips_Type_Word"       ),
+("RegPortEq" , "Mips_Type_Bool"       ),
+("Control"   , "Mips_Control_Control" ),
+])
+$include("inc/pipeline.inc")

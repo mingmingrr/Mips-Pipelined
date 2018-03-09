@@ -1,17 +1,17 @@
 $# vim: set ft=verilog:
 $# name : str, parts : [(id : str, type : str)]
 $begin
-$py(name, parts = name+"_Pipeline", [(id, "`"+type+"_W") for (id, type) in parts])
+$py(name, parts = name, [(id, "`"+type+"_W") for (id, type) in parts])
 $include("inc/struct.inc")
 $end
 
 module $(name)_pack
-	( `$(name)_Pipeline_T (output) pipe
+	( `$(name)_T (output) pipe
 $for((part, type) in parts)
 	, `$(type)_T (input) $(part[0].lower() + part[1:])
 $endfor
 	);
-assign pipe = `$(name)_Pipeline_Pack_Defaults;
+assign pipe = `$(name)_Pack_Defaults;
 endmodule
 
 `include "Util/Delay/array.v"
@@ -28,7 +28,7 @@ $endfor
 $for((part, type) in parts)
 	, `$(type)_T (input) $(part[0].lower() + part[1:])
 $endfor
-	, `$(name)_Pipeline_T (output) pipe
+	, `$(name)_T (output) pipe
 	);
 
 $for((part, type) in parts)
@@ -44,7 +44,7 @@ Util_Delay_array #
 	);
 $endfor
 
-$(name)_pack
+$(name)_pack PIPEPACK
 	( .pipe (pipe)
 $for((part, type) in parts)
 	, .$(part[0].lower() + part[1:]) ($(part[0].lower() + part[1:])\$)
@@ -54,11 +54,11 @@ $endfor
 endmodule
 
 module $(name)_unpack
-	( `$(name)_Pipeline_T (input) pipe
+	( `$(name)_T (input) pipe
 $for((part, type) in parts)
 	, `$(type)_T (output) $(part[0].lower() + part[1:])
 $endfor
 	);
-assign `$(name)_Pipeline_Pack_Defaults = pipe;
+assign `$(name)_Pack_Defaults = pipe;
 endmodule
 

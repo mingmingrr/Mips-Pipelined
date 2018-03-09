@@ -17,6 +17,7 @@
 module Mips_Datapath_Memory_datapath #
 	( parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
+	, parameter INVERT_CTRL = 1
 	)
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Type_Word_T       (input) aluResult
@@ -42,17 +43,22 @@ Mips_Datapath_Memory_byteEnable BYTE
 	, .byteEnable (byteEnable)
 	);
 
-`Data_Control_Control_T(wire) ctrlInv;
-Data_Control_invert CTRLINV
-	( .in (ctrl)
-	, .out (ctrlInv)
-	);
+`Data_Control_Control_T(wire) ctrl$;
+generate
+	if(INVERT_CTRL)
+		Data_Control_invert CTRLINV
+			( .in (ctrl)
+			, .out (ctrl$)
+			);
+	else
+		assign ctrl$ = ctrl;
+endgenerate
 
 `Mips_Type_Word_T(wire) memOut;
 Data_Memory_bam #
 	( .ADDR_WORD_L (ADDR_L)
 	) BAM
-	( .ctrl  (ctrlInv)
+	( .ctrl  (ctrl$)
 	, .addr  (memAddr[ADDR_W+1:0])
 	, .data  (memData)
 	, .bytes (byteEnable)
