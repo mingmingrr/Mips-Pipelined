@@ -21,6 +21,7 @@ Mips_Pipeline_RegEx_unpack REGEX
 	, .pcAddr      (pcAddr)
 	, .regPort1    (regPort1)
 	, .regPort2    (regPort2)
+	, .regPorts    (regPorts)
 	, .control     (control)
 	);
 
@@ -43,6 +44,7 @@ Mips_Pipeline_ExMem_generate #
 	, .pcAddr      (pcAddr)
 	, .control     (control)
 	, .regPort2    (regPort2)
+	, .regPorts    (regPorts)
 	, .aluResult   (aluResult)
 	, .out         (pipeExMem)
 	);

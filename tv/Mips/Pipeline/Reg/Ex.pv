@@ -1,4 +1,5 @@
 `include "Mips/Type/Word.v"
+`include "Mips/Type/RegPorts.v"
 `include "Mips/Control/Control.v"
 
 $py(name, parts = "Mips_Pipeline_RegEx", [
@@ -7,5 +8,6 @@ $py(name, parts = "Mips_Pipeline_RegEx", [
 ("RegPort1"    , "Mips_Type_Word"       , 1),
 ("RegPort2"    , "Mips_Type_Word"       , 1),
 ("Control"     , "Mips_Control_Control" , 1),
+("RegPorts"    , "Mips_Type_RegPorts"   , 1),
 ])
 $include("inc/pipeline.inc")

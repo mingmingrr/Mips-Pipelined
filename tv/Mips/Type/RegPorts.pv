@@ -1,0 +1,14 @@
+`include "Mips/Control/Signal/Register/Signal/WriteDataSource.v"
+`include "Mips/Type/RegAddr.v"
+`include "Mips/Type/Bool.v"
+
+$py(name, parts = "Mips_Type_RegPorts", [
+("Read1"     , "`Mips_Type_RegAddr_W"                                   ),
+("Read2"     , "`Mips_Type_RegAddr_W"                                   ),
+("WriteAddr" , "`Mips_Type_RegAddr_W"                                   ),
+("WriteData" , "`Mips_Control_Signal_Register_Signal_WriteDataSource_W" ),
+("WriteEn"   , "`Mips_Type_Bool_W"                                      ),
+])
+
+$include("inc/struct.inc")
+

@@ -22,7 +22,7 @@ module Mips_Stage_pc #
 
 `Mips_Pipeline_RegPc_Decl_Defaults
 Mips_Pipeline_RegPc_unpack REGPC
-	( .in       (pipeRegPc)
+	( .in        (pipeRegPc)
 	, .regPort1  (regPort1)
 	, .regPortEq (regPortEq)
 	, .control   (control)

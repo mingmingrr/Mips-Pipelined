@@ -27,6 +27,7 @@ Mips_Pipeline_ExMem_unpack EXMEM
 	, .pcAddr      (pcAddr)
 	, .control     (control)
 	, .regPort2    (regPort2)
+	, .regPorts    (regPorts)
 	, .aluResult   (aluResult)
 	);
 
@@ -34,7 +35,7 @@ Mips_Pipeline_ExMem_unpack EXMEM
 Mips_Datapath_Memory_datapath #
 	( .ADDR_L (64)
 	, .ADDR_W (Util_Math_log2(ADDR_L))
-	, .INVERT_CTRL (1)
+	, .INVERT_CTRL (INVERT_CTRL)
 	) MEM
 	( .ctrl (ctrl)
 	, .aluResult (aluResult)
@@ -51,7 +52,7 @@ Mips_Pipeline_MemReg_generate #
 	, .pcAddr      (pcAddr)
 	, .memOut      (memOut)
 	, .aluResult   (aluResult)
-	, .control     (control)
+	, .regPorts    (regPorts)
 	, .out         (pipeMemReg)
 	);
 
