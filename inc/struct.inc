@@ -64,3 +64,21 @@ $endfor
 `define $(name)_Unpack_Defaults(x) \\
 	`$(name)_Decl(x,$(",".join("wire" for _ in parts)))
 
+module $(name)_pack
+	( `$(name)_T (output) out
+$for((id, _, _) in parts)
+	, `$(name)_$(id)_T (input) $(id[0].lower() + id[1:])
+$endfor
+	);
+assign out = `$(name)_Pack_Defaults;
+endmodule
+
+module $(name)_unpack
+	( `$(name)_T (input) in
+$for((id, _, _) in parts)
+	, `$(name)_$(id)_T (output) $(id[0].lower() + id[1:])
+$endfor
+	);
+assign `$(name)_Pack_Defaults = in;
+endmodule
+

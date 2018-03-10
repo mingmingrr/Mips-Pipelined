@@ -11,15 +11,6 @@ $py(parts = [(id, f"`{type}_W") for (id, type, delay) in parts])
 $include("inc/struct.inc")
 $end
 
-module $(name)_pack
-	( `$(name)_T (output) pipe
-$for((id, type, delay) in parts)
-	, `$(type)_T (input) $(id[0].lower() + id[1:])
-$endfor
-	);
-assign pipe = `$(name)_Pack_Defaults;
-endmodule
-
 `include "Util/Delay/array.v"
 `include "Data/Control/Control.v"
 
@@ -36,7 +27,7 @@ $endfor
 $for((id, type, delay) in parts)
 	, `$(type)_T (input) $(id[0].lower() + id[1:])
 $endfor
-	, `$(name)_T (output) pipe
+	, `$(name)_T (output) out
 	);
 
 $for((id, type, delay) in parts)
@@ -53,20 +44,11 @@ Util_Delay_array #
 $endfor
 
 $(name)_pack PIPEPACK
-	( .pipe (pipe)
+	( .out (out)
 $for((id, type, delay) in parts)
 	, .$(id[0].lower() + id[1:]) ($(id[0].lower() + id[1:])\$)
 $endfor
 	);
 
-endmodule
-
-module $(name)_unpack
-	( `$(name)_T (input) pipe
-$for((id, type, delay) in parts)
-	, `$(type)_T (output) $(id[0].lower() + id[1:])
-$endfor
-	);
-assign `$(name)_Pack_Defaults = pipe;
 endmodule
 

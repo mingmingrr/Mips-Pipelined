@@ -23,7 +23,7 @@ module Mips_Stage_reg #
 `Mips_Type_Word_T (wire) pipePcReg_instruction ;
 `Mips_Type_Word_T (wire) pipePcReg_pcAddr ;
 Mips_Pipeline_PcReg_unpack PCREG
-	( .pipe (pipePcReg)
+	( .in (pipePcReg)
 	, .instruction (pipePcReg_instruction)
 	, .pcAddr      (pipePcReg_pcAddr)
 	);
@@ -34,7 +34,7 @@ Mips_Pipeline_PcReg_unpack PCREG
 `Mips_Type_Word_T (wire) pipeMemReg_aluResult;
 `Mips_Control_Control_T (wire) pipeMemReg_control;
 Mips_Pipeline_MemReg_unpack MEMREG
-	( .pipe (pipeMemReg)
+	( .in (pipeMemReg)
 	, .instruction (pipeMemReg_instruction)
 	, .pcAddr      (pipeMemReg_pcAddr)
 	, .memOut      (pipeMemReg_memOut)
@@ -73,7 +73,7 @@ Mips_Pipeline_RegEx_generate #
 	, .regPort1    (regPort1)
 	, .regPort2    (regPort2)
 	, .control     (control)
-	, .pipe        (pipeRegEx)
+	, .out         (pipeRegEx)
 	);
 
 Mips_Pipeline_RegPc_generate #
@@ -83,7 +83,7 @@ Mips_Pipeline_RegPc_generate #
 	, .regPort1  (regPort1)
 	, .regPortEq (regPortEq)
 	, .control   (control)
-	, .pipe      (pipeRegPc)
+	, .out       (pipeRegPc)
 	);
 
 endmodule

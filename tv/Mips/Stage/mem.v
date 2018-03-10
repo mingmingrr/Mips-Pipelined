@@ -22,7 +22,7 @@ module Mips_Stage_mem #
 
 `Mips_Pipeline_ExMem_Decl_Defaults
 Mips_Pipeline_ExMem_unpack EXMEM
-	( .pipe (pipeExMem)
+	( .in (pipeExMem)
 	, .instruction (instruction)
 	, .pcAddr      (pcAddr)
 	, .control     (control)
@@ -52,7 +52,7 @@ Mips_Pipeline_MemReg_generate #
 	, .memOut      (memOut)
 	, .aluResult   (aluResult)
 	, .control     (control)
-	, .pipe        (pipeMemReg)
+	, .out         (pipeMemReg)
 	);
 
 endmodule

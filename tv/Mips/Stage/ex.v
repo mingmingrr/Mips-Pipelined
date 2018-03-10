@@ -16,7 +16,7 @@ module Mips_Stage_ex #
 
 `Mips_Pipeline_RegEx_Decl_Defaults
 Mips_Pipeline_RegEx_unpack REGEX
-	( .pipe (pipeRegEx)
+	( .in (pipeRegEx)
 	, .instruction (instruction)
 	, .pcAddr      (pcAddr)
 	, .regPort1    (regPort1)
@@ -44,7 +44,7 @@ Mips_Pipeline_ExMem_generate #
 	, .control     (control)
 	, .regPort2    (regPort2)
 	, .aluResult   (aluResult)
-	, .pipe        (pipeExMem)
+	, .out         (pipeExMem)
 	);
 
 endmodule
