@@ -45,11 +45,6 @@ Mips_Datapath_Memory_datapath #
 
 Mips_Pipeline_MemReg_generate #
 	( .DELAYED (DELAYED)
-	, .INSTRUCTION_DELAY (1)
-	, .PCADDR_DELAY      (1)
-	, .MEMOUT_DELAY      (0)
-	, .ALURESULT_DELAY   (1)
-	, .CONTROL_DELAY     (1)
 	) MEMREG
 	( .ctrl (ctrl)
 	, .instruction (instruction)

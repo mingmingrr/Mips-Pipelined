@@ -37,11 +37,6 @@ Mips_Datapath_Alu_datapath ALU
 
 Mips_Pipeline_ExMem_generate #
 	( .DELAYED (DELAYED)
-	, .INSTRUCTION_DELAY (1)
-	, .PCADDR_DELAY      (1)
-	, .CONTROL_DELAY     (1)
-	, .REGPORT2_DELAY    (1)
-	, .ALURESULT_DELAY   (1)
 	) EXMEM
 	( .ctrl (ctrl)
 	, .instruction (instruction)

@@ -66,11 +66,6 @@ Mips_Datapath_Register_datapath REG
 
 Mips_Pipeline_RegEx_generate #
 	( .DELAYED (DELAYED)
-	, .INSTRUCTION_DELAY (1)
-	, .PCADDR_DELAY      (1)
-	, .REGPORT1_DELAY    (1)
-	, .REGPORT2_DELAY    (1)
-	, .CONTROL_DELAY     (1)
 	) REGEX
 	( .ctrl (ctrl)
 	, .instruction (pipePcReg_instruction)
@@ -83,9 +78,6 @@ Mips_Pipeline_RegEx_generate #
 
 Mips_Pipeline_RegPc_generate #
 	( .DELAYED (DELAYED)
-	, .REGPORT1_DELAY  (0)
-	, .REGPORTEQ_DELAY (0)
-	, .CONTROL_DELAY   (0)
 	) REGPC
 	( .ctrl (ctrl)
 	, .regPort1  (regPort1)

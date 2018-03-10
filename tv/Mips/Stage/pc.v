@@ -46,8 +46,6 @@ Mips_Datapath_Pc_datapath #
 
 Mips_Pipeline_PcReg_generate #
 	( .DELAYED (DELAYED)
-	, .INSTRUCTION_DELAY (0)
-	, .PCADDR_DELAY      (0)
 	) IFREG
 	( .ctrl (ctrl)
 	, .instruction (instruction)
