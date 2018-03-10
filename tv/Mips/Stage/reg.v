@@ -1,10 +1,10 @@
 `include "Data/Control/Control.v"
 `include "Mips/Type/Word.v"
 
-`include "Mips/Pipeline/MemReg.v"
-`include "Mips/Pipeline/PcReg.v"
-`include "Mips/Pipeline/RegEx.v"
-`include "Mips/Pipeline/RegPc.v"
+`include "Mips/Pipeline/Mem/Reg.v"
+`include "Mips/Pipeline/Pc/Reg.v"
+`include "Mips/Pipeline/Reg/Ex.v"
+`include "Mips/Pipeline/Reg/Pc.v"
 
 `include "Mips/Datapath/Register/datapath.v"
 `include "Mips/Control/Control.v"

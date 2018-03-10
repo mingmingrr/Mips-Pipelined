@@ -2,8 +2,8 @@
 `include "Data/Control/Control.v"
 `include "Mips/Type/Word.v"
 
-`include "Mips/Pipeline/ExMem.v"
-`include "Mips/Pipeline/MemReg.v"
+`include "Mips/Pipeline/Ex/Mem.v"
+`include "Mips/Pipeline/Mem/Reg.v"
 
 `include "Mips/Datapath/Memory/datapath.v"
 
