@@ -5,6 +5,7 @@
 
 module Mips_Datapath_Register_register #
 	( parameter RESET = `Mips_Type_Word_W'(0)
+	, parameter PASSTHROUGH = 0
 	)
 	( `Data_Control_Control_T (input ) ctrl
 	, `Mips_Type_RegAddr_T    (input ) rd1Addr
@@ -20,19 +21,33 @@ module Mips_Datapath_Register_register #
 
 `Mips_Type_Word_T(reg) regs [0:31];
 
-assign rd1Data
-	= regs[rd1Addr];
-	// = rd1Addr == wrAddr
-	// ? wrData
-	// : regs[rd1Addr]
-	// ;
+generate
+	if(PASSTHROUGH)
+		assign rd1Data
+			= (
+				(|wrAddr) &&
+				wrEnable &&
+				rd1Addr == wrAddr
+			)? wrData
+			: regs[rd1Addr]
+			;
+	else
+		assign rd1Data = regs[rd1Addr];
+endgenerate
 
-assign rd2Data
-	= regs[rd2Addr];
-	// = rd2Addr == wrAddr
-	// ? wrData
-	// : regs[rd2Addr]
-	// ;
+generate
+	if(PASSTHROUGH)
+		assign rd2Data
+			= (
+				(|wrAddr) &&
+				wrEnable &&
+				rd2Addr == wrAddr
+			)? wrData
+			: regs[rd2Addr]
+			;
+	else
+		assign rd1Data = regs[rd1Addr];
+endgenerate
 
 always @(posedge `Data_Control_Control_Clock(ctrl))
 	if(`Data_Control_Control_Reset(ctrl)) begin : wtf

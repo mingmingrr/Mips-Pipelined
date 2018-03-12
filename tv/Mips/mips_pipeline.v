@@ -44,6 +44,7 @@ Mips_Stage_pc #
 
 Mips_Stage_reg #
 	( .DELAYED (DELAYED)
+	, .PASSTHROUGH (DELAYED)
 	) REG
 	( .ctrl (ctrl)
 	, .pipeMemReg (pipeMemReg)

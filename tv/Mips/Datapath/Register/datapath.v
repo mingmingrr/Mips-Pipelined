@@ -14,7 +14,9 @@
 `include "Mips/Datapath/Register/wrData.v"
 `include "Mips/Datapath/Register/register.v"
 
-module Mips_Datapath_Register_datapath
+module Mips_Datapath_Register_datapath #
+	( parameter PASSTHROUGH = 0
+	)
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Control_Control_T (input) control
 	, `Mips_Type_RegPorts_T (input)  portsIn
@@ -71,7 +73,9 @@ Mips_Datapath_Register_wrData WRD
 	, .wrData    (wrData)
 	);
 
-Mips_Datapath_Register_register REG
+Mips_Datapath_Register_register #
+	( .PASSTHROUGH (PASSTHROUGH)
+	) REG
 	( .ctrl    (ctrl)
 	, .rd1Addr (rd1Addr)
 	, .rd2Addr (rd2Addr)

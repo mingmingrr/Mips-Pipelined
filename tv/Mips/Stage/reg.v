@@ -12,6 +12,7 @@
 
 module Mips_Stage_reg #
 	( parameter DELAYED = 1
+	, parameter PASSTHROUGH = DELAYED
 	)
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Pipeline_MemReg_T (input) pipeMemReg
@@ -52,7 +53,9 @@ Mips_Control_generate CTRL
 `Mips_Type_Word_T (wire) regPort2 ;
 `Mips_Type_RegPorts_T (wire) regPorts ;
 wire regPortEq ;
-Mips_Datapath_Register_datapath REG
+Mips_Datapath_Register_datapath #
+	( .PASSTHROUGH (PASSTHROUGH)
+	) REG
 	( .ctrl (ctrl)
 	, .control     (control)
 	, .instruction (pipePcReg_instruction)
