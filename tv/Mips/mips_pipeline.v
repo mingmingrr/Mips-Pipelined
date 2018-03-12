@@ -7,11 +7,16 @@
 `include "Mips/Pipeline/Pc/Reg.v"
 `include "Mips/Pipeline/Reg/Ex.v"
 `include "Mips/Pipeline/Reg/Pc.v"
+`include "Mips/Pipeline/Ex/Fwd.v"
+`include "Mips/Pipeline/Fwd/Ex.v"
+`include "Mips/Pipeline/Mem/Fwd.v"
+`include "Mips/Pipeline/Reg/Fwd.v"
 
 `include "Mips/Stage/pc.v"
 `include "Mips/Stage/reg.v"
 `include "Mips/Stage/ex.v"
 `include "Mips/Stage/mem.v"
+`include "Mips/Stage/fwd.v"
 
 module Mips_mips_pipeline #
 	( parameter DELAYED = 1
@@ -25,11 +30,15 @@ module Mips_mips_pipeline #
 
 `Util_Math_log2_expr
 
-`Mips_Pipeline_ExMem_T (wire) pipeExMem;
+`Mips_Pipeline_ExMem_T  (wire) pipeExMem;
 `Mips_Pipeline_MemReg_T (wire) pipeMemReg;
-`Mips_Pipeline_PcReg_T (wire) pipePcReg;
-`Mips_Pipeline_RegEx_T (wire) pipeRegEx;
-`Mips_Pipeline_RegPc_T (wire) pipeRegPc;
+`Mips_Pipeline_PcReg_T  (wire) pipePcReg;
+`Mips_Pipeline_RegEx_T  (wire) pipeRegEx;
+`Mips_Pipeline_RegPc_T  (wire) pipeRegPc;
+`Mips_Pipeline_FwdEx_T  (wire) pipeFwdEx;
+`Mips_Pipeline_RegFwd_T (wire) pipeRegFwd;
+`Mips_Pipeline_MemFwd_T (wire) pipeMemFwd;
+`Mips_Pipeline_ExFwd_T  (wire) pipeExFwd;
 
 Mips_Stage_pc #
 	( .DELAYED (DELAYED)
@@ -51,6 +60,7 @@ Mips_Stage_reg #
 	, .pipePcReg  (pipePcReg)
 	, .pipeRegEx  (pipeRegEx)
 	, .pipeRegPc  (pipeRegPc)
+	, .pipeRegFwd (pipeRegFwd)
 	);
 
 Mips_Stage_ex #
@@ -58,7 +68,9 @@ Mips_Stage_ex #
 	) EX
 	( .ctrl (ctrl)
 	, .pipeRegEx (pipeRegEx)
+	, .pipeFwdEx (pipeFwdEx)
 	, .pipeExMem (pipeExMem)
+	, .pipeExFwd (pipeExFwd)
 	);
 
 Mips_Stage_mem #
@@ -69,6 +81,16 @@ Mips_Stage_mem #
 	( .ctrl (ctrl)
 	, .pipeExMem  (pipeExMem)
 	, .pipeMemReg (pipeMemReg)
+	, .pipeMemFwd (pipeMemFwd)
+	);
+
+Mips_Stage_fwd #
+	( .DIRECT (!DELAYED)
+	) FWD
+	( .pipeFwdEx (pipeFwdEx)
+	, .pipeExFwd (pipeExFwd)
+	, .pipeRegFwd (pipeRegFwd)
+	, .pipeMemFwd (pipeMemFwd)
 	);
 
 assign pcAddr = `Mips_Pipeline_PcReg_PcAddr(pipePcReg);

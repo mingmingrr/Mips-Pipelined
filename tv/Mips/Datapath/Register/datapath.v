@@ -25,6 +25,7 @@ module Mips_Datapath_Register_datapath #
 	, `Mips_Type_Word_T (input) pcAddr
 	, `Mips_Type_Word_T (input) memOut
 	, `Mips_Type_Word_T (input) aluResult
+	, `Mips_Type_Word_T (output) writeData
 	, `Mips_Type_Word_T (output) port1
 	, `Mips_Type_Word_T (output) port2
 	, output portEq
@@ -35,8 +36,8 @@ module Mips_Datapath_Register_datapath #
 `Mips_Control_Signal_Register_Signal_WriteDataSource_T (wire) portInWriteData;
 Mips_Type_RegPorts_unpack PORTIN
 	( .in (portsIn)
-	, .read1 ()
-	, .read2 ()
+	, .read1Addr ()
+	, .read2Addr ()
 	, .writeAddr (portInWriteAddr)
 	, .writeData (portInWriteData)
 	, .writeEn (portInWriteEn)
@@ -87,10 +88,11 @@ Mips_Datapath_Register_register #
 	);
 
 assign portEq = port1 == port2;
+assign writeData = wrData;
 
 Mips_Type_RegPorts_pack PORTOUT
-	( .read1 (rd1Addr)
-	, .read2 (rd2Addr)
+	( .read1Addr (rd1Addr)
+	, .read2Addr (rd2Addr)
 	, .writeAddr (wrAddr)
 	, .writeData (`Mips_Control_Signal_Register_Control_WriteDataSource(regControl))
 	, .writeEn (`Mips_Control_Signal_Register_Control_WriteEnable(regControl))

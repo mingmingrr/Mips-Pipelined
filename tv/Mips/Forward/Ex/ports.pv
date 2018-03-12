@@ -1,0 +1,67 @@
+`include "Mips/Type/RegPorts.v"
+`include "Mips/Type/Word.v"
+
+$for(i in "12")
+module Mips_Forward_Ex_port$(i) #
+	( parameter DIRECT = 1
+	)
+	( `Mips_Type_Word_T (output) port
+	, `Mips_Type_RegPorts_T (input) pipeEx_RegPorts
+	, `Mips_Type_RegPorts_T (input) pipeMem_RegPorts
+	, `Mips_Type_RegPorts_T (input) pipeReg_RegPorts
+	, `Mips_Type_Word_T (input) pipeMem_AluResult
+	, `Mips_Type_Word_T (input) pipeMem_PcAddr
+	, `Mips_Type_Word_T (input) pipeReg_WriteData
+	, `Mips_Type_Word_T (input) pipeEx_RegPort$(i)
+	);
+
+`Mips_Type_Word_T (reg) portMem;
+always @(*)
+	case(`Mips_Type_RegPorts_WriteData(pipeMem_RegPorts))
+		`Mips_Control_Signal_Register_Signal_WriteDataSource_Pc  : portMem = pipeMem_PcAddr;
+		`Mips_Control_Signal_Register_Signal_WriteDataSource_Alu : portMem = pipeMem_AluResult;
+		default                                                  : portMem = pipeMem_AluResult;
+	endcase
+
+`Mips_Type_Word_T (wire) portReg;
+assign portReg = pipeReg_WriteData;
+
+`Mips_Type_Word_T (wire) portEx;
+assign portEx = pipeEx_RegPort$(i);
+
+wire [2:0] condMem;
+assign condMem = {
+	1'(`Mips_Type_RegPorts_WriteEn(pipeMem_RegPorts)),
+	1'(|`Mips_Type_RegPorts_WriteAddr(pipeMem_RegPorts)),
+	1'(`Mips_Type_RegPorts_WriteAddr(pipeMem_RegPorts) ==
+		`Mips_Type_RegPorts_Read$(i)Addr(pipeEx_RegPorts))
+};
+
+wire [2:0] condReg;
+assign condReg = {
+	1'(`Mips_Type_RegPorts_WriteEn(pipeReg_RegPorts)),
+	1'(|`Mips_Type_RegPorts_WriteAddr(pipeReg_RegPorts)),
+	1'(`Mips_Type_RegPorts_WriteAddr(pipeReg_RegPorts) ==
+		`Mips_Type_RegPorts_Read$(i)Addr(pipeEx_RegPorts))
+};
+
+`Mips_Type_Word_T (reg) portSelect;
+always @(*)
+	if(&condMem)
+		portSelect = portMem;
+	else if(&condReg)
+		portSelect = portReg;
+	else
+		portSelect = portEx;
+
+generate
+	if(DIRECT)
+		assign port = portEx;
+	else
+		assign port = portSelect;
+endgenerate
+
+endmodule
+
+$endfor
+

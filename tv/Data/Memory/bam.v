@@ -106,9 +106,8 @@ defparam
 	altsyncram_component.operation_mode                     = "BIDIR_DUAL_PORT",
 	altsyncram_component.outdata_aclr_a                     = "NONE",
 	altsyncram_component.outdata_aclr_b                     = "NONE",
-	altsyncram_component.outdata_reg_a                      = "CLOCK0",
-	altsyncram_component.outdata_reg_b                      = "CLOCK0",
-	// altsyncram_component.power_up_uninitialized             = "TRUE",
+	altsyncram_component.outdata_reg_a                      = "UNREGISTERED",
+	altsyncram_component.outdata_reg_b                      = "UNREGISTERED",
 	altsyncram_component.read_during_write_mode_mixed_ports = "DONT_CARE",
 	altsyncram_component.read_during_write_mode_port_a      = "NEW_DATA_WITH_NBE_READ",
 	altsyncram_component.read_during_write_mode_port_b      = "NEW_DATA_WITH_NBE_READ",
@@ -118,6 +117,7 @@ defparam
 	altsyncram_component.width_b                            = DATA_W,
 	altsyncram_component.width_byteena_a                    = BYTE_L,
 	altsyncram_component.width_byteena_b                    = BYTE_L,
+	altsyncram_component.power_up_uninitialized             = "FALSE",
 	altsyncram_component.wrcontrol_wraddress_reg_b          = "CLOCK0";
 
 endmodule

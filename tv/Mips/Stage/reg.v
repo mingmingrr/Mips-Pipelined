@@ -5,6 +5,7 @@
 `include "Mips/Pipeline/Pc/Reg.v"
 `include "Mips/Pipeline/Reg/Ex.v"
 `include "Mips/Pipeline/Reg/Pc.v"
+`include "Mips/Pipeline/Reg/Fwd.v"
 
 `include "Mips/Datapath/Register/datapath.v"
 `include "Mips/Control/Control.v"
@@ -19,6 +20,7 @@ module Mips_Stage_reg #
 	, `Mips_Pipeline_PcReg_T  (input) pipePcReg
 	, `Mips_Pipeline_RegEx_T  (output) pipeRegEx
 	, `Mips_Pipeline_RegPc_T  (output) pipeRegPc
+	, `Mips_Pipeline_RegFwd_T (output) pipeRegFwd
 	);
 
 `Mips_Type_Word_T (wire) pipePcReg_instruction ;
@@ -53,6 +55,7 @@ Mips_Control_generate CTRL
 `Mips_Type_Word_T (wire) regPort2 ;
 `Mips_Type_RegPorts_T (wire) regPorts ;
 wire regPortEq ;
+`Mips_Type_Word_T (wire) regWriteData ;
 Mips_Datapath_Register_datapath #
 	( .PASSTHROUGH (PASSTHROUGH)
 	) REG
@@ -67,6 +70,7 @@ Mips_Datapath_Register_datapath #
 	, .port2       (regPort2)
 	, .portEq      (regPortEq)
 	, .portsOut    (regPorts)
+	, .writeData   (regWriteData)
 	);
 
 Mips_Pipeline_RegEx_generate #
@@ -90,6 +94,12 @@ Mips_Pipeline_RegPc_generate #
 	, .regPortEq (regPortEq)
 	, .control   (control)
 	, .out       (pipeRegPc)
+	);
+
+Mips_Pipeline_RegFwd_pack REGFWD
+	( .out (pipeRegFwd)
+	, .writeData (regWriteData)
+	, .regPorts  (pipeMemReg_regPorts)
 	);
 
 endmodule

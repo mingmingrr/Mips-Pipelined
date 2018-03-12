@@ -1,4 +1,5 @@
 `include "Util/Math.v"
+`include "Util/Delay/array.v"
 `include "Data/Control/Control.v"
 `include "Data/Control/invert.v"
 `include "Data/Memory/bam.v"
@@ -28,8 +29,11 @@ module Mips_Datapath_Memory_datapath #
 
 `Util_Math_log2_expr
 
-`Mips_Control_Signal_Memory_Control_T(wire) memControl;
+`Mips_Control_Signal_Memory_Control_T (wire) memControl;
 assign memControl = `Mips_Control_Control_Memory(control);
+`Mips_Control_Signal_Memory_Control_T (reg) memControl$;
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	memControl$ <= memControl;
 
 `Mips_Type_Word_T (wire) memAddr;
 assign memAddr = aluResult;
@@ -67,7 +71,7 @@ Data_Memory_bam #
 	);
 
 Mips_Datapath_Memory_outMask MASK
-	( .control (`Mips_Control_Signal_Memory_Control_ByteEnable(memControl))
+	( .control (`Mips_Control_Signal_Memory_Control_ByteEnable(memControl$))
 	, .in (memOut)
 	, .out (out)
 	);
