@@ -12,7 +12,7 @@ endef
 
 define makePv
 	$(call makePre,$1,$2)
-	expander3 -a -i "py/tv/header.py" "$2" > "$1"
+	expander3.py -a -i "py/tv/header.py" "$2" > "$1"
 	cat "$1" | \
 	$(call makePost,$1,$2)
 endef
