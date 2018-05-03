@@ -33,6 +33,25 @@ Mips_Pipeline_ExMem_unpack EXMEM
 	, .aluResult   (aluResult)
 	);
 
+`Mips_Type_RegPorts_T (reg) regPorts$;
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	regPorts$ <= regPorts;
+
+`Mips_Type_Word_T (reg) aluResult$;
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	aluResult$ <= aluResult;
+
+`Mips_Type_Word_T (reg) memData;
+always @(*)
+	if(
+		`Mips_Type_RegPorts_WriteAddr(regPorts$) ==
+		`Mips_Type_RegPorts_Read2Addr(regPorts)
+	)
+		memData = aluResult$;
+	else
+		memData = regPort2;
+
+
 `Mips_Type_Word_T (wire) memOut;
 Mips_Datapath_Memory_datapath #
 	( .ADDR_L (64)
@@ -41,10 +60,28 @@ Mips_Datapath_Memory_datapath #
 	) MEM
 	( .ctrl (ctrl)
 	, .aluResult (aluResult)
-	, .regPort2  (regPort2)
+	, .regPort2  (memData)
 	, .control   (control)
 	, .out       (memOut)
 	);
+
+`Mips_Type_Word_T (reg) memOutD;
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	memOutD <= memOut;
+
+`Mips_Type_Word_T (reg) regPort2$;
+always @(posedge `Data_Control_Control_Clock(ctrl))
+	regPort2$ <= regPort2;
+
+`Mips_Type_Word_T (reg) memOut$;
+always @(*)
+	if(
+		aluResult == aluResult$
+	)
+		memOut$ = regPort2$;
+	else
+		memOut$ = memOut;
+
 
 Mips_Pipeline_MemReg_generate #
 	( .DELAYED (DELAYED)
@@ -52,7 +89,7 @@ Mips_Pipeline_MemReg_generate #
 	( .ctrl (ctrl)
 	, .instruction (instruction)
 	, .pcAddr      (pcAddr)
-	, .memOut      (memOut)
+	, .memOut      (memOut$)
 	, .aluResult   (aluResult)
 	, .regPorts    (regPorts)
 	, .out         (pipeMemReg)

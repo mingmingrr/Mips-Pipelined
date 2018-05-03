@@ -2,21 +2,30 @@
 `include "Mips/Type/Word.v"
 `include "Util/Math.v"
 
-`include "Mips/Pipeline/Ex/Mem.v"
-`include "Mips/Pipeline/Mem/Reg.v"
-`include "Mips/Pipeline/Pc/Reg.v"
-`include "Mips/Pipeline/Reg/Ex.v"
-`include "Mips/Pipeline/Reg/Pc.v"
-`include "Mips/Pipeline/Ex/Fwd.v"
-`include "Mips/Pipeline/Fwd/Ex.v"
-`include "Mips/Pipeline/Mem/Fwd.v"
-`include "Mips/Pipeline/Reg/Fwd.v"
-
 `include "Mips/Stage/pc.v"
 `include "Mips/Stage/reg.v"
 `include "Mips/Stage/ex.v"
 `include "Mips/Stage/mem.v"
 `include "Mips/Stage/fwd.v"
+`include "Mips/Stage/haz.v"
+
+$py(pipes = [i.strip().split() for i in """
+Ex    Mem
+Mem   Reg
+Pc    Reg
+Reg   Ex
+Reg   Pc
+Ex    Fwd
+Fwd   Ex
+Mem   Fwd
+Reg   Fwd
+Haz   Reg
+Reg   Haz
+Ex    Haz
+""".strip("\n").splitlines()])
+$for(src, dest in pipes)
+`include "Mips/Pipeline/$(src)/$(dest).v"
+$endfor
 
 module Mips_mips_pipeline #
 	( parameter DELAYED = 1
@@ -24,21 +33,15 @@ module Mips_mips_pipeline #
 	, parameter ADDR_L = 64
 	, parameter ADDR_W = Util_Math_log2(ADDR_L)
 	)
-	( `Data_Control_Control_T(input) ctrl
-	, `Mips_Type_Word_T(output)      pcAddr
+	( `Data_Control_Control_T (input)  ctrl
+	, `Mips_Type_Word_T       (output) pcAddr
 	);
 
 `Util_Math_log2_expr
 
-`Mips_Pipeline_ExMem_T  (wire) pipeExMem;
-`Mips_Pipeline_MemReg_T (wire) pipeMemReg;
-`Mips_Pipeline_PcReg_T  (wire) pipePcReg;
-`Mips_Pipeline_RegEx_T  (wire) pipeRegEx;
-`Mips_Pipeline_RegPc_T  (wire) pipeRegPc;
-`Mips_Pipeline_FwdEx_T  (wire) pipeFwdEx;
-`Mips_Pipeline_RegFwd_T (wire) pipeRegFwd;
-`Mips_Pipeline_MemFwd_T (wire) pipeMemFwd;
-`Mips_Pipeline_ExFwd_T  (wire) pipeExFwd;
+$for(src, dest in pipes)
+`Mips_Pipeline_$(src)$(dest)_T (wire) pipe$(src)$(dest);
+$endfor
 
 Mips_Stage_pc #
 	( .DELAYED (DELAYED)
@@ -56,6 +59,8 @@ Mips_Stage_reg #
 	, .PASSTHROUGH (DELAYED)
 	) REG
 	( .ctrl (ctrl)
+	, .pipeHazReg (pipeHazReg)
+	, .pipeRegHaz (pipeRegHaz)
 	, .pipeMemReg (pipeMemReg)
 	, .pipePcReg  (pipePcReg)
 	, .pipeRegEx  (pipeRegEx)
@@ -67,6 +72,7 @@ Mips_Stage_ex #
 	( .DELAYED (DELAYED)
 	) EX
 	( .ctrl (ctrl)
+	, .pipeExHaz (pipeExHaz)
 	, .pipeRegEx (pipeRegEx)
 	, .pipeFwdEx (pipeFwdEx)
 	, .pipeExMem (pipeExMem)
@@ -91,6 +97,14 @@ Mips_Stage_fwd #
 	, .pipeExFwd (pipeExFwd)
 	, .pipeRegFwd (pipeRegFwd)
 	, .pipeMemFwd (pipeMemFwd)
+	);
+
+Mips_Stage_haz #
+	( .ENABLE (DELAYED)
+	) HAZ
+	( .pipeHazReg (pipeHazReg)
+	, .pipeExHaz (pipeExHaz)
+	, .pipeRegHaz (pipeRegHaz)
 	);
 
 assign pcAddr = `Mips_Pipeline_PcReg_PcAddr(pipePcReg);

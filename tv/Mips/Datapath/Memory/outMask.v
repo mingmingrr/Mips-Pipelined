@@ -1,5 +1,6 @@
 `include "Mips/Type/Word.v"
 
+`include "Mips/Control/Signal/Memory/Signal/ByteExtend.v"
 `include "Mips/Control/Signal/Memory/Signal/ByteEnable.v"
 
 module Mips_Datapath_Memory_outMask

@@ -5,6 +5,7 @@
 `include "Mips/Pipeline/Reg/Ex.v"
 `include "Mips/Pipeline/Ex/Mem.v"
 `include "Mips/Pipeline/Ex/Fwd.v"
+`include "Mips/Pipeline/Ex/Haz.v"
 
 `include "Mips/Datapath/Alu/datapath.v"
 
@@ -14,6 +15,7 @@ module Mips_Stage_ex #
 	( `Data_Control_Control_T (input) ctrl
 	, `Mips_Pipeline_RegEx_T (input) pipeRegEx
 	, `Mips_Pipeline_FwdEx_T (input) pipeFwdEx
+	, `Mips_Pipeline_ExHaz_T (output) pipeExHaz
 	, `Mips_Pipeline_ExMem_T (output) pipeExMem
 	, `Mips_Pipeline_ExFwd_T (output) pipeExFwd
 	);
@@ -67,5 +69,11 @@ Mips_Pipeline_ExFwd_pack EXFWD
 	, .regPort2 (regPort2)
 	, .regPorts (regPorts)
 	);
+
+Mips_Pipeline_ExHaz_pack EXHAZ
+	( .out (pipeExHaz)
+	, .regPorts (regPorts)
+	);
+
 endmodule
 

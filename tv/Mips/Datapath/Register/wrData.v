@@ -5,7 +5,7 @@
 `include "Mips/Control/Signal/Register/Signal/WriteDataSource.v"
 
 module Mips_Datapath_Register_wrData
-	( `Mips_Control_Signal_Register_Signal_WriteDataSource_T(input) control
+	( `Mips_Control_Signal_Register_Signal_WriteDataSource_T(input) source
 	, `Mips_Type_Word_T(input) memOut
 	, `Mips_Type_Word_T(input) pcAddr
 	, `Mips_Type_Word_T(input) aluResult
@@ -14,7 +14,7 @@ module Mips_Datapath_Register_wrData
 
 `Mips_Type_Word_T (reg) wrData$;
 always @(*)
-	case(control)
+	case(source)
 		`Mips_Control_Signal_Register_Signal_WriteDataSource_Memory : wrData$ = memOut;
 		`Mips_Control_Signal_Register_Signal_WriteDataSource_Pc     : wrData$ = pcAddr + 4;
 		`Mips_Control_Signal_Register_Signal_WriteDataSource_Alu    : wrData$ = aluResult;

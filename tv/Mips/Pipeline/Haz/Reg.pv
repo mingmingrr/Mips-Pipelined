@@ -1,0 +1,6 @@
+`include "Mips/Type/Bool.v"
+
+$py(name, parts = "Mips_Pipeline_HazReg", [
+("Stall" , "Mips_Type_Bool" , 0),
+])
+$include("inc/pipeline.inc")

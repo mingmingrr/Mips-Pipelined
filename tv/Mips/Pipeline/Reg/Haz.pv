@@ -1,0 +1,9 @@
+`include "Mips/Control/Control.v"
+`include "Mips/Type/Word.v"
+
+$py(name, parts = "Mips_Pipeline_RegHaz", [
+("Control", "Mips_Control_Control", 0),
+("Instruction", "Mips_Type_Word", 0),
+])
+$include("inc/pipeline.inc")
+
